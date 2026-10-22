@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>seespanish · مرور واژگان</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
+    --pencil: #F2C230; --ok: #CDE8C4; --bad: #F4C7C7; --line: #D6CEB4; --shadow: rgba(46,46,51,.18);
+    --head: "Caveat", "Vazirmatn", cursive; --body: "Vazirmatn", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--body); color: var(--graphite); background: var(--paper);
+    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
+    background-size: 100% 32px; background-attachment: fixed; line-height: 1.9; min-height: 100vh;
+  }
+  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 80px; }
+  header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 22px; }
+  .logo { font-family: var(--head); font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
+  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
+  .nav a { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-right: 14px; }
+  .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 20px; }
+  .levels button {
+    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
+    background: #fff; border: 2px solid var(--graphite);
+    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
+    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
+  }
+  .levels button[aria-pressed="true"] { background: var(--pencil); }
+  .card {
+    background: #fff; border: 2px solid var(--graphite); border-radius: 14px 6px 16px 8px;
+    box-shadow: 6px 7px 0 var(--shadow); padding: 26px 22px; text-align: center; margin-bottom: 18px;
+  }
+  .word { font-family: var(--head); font-size: 3rem; font-weight: 700; margin: 6px 0; line-height: 1.1; }
+  .meaning { font-size: 1.4rem; margin: 10px 0; min-height: 2.2em; }
+  .topic { color: var(--graphite-soft); font-size: .92rem; }
+  .btn {
+    font-family: var(--head); font-size: 1.35rem; color: var(--graphite); background: var(--paper-2);
+    border: 2px solid var(--graphite); padding: 2px 16px; cursor: pointer; margin: 6px 4px 0;
+    border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; box-shadow: 3px 3px 0 var(--graphite);
+  }
+  .btn.main { background: var(--pencil); }
+  .btn:hover { transform: translate(-1px, -1px); }
+  .grades { display: none; margin-top: 10px; }
+  .grades.show { display: block; }
+  .grades .btn.forgot { background: var(--bad); }
+  .grades .btn.good { background: var(--ok); }
+  .muted { color: var(--graphite-soft); font-size: .95rem; text-align: center; }
+  .stat { text-align: center; color: var(--graphite-soft); font-size: .95rem; margin-top: 8px; }
+  footer { margin-top: 30px; font-size: .9rem; color: var(--graphite-soft); text-align: center; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo">see<span>spanish</span></h1>
+    <nav class="nav"><a href="index.html">گرامرها</a><a href="practice.html">تمرین</a><a href="exams.html">امتحان‌ها</a></nav>
+  </header>
+
+  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
+
+  <div class="card" id="card">
+    <p class="topic" id="topic"></p>
+    <div class="word" id="word"></div>
+    <button class="btn" id="speak" type="button">شنیدن تلفظ</button>
+    <div class="meaning" id="meaning" hidden></div>
+    <button class="btn main" id="show" type="button">نشان بده</button>
+    <div class="grades" id="grades">
+      <button class="btn forgot" data-g="0" type="button">بلد نبودم</button>
+      <button class="btn" data-g="1" type="button">سخت بود</button>
+      <button class="btn good" data-g="2" type="button">بلد بودم</button>
+    </div>
+  </div>
+  <p class="stat" id="stat"></p>
+  <p class="muted" id="empty" hidden>امروز کارت مرور نداری. فردا دوباره سر بزن.</p>
+
+  <footer>پیشرفت مرور فقط در همین مرورگر ذخیره می‌شود. تلفظ با صدای خود مرورگر پخش می‌شود.</footer>
+</div>
+
+<script src="data/practice.js"></script>
+<script>
+  const $ = (s) => document.querySelector(s);
+  const KEY = "seespanish:memory:v1";
+  const DAY = 24 * 60 * 60 * 1000;
+  let level = "A1";
+  let queue = [];
+  let current = null;
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
+  }
+  function saveState(s) {
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* حافظه در دسترس نیست */ }
+  }
+
+  // کارت‌ها را از فهرست واژگان همان سطح می‌سازیم؛ کلیدشان سطح + کلمه است
+  function cardsFor(lvl) {
+    return (window.SEE_PRACTICE.vocab[lvl] || []).map((v) => ({
+      key: lvl + "|" + v.es, es: v.es, fa: v.fa, topic: v.topic, level: lvl
+    }));
+  }
+
+  // زمان‌بندی ساده: بلد نبودم → ۱۰ دقیقه بعد؛ سخت → کمی جلوتر؛ بلد بودم → فاصله دو برابر می‌شود
+  function schedule(state, key, grade) {
+    const now = Date.now();
+    const rec = state[key] || { interval: 0, due: 0 };
+    if (grade === 0) { rec.interval = 0; rec.due = now + 10 * 60 * 1000; }
+    else if (grade === 1) { rec.interval = Math.max(1, Math.round((rec.interval || 1) * 1.2)); rec.due = now + rec.interval * DAY; }
+    else { rec.interval = rec.interval ? Math.round(rec.interval * 2) : 1; rec.due = now + rec.interval * DAY; }
+    state[key] = rec;
+    saveState(state);
+  }
+
+  function buildQueue() {
+    const state = loadState();
+    const now = Date.now();
+    queue = cardsFor(level).filter((c) => !state[c.key] || state[c.key].due <= now);
+    queue.sort(() => Math.random() - 0.5);
+  }
+
+  function speak(text) {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "es-ES";
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+
+  function showCard() {
+    const has = !!queue.length;
+    $("#empty").hidden = has;
+    $("#card").hidden = !has;
+    $("#stat").textContent = has ? `${queue.length} کارت باقی‌مانده برای امروز` : "";
+    if (!has) return;
+    current = queue[0];
+    $("#topic").textContent = current.topic;
+    $("#word").textContent = current.es;
+    $("#meaning").textContent = current.fa;
+    $("#meaning").hidden = true;
+    $("#grades").classList.remove("show");
+    $("#show").hidden = false;
+  }
+
+  function renderLevels() {
+    const ul = $("#levels");
+    ul.innerHTML = "";
+    window.SEE_PRACTICE && ["A1", "A2", "B1", "B2", "C1", "C2"].forEach((lvl) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = lvl;
+      b.setAttribute("aria-pressed", String(lvl === level));
+      b.addEventListener("click", () => { level = lvl; renderLevels(); buildQueue(); showCard(); });
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  $("#show").addEventListener("click", () => {
+    $("#meaning").hidden = false;
+    $("#show").hidden = true;
+    $("#grades").classList.add("show");
+  });
+
+  $("#speak").addEventListener("click", () => current && speak(current.es));
+
+  document.querySelectorAll("#grades button").forEach((b) => {
+    b.addEventListener("click", () => {
+      if (!current) return;
+      schedule(loadState(), current.key, Number(b.dataset.g));
+      queue.shift();
+      showCard();
+    });
+  });
+
+  renderLevels();
+  buildQueue();
+  showCard();
+</script>
+</body>
+</html>
