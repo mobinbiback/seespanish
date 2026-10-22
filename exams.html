@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>seespanish · امتحان‌ها و مصاحبه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
+    --pencil: #F2C230; --line: #D6CEB4; --shadow: rgba(46, 46, 51, .18);
+    --head: "Caveat", "Vazirmatn", cursive; --body: "Vazirmatn", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--body); color: var(--graphite); background: var(--paper);
+    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
+    background-size: 100% 32px; background-attachment: fixed; line-height: 1.9; min-height: 100vh;
+  }
+  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 80px; }
+  header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 24px; }
+  .logo { font-family: var(--head); font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
+  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
+  .back { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; }
+  h2 { font-family: var(--head); font-size: 2rem; margin: 32px 0 10px; }
+  .card { background: #fff; border: 2px solid var(--graphite); border-radius: 12px 5px 14px 7px;
+    padding: 20px 22px; box-shadow: 5px 6px 0 var(--shadow); margin-bottom: 20px; }
+  .card h3 { font-family: var(--head); font-size: 1.8rem; margin: 0 0 6px; }
+  .card p { margin: 6px 0; }
+  .muted { color: var(--graphite-soft); font-size: .93rem; }
+  .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 18px; }
+  .levels button {
+    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
+    background: #fff; border: 2px solid var(--graphite);
+    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
+    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
+  }
+  .levels button[aria-pressed="true"] { background: var(--pencil); }
+  ul.q { padding-right: 20px; margin: 8px 0 0; }
+  ul.q li { margin: 6px 0; }
+  a.btn {
+    display: inline-block; margin: 6px 6px 0 0; padding: 4px 14px;
+    font-family: var(--head); font-size: 1.25rem; color: var(--graphite);
+    background: var(--paper-2); border: 2px solid var(--graphite); border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px;
+    text-decoration: none;
+  }
+  a.btn:hover { background: var(--pencil); }
+  .warn { border: 2px dashed var(--graphite); border-radius: 10px 4px 12px 6px; padding: 12px 16px; background: #fff; }
+  footer { margin-top: 36px; font-size: .9rem; color: var(--graphite-soft); text-align: center; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1 class="logo">see<span>spanish</span></h1>
+    <nav><a class="back" href="practice.html">تمرین سؤال‌ها</a> &nbsp; <a class="back" href="index.html">← گرامرها</a></nav>
+  </header>
+
+  <h2>امتحان‌های رسمی به تفکیک سطح</h2>
+  <p class="muted">برای هر سطح، صفحه‌ی رسمی Instituto Cervantes و SIELE را ببینید. نمونه‌سوال‌ها و پاسخ‌نامه‌ها در همان صفحه‌ها هستند.</p>
+
+  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
+  <div id="levelBody"></div>
+
+  <h2>امتحان‌های دانشگاهی اسپانیا (PAU)</h2>
+  <div class="card">
+    <h3>پذیرش دانشگاه در اسپانیا</h3>
+    <p>PAU (Prueba de Acceso a la Universidad) امتحان ورود به دانشگاه برای دانش‌آموزان دبیرستانی در اسپانیاست و هر منطقه‌ی خودمختار آن را برگزار می‌کند. نمونه‌سوال‌های سال‌های قبل را دانشگاه‌ها و مسئولان هر منطقه منتشر می‌کنند.</p>
+    <a class="btn" href="https://saap.ugr.es/acceso/prueba-acceso/estudiantes/orientaciones-examenes" target="_blank" rel="noopener">راهنما و نمونه‌سوال‌های دانشگاه گرانادا</a>
+    <a class="btn" href="https://uniscopio.com/acceso/examenes-anteriores-selectividad/" target="_blank" rel="noopener">فهرست نمونه‌سوال‌ها به تفکیک منطقه</a>
+    <p class="muted">توجه: PAU برای دانش‌آموزان بومی طراحی شده است. اگر قصد تحصیل در اسپانیا را داری، شرط زبان هر دانشگاه را جداگانه بررسی کن. معمولاً DELE یا SIELE را می‌خواهند.</p>
+  </div>
+
+  <h2>درباره‌ی نمونه‌سوال‌های قدیمی</h2>
+  <div class="card warn">
+    <p>نمونه‌سوال‌های رسمی و مدل‌های امتحان از سایت Instituto Cervantes در دسترس‌اند. نمونه‌سوال‌های کامل سال‌های قبل همه‌ی سطح‌ها به‌صورت عمومی منتشر نمی‌شوند. این سایت PDFهایی را که از کانال‌ها یا سایت‌های غیررسمی گرفته شده میزبانی نمی‌کند، چون مالکیت آن‌ها روشن نیست.</p>
+    <p>اگر نمونه‌سوالی را که خودت به‌صورت قانونی داری بفرستی، می‌توانم آن را تحلیل کنم و موضوع، ساختار و گرامر آن را به واحدهای همین سایت وصل کنم.</p>
+  </div>
+
+  <h2>نمونه پرسش‌های مصاحبه</h2>
+  <p class="muted">این پرسش‌ها برای تمرین شفاهی نوشته شده‌اند و از هیچ کتاب یا امتحان رسمی کپی نشده‌اند.</p>
+  <div id="interview"></div>
+
+  <footer>
+    اطلاعات امتحان‌ها از سایت‌های رسمی و منابع تأیید شده گرفته شده است. قبل از ثبت‌نام، شرایط جدید را در سایت رسمی بررسی کن.
+  </footer>
+</div>
+
+<script>
+  const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+  const EXAMS = {
+    A1: { dele: "DELE A1 (و نسخه‌ی کودکان)", siele: "SIELE در سطح A1 نتیجه‌ی مستقل می‌دهد" },
+    A2: { dele: "DELE A2", siele: "SIELE در سطح A2" },
+    B1: { dele: "DELE B1 (با نسخه‌ی تعاملی modelo 0)", siele: "SIELE در سطح B1" },
+    B2: { dele: "DELE B2 (با نسخه‌ی تعاملی modelo 0)", siele: "SIELE در سطح B2" },
+    C1: { dele: "DELE C1", siele: "SIELE در سطح C1" },
+    C2: { dele: "DELE C2", siele: "SIELE در سطح C2" }
+  };
+
+  const INTERVIEW = {
+    A1: ["¿Cómo te llamas y de dónde eres?", "¿A qué te dedicas?", "¿Qué haces en tu tiempo libre?"],
+    A2: ["¿Qué hiciste el fin de semana pasado?", "¿Cómo es tu casa o tu barrio?", "¿Qué te gusta de viajar?"],
+    B1: ["Háblame de una experiencia que te haya marcado.", "¿Qué ventajas y desventajas tiene estudiar en línea?", "¿Qué cambiarías de tu ciudad y por qué?"],
+    B2: ["¿Crees que las redes sociales han cambiado la forma de relacionarnos? Justifica tu respuesta.", "¿Qué opinas del teletrabajo?", "Si pudieras empezar de nuevo en un aspecto de tu vida, ¿cuál sería y por qué?"],
+    C1: ["¿Hasta qué punto la tecnología puede sustituir la educación presencial?", "Argumenta tu postura sobre la inmigración como oportunidad para una sociedad."],
+    C2: ["¿Qué papel juega la cultura en la identidad de un pueblo? Desarróllalo con ejemplos.", "Comenta una crítica que hayas leído recientemente y explica si estás de acuerdo."]
+  };
+
+  let current = "A1";
+
+  function renderLevels() {
+    const ul = document.getElementById("levels");
+    ul.innerHTML = "";
+    LEVELS.forEach((lvl) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = lvl;
+      b.setAttribute("aria-pressed", String(lvl === current));
+      b.addEventListener("click", () => { current = lvl; renderLevels(); renderLevel(); renderInterview(); });
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  function renderLevel() {
+    const box = document.getElementById("levelBody");
+    const e = EXAMS[current];
+    box.innerHTML = `
+      <div class="card">
+        <h3>${current}</h3>
+        <p>${e.dele}</p>
+        <p class="muted">${e.siele}</p>
+        <a class="btn" href="https://examenes.cervantes.es/es/dele/preparar-prueba" target="_blank" rel="noopener">نمونه‌سوال و پاسخ‌نامه‌ی رسمی DELE</a>
+        <a class="btn" href="https://examenes.cervantes.es/es/siele/que-es" target="_blank" rel="noopener">اطلاعات رسمی SIELE</a>
+        <a class="btn" href="https://siele.org" target="_blank" rel="noopener">سایت SIELE (نسخه‌ی آزمایشی)</a>
+      </div>`;
+  }
+
+  function renderInterview() {
+    const box = document.getElementById("interview");
+    const qs = INTERVIEW[current] || [];
+    box.innerHTML = `
+      <div class="card">
+        <h3>سطح ${current}</h3>
+        <ul class="q">${qs.map((q) => `<li>${q}</li>`).join("")}</ul>
+        <p class="muted">جواب را با صدای بلند بگو و بعد ضبط کن تا بهتر خودت را بشنوی.</p>
+      </div>`;
+  }
+
+  renderLevels();
+  renderLevel();
+  renderInterview();
+</script>
+</body>
+</html>
