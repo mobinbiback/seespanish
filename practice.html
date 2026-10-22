@@ -64,6 +64,9 @@
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { font-size: .95rem; background: #fff; border: 1.5px solid var(--graphite); border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; padding: 0 10px; }
   .checklist li { list-style: none; margin: 4px 0; }
+  details.explain { margin-top: 6px; }
+  details.explain summary { cursor: pointer; font-family: var(--head); font-size: 1.15rem; border-bottom: 1.5px dashed var(--graphite); display: inline-block; }
+  .explain-body { white-space: pre-line; margin-top: 6px; padding: 8px 10px; background: var(--paper-2); border-radius: 8px; font-size: .92rem; }
   .checklist { padding: 0; }
   .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
   .vocab-grid div { background: #fff; border: 1.5px solid var(--graphite); border-radius: 8px; padding: 8px 10px; }
@@ -95,7 +98,11 @@
 </div>
 
 <script src="data/data.js"></script>
+<script src="data/explain.js"></script>
+<script src="data/explain-b1.js"></script>
 <script src="data/practice.js"></script>
+<script src="data/practice-extra.js"></script>
+<script src="data/practice-b1.js"></script>
 <script>
   const G = window.SEE;
   const P = window.SEE_PRACTICE;
@@ -115,6 +122,7 @@
         <b>${g.title}</b>
         <span class="stars">${"★".repeat(g.stars)}${"☆".repeat(3 - g.stars)}</span>
         <small>${g.note}</small>
+        ${(window.SEE_EXPLAIN || {})[g.id] ? `<details class="explain"><summary>توضیح کامل</summary><div class="explain-body">${(window.SEE_EXPLAIN[g.id]).replace(/</g, "&lt;")}</div></details>` : ""}
       </div>`).join("");
     const vs = (it.vocab || []).map((v) => {
       const hit = (P.vocab[it.level] || []).find((x) => x.es === v);
