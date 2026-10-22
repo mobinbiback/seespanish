@@ -1,0 +1,60 @@
+/*
+  واژگان گسترده‌ی B2 (۵۰ کلمه).
+  کلمه‌های قبلی هم نگه داشته شده‌اند.
+*/
+(function () {
+  const V = window.SEE_PRACTICE.vocab;
+
+  V.B2 = [
+    { es: "estrés", fa: "استرس", topic: "سلامت و کار", ex: "Tengo mucho estrés en el trabajo." },
+    { es: "teletrabajo", fa: "کار از راه دور", topic: "کار", ex: "El teletrabajo ahorra tiempo de viaje." },
+    { es: "límite", fa: "حد و مرز", topic: "قوانین", ex: "Hay que poner límites al uso del móvil." },
+    { es: "beneficio", fa: "سود / مزیت", topic: "اقتصاد", ex: "El proyecto trajo muchos beneficios." },
+    { es: "fomentar", fa: "تشویق کردن", topic: "جامعه", ex: "Hay que fomentar la lectura." },
+    { es: "contaminación", fa: "آلودگی", topic: "محیط زیست", ex: "La contaminación del aire es grave." },
+    { es: "opinar", fa: "نظر دادن", topic: "گفتگو", ex: "¿Qué opinas del nuevo plan?" },
+    { es: "convencer", fa: "قانع کردن", topic: "بحث", ex: "Intenté convencerla de la idea." },
+    { es: "sostenible", fa: "پایدار", topic: "محیط زیست", ex: "Necesitamos un modelo sostenible." },
+    { es: "desigualdad", fa: "نابرابری", topic: "جامعه", ex: "La desigualdad sigue siendo un problema." },
+    { es: "impuesto", fa: "مالیات", topic: "اقتصاد", ex: "Los impuestos subieron este año." },
+    { es: "subvención", fa: "یارانه / کمک مالی", topic: "اقتصاد", ex: "La empresa recibió una subvención." },
+    { es: "rendimiento", fa: "بازدهی / عملکرد", topic: "کار", ex: "Su rendimiento mejoró mucho." },
+    { es: "competencia", fa: "رقابت / شایستگی", topic: "کار", ex: "Hay mucha competencia en este sector." },
+    { es: "inflación", fa: "تورم", topic: "اقتصاد", ex: "La inflación afecta a los precios." },
+    { es: "crecimiento", fa: "رشد", topic: "اقتصاد", ex: "El crecimiento económico fue lento." },
+    { es: "desempleo", fa: "بیکاری", topic: "اقتصاد", ex: "El desempleo ha bajado este año." },
+    { es: "empleo", fa: "شغل / اشتغال", topic: "کار", ex: "Buscamos empleo para el verano." },
+    { es: "jubilación", fa: "بازنشستگی", topic: "کار", ex: "Se jubiló a los sesenta y cinco años." },
+    { es: "pensión", fa: "مستمری", topic: "اقتصاد", ex: "Cobra una pensión desde hace dos años." },
+    { es: "hipoteca", fa: "وام مسکن", topic: "خانه", ex: "Pagamos la hipoteca cada mes." },
+    { es: "sanidad", fa: "بهداشت عمومی", topic: "سلامت", ex: "La sanidad pública es gratuita en muchos países." },
+    { es: "prejuicio", fa: "پیش‌داوری", topic: "جامعه", ex: "Hay que superar los prejuicios." },
+    { es: "tolerancia", fa: "مدارا", topic: "جامعه", ex: "La tolerancia es clave en una sociedad diversa." },
+    { es: "discriminación", fa: "تبعیض", topic: "جامعه", ex: "Ninguna discriminación es aceptable." },
+    { es: "igualdad", fa: "برابری", topic: "جامعه", ex: "Luchamos por la igualdad de derechos." },
+    { es: "derecho", fa: "حق", topic: "قانون", ex: "Todos tenemos derecho a la educación." },
+    { es: "ley", fa: "قانون", topic: "قانون", ex: "La ley prohíbe fumar en los bares." },
+    { es: "votar", fa: "رأی دادن", topic: "سیاست", ex: "Voy a votar el domingo." },
+    { es: "gobierno", fa: "دولت", topic: "سیاست", ex: "El gobierno anunció nuevas medidas." },
+    { es: "protesta", fa: "اعتراض", topic: "سیاست", ex: "Hubo una protesta en el centro." },
+    { es: "noticia", fa: "خبر", topic: "رسانه", ex: "Hoy leí una noticia interesante." },
+    { es: "rumor", fa: "شایعه", topic: "رسانه", ex: "Es solo un rumor, no es verdad." },
+    { es: "fiable", fa: "قابل اعتماد", topic: "صفت", ex: "Es una fuente fiable." },
+    { es: "engañar", fa: "فریب دادن", topic: "رفتار", ex: "No quiero engañarte." },
+    { es: "mentira", fa: "دروغ", topic: "رفتار", ex: "Dijo una mentira para salir del problema." },
+    { es: "sinceridad", fa: "صداقت", topic: "رفتار", ex: "Aprecio su sinceridad." },
+    { es: "compromiso", fa: "تعهد", topic: "رفتار", ex: "Tenemos un compromiso con el cliente." },
+    { es: "responsabilidad", fa: "مسئولیت", topic: "رفتار", ex: "Cada uno tiene su responsabilidad." },
+    { es: "logro", fa: "دستاورد", topic: "موفقیت", ex: "Terminar la carrera fue un gran logro." },
+    { es: "ambición", fa: "جاه‌طلبی", topic: "شخصیت", ex: "Tiene mucha ambición profesional." },
+    { es: "adaptarse", fa: "سازگار شدن", topic: "فعل", ex: "Me costó adaptarme a la nueva ciudad." },
+    { es: "desarrollo", fa: "توسعه", topic: "اقتصاد", ex: "El desarrollo del país es lento." },
+    { es: "innovación", fa: "نوآوری", topic: "فناوری", ex: "La innovación cambia el mercado." },
+    { es: "tecnología", fa: "فناوری", topic: "فناوری", ex: "La tecnología avanza muy rápido." },
+    { es: "privacidad", fa: "حریم خصوصی", topic: "فناوری", ex: "Debemos proteger nuestra privacidad." },
+    { es: "red social", fa: "شبکه‌ی اجتماعی", topic: "فناوری", ex: "Paso mucho tiempo en las redes sociales." },
+    { es: "esperanza", fa: "امید", topic: "احساس", ex: "Tengo esperanza de que todo salga bien." },
+    { es: "miedo", fa: "ترس", topic: "احساس", ex: "Siento miedo a las alturas." },
+    { es: "vergüenza", fa: "شرم", topic: "احساس", ex: "Me dio vergüenza hablar en público." }
+  ];
+})();
