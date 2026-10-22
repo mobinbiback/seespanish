@@ -122,6 +122,9 @@
   }
   .stars { font-family: var(--head); font-size: 1.3rem; letter-spacing: 1px; white-space: nowrap; }
   .empty { color: var(--graphite-soft); margin: 10px 0; }
+  details.explain { margin-top: 8px; }
+  details.explain summary { cursor: pointer; font-family: var(--head); font-size: 1.25rem; border-bottom: 1.5px dashed var(--graphite); display: inline-block; }
+  .explain-body { white-space: pre-line; margin-top: 8px; padding: 10px 12px; background: var(--paper-2); border-radius: 8px; font-size: .95rem; }
   .navlink { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; }
 
   footer {
@@ -143,7 +146,7 @@
       <h1 class="logo">see<span>spanish</span></h1>
       <p class="tagline">اسپانیایی را از کتاب‌های واقعی، قدم‌به‌قدم و با اولویت بخوان.</p>
     </div>
-    <nav><a class="navlink" href="practice.html">تمرین امتحان</a> &nbsp; <a class="navlink" href="exams.html">امتحان‌ها</a></nav>
+    <nav><a class="navlink" href="memory.html">مرور واژگان</a> &nbsp; <a class="navlink" href="practice.html">تمرین امتحان</a> &nbsp; <a class="navlink" href="exams.html">امتحان‌ها</a></nav>
   </header>
 
   <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
@@ -166,6 +169,8 @@
 </div>
 
 <script src="data/data.js"></script>
+<script src="data/explain.js"></script>
+<script src="data/explain-b1.js"></script>
 <script>
   const SEE = window.SEE;
   const PROGRESS_KEY = "seespanish:progress:v2";
@@ -289,6 +294,18 @@
       ref.className = "topic-ref";
       ref.textContent = `${book.title} · ${it.refs[book.id]}`;
       body.append(t, n, ref);
+      const ex = (window.SEE_EXPLAIN || {})[it.id];
+      if (ex) {
+        const d = document.createElement("details");
+        d.className = "explain";
+        const sm = document.createElement("summary");
+        sm.textContent = "توضیح کامل";
+        const pre = document.createElement("div");
+        pre.className = "explain-body";
+        pre.textContent = ex;
+        d.append(sm, pre);
+        body.appendChild(d);
+      }
 
       const st = document.createElement("span");
       st.className = "stars";
