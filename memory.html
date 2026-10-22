@@ -41,6 +41,7 @@
   .word { font-family: var(--head); font-size: 3rem; font-weight: 700; margin: 6px 0; line-height: 1.1; }
   .meaning { font-size: 1.4rem; margin: 10px 0; min-height: 2.2em; }
   .topic { color: var(--graphite-soft); font-size: .92rem; }
+  .example { font-style: italic; color: var(--graphite-soft); margin: 4px 0 10px; }
   .btn {
     font-family: var(--head); font-size: 1.35rem; color: var(--graphite); background: var(--paper-2);
     border: 2px solid var(--graphite); padding: 2px 16px; cursor: pointer; margin: 6px 4px 0;
@@ -72,6 +73,7 @@
     <div class="word" id="word"></div>
     <button class="btn" id="speak" type="button">شنیدن تلفظ</button>
     <div class="meaning" id="meaning" hidden></div>
+    <p class="example" id="example" hidden></p>
     <button class="btn main" id="show" type="button">نشان بده</button>
     <div class="grades" id="grades">
       <button class="btn forgot" data-g="0" type="button">بلد نبودم</button>
@@ -86,6 +88,7 @@
 </div>
 
 <script src="data/practice.js"></script>
+<script src="data/vocab-more.js"></script>
 <script>
   const $ = (s) => document.querySelector(s);
   const KEY = "seespanish:memory:v1";
@@ -104,7 +107,7 @@
   // کارت‌ها را از فهرست واژگان همان سطح می‌سازیم؛ کلیدشان سطح + کلمه است
   function cardsFor(lvl) {
     return (window.SEE_PRACTICE.vocab[lvl] || []).map((v) => ({
-      key: lvl + "|" + v.es, es: v.es, fa: v.fa, topic: v.topic, level: lvl
+      key: lvl + "|" + v.es, es: v.es, fa: v.fa, topic: v.topic, ex: v.ex || "", level: lvl
     }));
   }
 
@@ -146,6 +149,8 @@
     $("#word").textContent = current.es;
     $("#meaning").textContent = current.fa;
     $("#meaning").hidden = true;
+    $("#example").textContent = current.ex;
+    $("#example").hidden = true;
     $("#grades").classList.remove("show");
     $("#show").hidden = false;
   }
@@ -167,6 +172,7 @@
 
   $("#show").addEventListener("click", () => {
     $("#meaning").hidden = false;
+    $("#example").hidden = !$("#example").textContent;
     $("#show").hidden = true;
     $("#grades").classList.add("show");
   });
