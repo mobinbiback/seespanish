@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2E2E33">
+<link rel="manifest" href="manifest.json">
+<title>seespanish · درک شنیداری</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root {
+    --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
+    --pencil: #F2C230; --ok: #CDE8C4; --bad: #F4C7C7; --line: #D6CEB4; --shadow: rgba(46,46,51,.18);
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--body); color: var(--graphite); background: var(--paper);
+    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
+    background-size: 100% 32px; background-attachment: fixed; line-height: 1.9; min-height: 100vh;
+  }
+  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 80px; }
+  header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 22px; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
+  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
+  .nav a { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-right: 14px; }
+  .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 20px; }
+  .levels button {
+    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
+    background: #fff; border: 2px solid var(--graphite); min-height: 44px;
+    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
+    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
+  }
+  .levels button[aria-pressed="true"] { background: var(--pencil); }
+  .card { background: #fff; border: 2px solid var(--graphite); border-radius: 14px 6px 16px 8px;
+    box-shadow: 6px 7px 0 var(--shadow); padding: 22px; margin-bottom: 18px; }
+  .btn {
+    font-family: var(--head); font-size: 1.35rem; color: var(--graphite); background: var(--paper-2);
+    border: 2px solid var(--graphite); padding: 2px 16px; min-height: 44px; cursor: pointer; margin: 6px 4px 6px 0;
+    border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; box-shadow: 3px 3px 0 var(--graphite);
+  }
+  .btn.main { background: var(--pencil); }
+  .q { font-weight: 800; margin: 14px 0 4px; }
+  .opts { list-style: none; padding: 0; margin: 0; }
+  .opts li { margin: 6px 0; }
+  .opts label { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; }
+  .opts span { direction: ltr; text-align: left; }
+  .text { direction: ltr; text-align: left; background: var(--paper-2); border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+  .result { margin-top: 12px; padding: 12px 14px; border-radius: 10px; border: 2px dashed var(--graphite); }
+  .result.ok { background: var(--ok); }
+  .result.bad { background: var(--bad); }
+  .muted { color: var(--graphite-soft); font-size: .95rem; text-align: center; }
+  .score { text-align: center; color: var(--graphite-soft); font-size: .95rem; }
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 6px;
+    background: #fff; border-top: 2px solid var(--graphite); padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); z-index: 50; }
+  .tabbar a { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); text-decoration: none; padding: 6px 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
+  .tabbar a[aria-current="page"] { background: var(--pencil); border: 2px solid var(--graphite); }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 84px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo">see<span>spanish</span></h1>
+    <nav class="nav"><a href="index.html">خانه</a><a href="dictation.html">دیکته</a></nav>
+  </header>
+
+  <p class="muted">متن را گوش کن، به سؤال‌ها جواب بده، بعد متن و توضیح را ببین.</p>
+  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
+
+  <div class="card" id="card"></div>
+  <p class="score" id="score"></p>
+
+  <nav class="tabbar" aria-label="منوی پایین"><a href="index.html">خانه</a><a href="memory.html">مرور</a><a href="practice.html">تمرین</a><a href="listening.html" aria-current="page">شنیداری</a></nav>
+</div>
+
+<script src="data/listening.js"></script>
+<script>
+  const $ = (s) => document.querySelector(s);
+  const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  let level = "A1";
+  let current = null;
+  let right = 0, total = 0;
+
+  function speak(text, rate) {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "es-ES";
+    u.rate = rate;
+    window.speechSynthesis.speak(u);
+  }
+
+  function renderLevels() {
+    const ul = $("#levels");
+    ul.innerHTML = "";
+    LEVELS.forEach((lvl) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = lvl;
+      b.setAttribute("aria-pressed", String(lvl === level));
+      b.addEventListener("click", () => { level = lvl; renderLevels(); render(); });
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  function render() {
+    const list = window.SEE_LISTEN.filter((x) => x.level === level);
+    if (!current || current.level !== level) current = list[Math.floor(Math.random() * list.length)] || null;
+    const item = current;
+    const card = $("#card");
+    card.innerHTML = "";
+    $("#score").textContent = total ? `درست: ${right} از ${total}` : "";
+    if (!item) {
+      card.innerHTML = `<p class="muted">برای این سطح هنوز متن شنیداری نداریم.</p>`;
+      return;
+    }
+
+    const play = document.createElement("button");
+    play.className = "btn main"; play.type = "button"; play.textContent = "پخش متن";
+    play.addEventListener("click", () => speak(item.text, 0.9));
+    const slow = document.createElement("button");
+    slow.className = "btn"; slow.type = "button"; slow.textContent = "پخش آهسته";
+    slow.addEventListener("click", () => speak(item.text, 0.6));
+    card.append(play, slow);
+
+    const form = document.createElement("form");
+    item.questions.forEach((qq, qi) => {
+      const p = document.createElement("p");
+      p.className = "q";
+      p.textContent = `${qi + 1}. ${qq.q}`;
+      form.appendChild(p);
+      const ul = document.createElement("ul");
+      ul.className = "opts";
+      qq.options.forEach((opt, oi) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<label><input type="radio" name="q${qi}" value="${oi}"> <span>${opt}</span></label>`;
+        ul.appendChild(li);
+      });
+      form.appendChild(ul);
+    });
+    card.appendChild(form);
+
+    const check = document.createElement("button");
+    check.className = "btn main"; check.type = "button"; check.textContent = "بررسی جواب‌ها";
+    const out = document.createElement("div");
+    check.addEventListener("click", () => {
+      const answers = item.questions.map((_, qi) => {
+        const sel = form.querySelector(`input[name="q${qi}"]:checked`);
+        return sel ? Number(sel.value) : null;
+      });
+      if (answers.some((a) => a === null)) {
+        out.innerHTML = `<p class="muted">به همه‌ی سؤال‌ها جواب بده.</p>`;
+        return;
+      }
+      const hits = item.questions.filter((qq, qi) => answers[qi] === qq.answer).length;
+      total += item.questions.length;
+      right += hits;
+      $("#score").textContent = `درست: ${right} از ${total}`;
+      const ok = hits === item.questions.length;
+      out.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "result " + (ok ? "ok" : "bad");
+      const h = document.createElement("p");
+      h.textContent = `${hits} از ${item.questions.length} درست`;
+      const t = document.createElement("p");
+      t.className = "text";
+      t.textContent = item.text;
+      t.dir = "ltr";
+      const n = document.createElement("p");
+      n.dir = "auto";
+      n.textContent = item.note;
+      box.append(h, t, n);
+      out.appendChild(box);
+      check.disabled = true;
+    });
+    const nxt = document.createElement("button");
+    nxt.className = "btn"; nxt.type = "button"; nxt.textContent = "متن بعدی";
+    nxt.addEventListener("click", () => { current = null; render(); });
+    card.append(check, nxt, out);
+  }
+
+  renderLevels();
+  render();
+</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
