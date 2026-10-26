@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2E2E33">
+<link rel="manifest" href="manifest.json">
 <title>seespanish · تمرین امتحان</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root {
     --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
     --pencil: #F2C230; --ok: #CDE8C4; --bad: #F4C7C7; --line: #D6CEB4; --shadow: rgba(46,46,51,.18);
-    --head: "Caveat", "Vazirmatn", cursive; --body: "Vazirmatn", system-ui, sans-serif;
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -23,7 +26,7 @@
   .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 80px; }
   header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
     border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 22px; }
-  .logo { font-family: var(--head); font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
   .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
   .nav a { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-right: 14px; }
   .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 20px; }
@@ -75,6 +78,11 @@
   h2 { font-family: var(--head); font-size: 2rem; margin: 26px 0 8px; }
   footer { margin-top: 30px; font-size: .9rem; color: var(--graphite-soft); text-align: center; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 6px;
+    background: #fff; border-top: 2px solid var(--graphite); padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); z-index: 50; }
+  .tabbar a { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); text-decoration: none; padding: 6px 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
+  .tabbar a[aria-current="page"] { background: var(--pencil); border: 2px solid var(--graphite); }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 84px; } }
 </style>
 </head>
 <body>
@@ -82,7 +90,7 @@
 
   <header>
     <h1 class="logo">see<span>spanish</span></h1>
-    <nav class="nav"><a href="index.html">گرامرها</a><a href="memory.html">مرور واژگان</a><a href="exams.html">امتحان‌ها</a></nav>
+    <nav class="nav"><a href="index.html">گرامرها</a><a href="dictation.html">دیکته</a><a href="memory.html">مرور واژگان</a><a href="exams.html">امتحان‌ها</a></nav>
   </header>
 
   <p class="muted">سؤال‌ها به سبک DELE و SIELE نوشته شده‌اند ولی سؤال رسمی نیستند. بعد از هر جواب، تحلیل و گرامر و واژه‌های مرتبط را می‌بینی.</p>
@@ -101,13 +109,19 @@
 <script src="data/explain.js"></script>
 <script src="data/explain-b1.js"></script>
 <script src="data/explain-b2.js"></script>
+<script src="data/explain-c1.js"></script>
+<script src="data/explain-c2.js"></script>
 <script src="data/practice.js"></script>
 <script src="data/practice-extra.js"></script>
 <script src="data/practice-b1.js"></script>
 <script src="data/practice-b2.js"></script>
+<script src="data/practice-more.js"></script>
+<script src="data/progress.js"></script>
 <script src="data/vocab-more.js"></script>
 <script src="data/vocab-b1.js"></script>
 <script src="data/vocab-b2.js"></script>
+<script src="data/vocab-c1.js"></script>
+<script src="data/vocab-c2.js"></script>
 <script>
   const G = window.SEE;
   const P = window.SEE_PRACTICE;
@@ -124,14 +138,14 @@
   function studyBlock(it) {
     const gs = (it.grammar || []).map(grammarById).filter(Boolean).map((g) => `
       <div class="gcard">
-        <b>${g.title}</b>
+        <b dir="auto">${g.title}</b>
         <span class="stars">${"★".repeat(g.stars)}${"☆".repeat(3 - g.stars)}</span>
         <small>${g.note}</small>
         ${(window.SEE_EXPLAIN || {})[g.id] ? `<details class="explain"><summary>توضیح کامل</summary><div class="explain-body">${(window.SEE_EXPLAIN[g.id]).replace(/</g, "&lt;")}</div></details>` : ""}
       </div>`).join("");
     const vs = (it.vocab || []).map((v) => {
       const hit = (P.vocab[it.level] || []).find((x) => x.es === v);
-      return `<span class="chip">${v}${hit ? " · " + hit.fa : ""}</span>`;
+      return `<span class="chip"><span dir="ltr">${v}</span>${hit ? " · " + hit.fa : ""}</span>`;
     }).join("");
     return `
       <div class="study">
@@ -160,12 +174,18 @@
   function renderItems() {
     const box = $("#items");
     box.innerHTML = "";
-    P.items.filter((i) => i.level === current).forEach((it) => {
+    const weakOnly = new URLSearchParams(location.search).get("weak") === "1";
+    const weak = window.SEE_PROGRESS.weakIds();
+    const list = weakOnly
+      ? P.items.filter((i) => weak.includes(i.id))
+      : P.items.filter((i) => i.level === current);
+    if (weakOnly && !list.length) box.innerHTML = `<p class="muted">نقطه‌ضعفی ثبت نشده است. اول چند تمرین را حل کن.</p>`;
+    list.forEach((it) => {
       const card = document.createElement("div");
       card.className = "card";
       card.innerHTML = `<span class="badge">${it.level} · ${it.skill}</span>
-        <div class="prompt">${it.prompt}</div>
-        <div class="question">${it.question || ""}</div>
+        <div class="prompt" dir="ltr">${it.prompt}</div>
+        <div class="question" dir="ltr">${it.question || ""}</div>
         <div class="body"></div>
         <div class="feedback"></div>`;
       box.appendChild(card);
@@ -177,7 +197,7 @@
         ul.className = "opts";
         it.options.forEach((opt, idx) => {
           const li = document.createElement("li");
-          li.innerHTML = `<label><input type="radio" name="${it.id}" value="${idx}"> ${opt}</label>`;
+          li.innerHTML = `<label><input type="radio" name="${it.id}" value="${idx}"> <span dir="ltr">${opt}</span></label>`;
           ul.appendChild(li);
         });
         body.appendChild(ul);
@@ -187,6 +207,7 @@
           const sel = card.querySelector(`input[name="${it.id}"]:checked`);
           if (!sel) { fb.innerHTML = `<p class="muted">اول یک گزینه را انتخاب کن.</p>`; return; }
           const ok = Number(sel.value) === it.answer;
+          window.SEE_PROGRESS.recordAnswer(it.id, ok);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
             <h4>${ok ? "درست است" : "پاسخ درست: " + it.options[it.answer]}</h4>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
@@ -194,12 +215,13 @@
         body.appendChild(btn);
       } else if (it.type === "fill") {
         const input = document.createElement("input");
-        input.type = "text"; input.placeholder = "جواب را بنویس";
+        input.type = "text"; input.placeholder = "جواب را بنویس"; input.dir = "ltr";
         body.appendChild(input);
         const btn = document.createElement("button");
         btn.className = "act"; btn.type = "button"; btn.textContent = "بررسی جواب";
         btn.addEventListener("click", () => {
           const ok = it.accept.map(norm).includes(norm(input.value));
+          window.SEE_PROGRESS.recordAnswer(it.id, ok);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
             <h4>${ok ? "درست است" : "پاسخ درست: " + it.answer}</h4>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
@@ -207,6 +229,7 @@
         body.appendChild(btn);
       } else if (it.type === "writing") {
         const ta = document.createElement("textarea");
+        ta.dir = "ltr";
         const cnt = document.createElement("p");
         cnt.className = "count";
         const words = () => (ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0);
@@ -230,6 +253,7 @@
           const checked = body.querySelectorAll("input[type=checkbox]:checked").length;
           const inRange = n >= it.minWords && n <= it.maxWords;
           const ok = inRange && checked === it.checklist.length;
+          window.SEE_PROGRESS.recordAnswer(it.id, ok);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
             <h4>${ok ? "متن کامل است" : "هنوز کامل نیست"}</h4>
             <p>${inRange ? "طول متن مناسب است." : "طول متن باید بین " + it.minWords + " و " + it.maxWords + " کلمه باشد. الان " + n + " کلمه داری."}
@@ -251,5 +275,7 @@
   renderItems();
   renderVocab();
 </script>
+<nav class="tabbar" aria-label="منوی پایین"><a href="index.html">خانه</a><a href="memory.html">مرور</a><a href="practice.html" aria-current="page">تمرین</a><a href="exams.html">امتحان</a></nav>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
 </body>
 </html>

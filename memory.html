@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2E2E33">
+<link rel="manifest" href="manifest.json">
 <title>seespanish · مرور واژگان</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root {
     --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
     --pencil: #F2C230; --ok: #CDE8C4; --bad: #F4C7C7; --line: #D6CEB4; --shadow: rgba(46,46,51,.18);
-    --head: "Caveat", "Vazirmatn", cursive; --body: "Vazirmatn", system-ui, sans-serif;
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -23,7 +26,7 @@
   .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 80px; }
   header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
     border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 22px; }
-  .logo { font-family: var(--head); font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
   .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
   .nav a { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-right: 14px; }
   .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 20px; }
@@ -34,6 +37,7 @@
     padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
   }
   .levels button[aria-pressed="true"] { background: var(--pencil); }
+  .btn { min-height: 44px; }
   .card {
     background: #fff; border: 2px solid var(--graphite); border-radius: 14px 6px 16px 8px;
     box-shadow: 6px 7px 0 var(--shadow); padding: 26px 22px; text-align: center; margin-bottom: 18px;
@@ -42,6 +46,11 @@
   .meaning { font-size: 1.4rem; margin: 10px 0; min-height: 2.2em; }
   .topic { color: var(--graphite-soft); font-size: .92rem; }
   .example { font-style: italic; color: var(--graphite-soft); margin: 4px 0 10px; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+  #card.pop { animation: pop .3s ease; }
+  #meaning:not([hidden]), #example:not([hidden]) { animation: reveal .35s ease; }
+  .hint { font-size: .85rem; color: var(--graphite-soft); margin-top: 10px; }
   .btn {
     font-family: var(--head); font-size: 1.35rem; color: var(--graphite); background: var(--paper-2);
     border: 2px solid var(--graphite); padding: 2px 16px; cursor: pointer; margin: 6px 4px 0;
@@ -57,6 +66,11 @@
   .stat { text-align: center; color: var(--graphite-soft); font-size: .95rem; margin-top: 8px; }
   footer { margin-top: 30px; font-size: .9rem; color: var(--graphite-soft); text-align: center; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 6px;
+    background: #fff; border-top: 2px solid var(--graphite); padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); z-index: 50; }
+  .tabbar a { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); text-decoration: none; padding: 6px 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
+  .tabbar a[aria-current="page"] { background: var(--pencil); border: 2px solid var(--graphite); }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 84px; } }
 </style>
 </head>
 <body>
@@ -70,10 +84,10 @@
 
   <div class="card" id="card">
     <p class="topic" id="topic"></p>
-    <div class="word" id="word"></div>
+    <div class="word" id="word" dir="ltr"></div>
     <button class="btn" id="speak" type="button">شنیدن تلفظ</button>
     <div class="meaning" id="meaning" hidden></div>
-    <p class="example" id="example" hidden></p>
+    <p class="example" id="example" dir="ltr" hidden></p>
     <button class="btn main" id="show" type="button">نشان بده</button>
     <div class="grades" id="grades">
       <button class="btn forgot" data-g="0" type="button">بلد نبودم</button>
@@ -91,6 +105,8 @@
 <script src="data/vocab-more.js"></script>
 <script src="data/vocab-b1.js"></script>
 <script src="data/vocab-b2.js"></script>
+<script src="data/vocab-c1.js"></script>
+<script src="data/vocab-c2.js"></script>
 <script>
   const $ = (s) => document.querySelector(s);
   const KEY = "seespanish:memory:v1";
@@ -142,6 +158,10 @@
 
   function showCard() {
     const has = !!queue.length;
+    const cardEl = $("#card");
+    cardEl.classList.remove("pop");
+    void cardEl.offsetWidth;
+    cardEl.classList.add("pop");
     $("#empty").hidden = has;
     $("#card").hidden = !has;
     $("#stat").textContent = has ? `${queue.length} کارت باقی‌مانده برای امروز` : "";
@@ -190,9 +210,20 @@
     });
   });
 
+  // میان‌بُرهای صفحه‌کلید: فاصله = نشان بده، ۰ / ۱ / ۲ = بلد نبودم / سخت / بلد بودم
+  document.addEventListener("keydown", (e) => {
+    if (!current) return;
+    if (e.code === "Space" && !$("#show").hidden) { e.preventDefault(); $("#show").click(); return; }
+    const map = { "Digit0": 0, "Digit1": 1, "Digit2": 2 };
+    if (e.code in map && !$("#grades").classList.contains("show")) return;
+    if (e.code in map) document.querySelector(`#grades button[data-g="${map[e.code]}"]`).click();
+  });
+
   renderLevels();
   buildQueue();
   showCard();
 </script>
+<nav class="tabbar" aria-label="منوی پایین"><a href="index.html">خانه</a><a href="memory.html" aria-current="page">مرور</a><a href="practice.html">تمرین</a><a href="exams.html">امتحان</a></nav>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
 </body>
 </html>
