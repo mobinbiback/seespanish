@@ -1,6 +1,7 @@
 /*
   توضیح کامل گرامر B2، با کلید برابر با id در data.js.
 */
+window.SEE_EXPLAIN = window.SEE_EXPLAIN || {};
 Object.assign(window.SEE_EXPLAIN, {
   "b2-pretérito-perfecto-subj": "pretérito perfecto de subjuntivo = haya/hayas/haya/hayamos/hayáis/hayan + participio. برای کاری که قبل از زمان اصلی تمام شده و بعد از عبارت‌های احساس، شک یا امید می‌آید.\nمثال: Me alegro de que hayas llegado bien. Espero que hayan terminado el informe.\nاشتباه رایج: استفاده از indicativo بعد از عبارت احساس، مثل «Me alegro de que has llegado».",
 

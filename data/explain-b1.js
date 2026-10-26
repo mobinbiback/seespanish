@@ -1,6 +1,7 @@
 /*
   توضیح کامل گرامر B1، با کلید برابر با id در data.js.
 */
+window.SEE_EXPLAIN = window.SEE_EXPLAIN || {};
 Object.assign(window.SEE_EXPLAIN, {
   "b1-subjuntivo-deseos": "subjuntivo بعد از عبارت‌های خواسته، امید و احساس می‌آید، وقتی فاعل جمله‌ی دوم با فاعل اول فرق دارد: Quiero que vengas.\nبرای ساخت، از صیغه‌ی yo زمان حال استفاده می‌کنی و پایان‌ها را برعکس می‌کنی (hablar → hable، comer → coma).\nعبارت‌های رایج: espero que، quiero que، es importante que، ojalá (ojalá + subjuntivo یعنی «کاش»).\nمثال: Espero que llegues pronto. Ojalá llueva mañana.\nاشتباه رایج: «Espero que vienes» به‌جای «Espero que vengas».",
 
