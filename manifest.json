@@ -1,0 +1,15 @@
+{
+  "name": "seespanish",
+  "short_name": "seespanish",
+  "description": "یادگیری اسپانیایی از کتاب‌های واقعی، با تمرین و مرور",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F7F3E8",
+  "theme_color": "#2E2E33",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
