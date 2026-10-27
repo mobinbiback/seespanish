@@ -159,6 +159,14 @@
       </div>`;
   }
 
+  function lvlOpen(l) {
+    if (!(window.SEE_PROGRESS && typeof window.SEE_PROGRESS.levelOpen === "function")) return true;
+    return window.SEE_PROGRESS.levelOpen(l);
+  }
+  function lvlLockMsg(l) {
+    if (window.SEE_PROGRESS && typeof window.SEE_PROGRESS.lockMessage === "function") return window.SEE_PROGRESS.lockMessage(l);
+    return "";
+  }
   function renderLevels() {
     const ul = $("#levels");
     ul.innerHTML = "";
@@ -169,7 +177,7 @@
       b.textContent = lvl;
       b.setAttribute("aria-pressed", String(lvl === current));
       b.addEventListener("click", () => {
-        if (!window.SEE_PROGRESS.levelOpen(lvl)) { window.alert(window.SEE_PROGRESS.lockMessage(lvl)); return; }
+        if (!lvlOpen(lvl)) { window.alert(lvlLockMsg(lvl)); return; }
         current = lvl; renderLevels(); renderItems(); renderVocab();
       });
       li.appendChild(b);

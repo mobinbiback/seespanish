@@ -82,6 +82,7 @@
     content: ""; position: absolute; top: -10px; left: 50%; width: 64px; height: 20px;
     margin-left: -32px; background: var(--sky); opacity: .75; transform: rotate(-3deg); border-radius: 2px;
   }
+  .section-title { font-family: var(--head); font-size: 1.5rem; margin: 22px 0 10px; }
   .book-title { font-family: var(--head); font-size: 1.8rem; font-weight: 700; line-height: 1.1; margin: 6px 0 4px; }
   .book-meta { font-size: .85rem; color: var(--graphite-soft); margin: 0; }
   .book-progress { height: 8px; margin-top: 12px; border: 1.5px solid var(--graphite); border-radius: 999px; background: var(--paper-2); overflow: hidden; }
@@ -201,6 +202,9 @@
     <ul class="results" id="results"></ul>
   </div>
 
+  <h2 class="section-title">کتاب‌های این سطح</h2>
+  <ul class="books" id="books"></ul>
+
   <section class="today" id="today" aria-label="برنامه‌ی امروز"></section>
 
   <section class="path-wrap" aria-label="مسیر درس">
@@ -210,7 +214,6 @@
     <div class="pathdetail" id="pathDetail" hidden></div>
   </section>
 
-  <ul class="books" id="books"></ul>
 
   <section class="panel" id="panel" hidden aria-live="polite">
     <button class="back" id="back" type="button">← برگشت به کتاب‌ها</button>
@@ -242,6 +245,7 @@
 <script src="data/vocab-c1.js"></script>
 <script src="data/vocab-c2.js"></script>
 <script src="data/practice-more.js"></script>
+<script src="data/practice-expand.js"></script>
 <script>
   const SEE = window.SEE;
   const PROGRESS_KEY = "seespanish:progress:v2";
@@ -258,6 +262,14 @@
     catch { /* حافظه‌ی مرورگر در دسترس نیست؛ پیشرفت ذخیره نمی‌شود */ }
   }
 
+  function lvlOpen(l) {
+    if (!(window.SEE_PROGRESS && typeof window.SEE_PROGRESS.levelOpen === "function")) return true;
+    return window.SEE_PROGRESS.levelOpen(l);
+  }
+  function lvlLockMsg(l) {
+    if (window.SEE_PROGRESS && typeof window.SEE_PROGRESS.lockMessage === "function") return window.SEE_PROGRESS.lockMessage(l);
+    return "";
+  }
   function renderLevels() {
     const ul = $("#levels");
     ul.innerHTML = "";
@@ -265,13 +277,13 @@
       const li = document.createElement("li");
       const b = document.createElement("button");
       b.type = "button";
-      b.textContent = window.SEE_PROGRESS.levelOpen(lvl) ? lvl : lvl + " 🔒";
+      b.textContent = lvlOpen(lvl) ? lvl : lvl + " 🔒";
       if (SEE.status[lvl] !== "ready") b.classList.add("pending");
       b.setAttribute("aria-pressed", String(lvl === currentLevel));
       b.addEventListener("click", () => {
-        if (!window.SEE_PROGRESS.levelOpen(lvl)) {
+        if (!lvlOpen(lvl)) {
           const n = document.getElementById("notice");
-          if (n) n.textContent = window.SEE_PROGRESS.lockMessage(lvl);
+          if (n) n.textContent = lvlLockMsg(lvl);
           return;
         }
         currentLevel = lvl;
@@ -324,9 +336,12 @@
         btn.className = "book";
         const pct = progressFor(book.id, currentLevel);
         btn.innerHTML = `
-          <p class="book-title" dir="ltr"></p>
-          <p class="book-meta"></p>
-          <div class="book-progress" role="img" aria-label="پیشرفت ${pct}٪"><i style="width:${pct}%"></i></div>`;
+          <img class="cover" src="covers/${book.id}.svg" alt="" width="84" height="118" loading="lazy">
+          <span class="book-text">
+          <span class="book-title" dir="ltr" style="display:block"></span>
+          <span class="book-meta" style="display:block"></span>
+          <span class="book-progress" role="img" aria-label="پیشرفت ${pct}٪" style="display:block"><i style="width:${pct}%"></i></span>
+          </span>`;
         btn.querySelector(".book-title").textContent = book.title;
         btn.querySelector(".book-meta").textContent = book.note || `سطح ${currentLevel}`;
         btn.addEventListener("click", () => openBook(book));
