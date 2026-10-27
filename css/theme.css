@@ -276,7 +276,7 @@ h1, h2, h3 { letter-spacing: 0; }
   background: radial-gradient(3.5ch 100% at 50% 50%,
       var(--graphite) 20%,
       color-mix(in srgb, var(--graphite) 14%, transparent) 75%
-    ) 0 0 / 300% 100% !important;
+    ) 0 0 / 300% 100%;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
