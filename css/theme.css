@@ -260,3 +260,80 @@ h1, h2, h3 { letter-spacing: 0; }
 }
 
 ::selection { background: var(--pencil); color: var(--accent-ink); }
+
+/* ==========================================================
+   اصلاحات بعد از بررسی روی موبایل
+   ========================================================== */
+
+/* ---- لوگو: افکت Spotlight (نور که روی حروف حرکت می‌کند) ---- */
+:root { --ink: currentColor; --ink-2: #FF4FD8; --ink-3: #4FF8FF; }
+
+.logo span.fx-spotlight {
+  font: 800 2.1rem/1.2 "JetBrains Mono", "Nunito", ui-monospace, monospace !important;
+  letter-spacing: .04em;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: radial-gradient(3.5ch 100% at 50% 50%,
+      var(--graphite) 20%,
+      color-mix(in srgb, var(--graphite) 14%, transparent) 75%
+    ) 0 0 / 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  animation: fx-spotlight 3.4s ease-in-out infinite alternate;
+}
+@keyframes fx-spotlight {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo span.fx-spotlight { animation: none; }
+}
+
+/* ---- هدر: لوگو و دکمه‌ی حالت کنار هم بمانند ---- */
+header { flex-wrap: nowrap !important; }
+header > div:first-child { flex: 1 1 auto; min-width: 0; }
+header > .theme-toggle { margin-inline-start: auto; }
+
+/* ---- سطح‌ها: اندازه‌ی مناسب و بدون نشانه‌ی نقطه ---- */
+.levels { gap: 8px !important; }
+.levels button {
+  font-size: 1.15rem !important;
+  padding: 4px 16px !important;
+  min-height: 40px !important;
+}
+.levels button.pending::after { content: none !important; }
+
+/* ---- اطلاعیه: متن در حالت تیره دیده شود ---- */
+.notice {
+  background: var(--surface) !important;
+  color: var(--graphite) !important;
+  border: 1px dashed var(--line) !important;
+  border-radius: 14px !important;
+}
+
+/* ---- برنامه‌ی امروز: تیتر کوچک‌تر و فهرست مرتب ---- */
+.today h2 { font-size: 1.35rem !important; }
+.today ul { list-style: none !important; padding: 0 !important; }
+.today li {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 6px 10px !important;
+  padding: 8px 0 !important;
+  border-bottom: 1px dashed var(--line);
+}
+.today li:last-child { border-bottom: 0; }
+.today .go {
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  padding: 4px 12px !important;
+  background: var(--paper-2) !important;
+  color: var(--graphite) !important;
+  margin: 0 !important;
+  font-size: .95rem !important;
+}
+
+/* ---- دکمه‌ها: اندازه‌ی یکنواخت ---- */
+.btn, .act, .theme-toggle, .tabs button { min-height: 42px; }
+.btn { font-size: 1.1rem !important; padding: 4px 18px !important; }
