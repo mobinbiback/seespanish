@@ -100,5 +100,30 @@
     };
   }
 
-  window.SEE_PROGRESS = { recordAnswer, weakIds, levelProgress, dailyPlan, DAY };
+  // ---------- قفل سطح‌ها با آزمون ----------
+  const PASS_KEY = "seespanish:passed:v1";
+  const LEVEL_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+  function passedLevels() {
+    return read(PASS_KEY);
+  }
+  function setLevelPassed(level) {
+    const p = read(PASS_KEY);
+    p[level] = true;
+    write(PASS_KEY, p);
+  }
+  // سطح A1 همیشه باز است؛ هر سطح دیگر وقتی باز می‌شود که آزمون سطح قبلی پاس شده باشد
+  function levelOpen(level) {
+    const i = LEVEL_ORDER.indexOf(level);
+    if (i <= 0) return true;
+    return !!passedLevels()[LEVEL_ORDER[i - 1]];
+  }
+  function lockMessage(level) {
+    const i = LEVEL_ORDER.indexOf(level);
+    const prev = LEVEL_ORDER[i - 1];
+    return `سطح ${level} قفل است. اول آزمون سطح ${prev} را با حداقل ۷۰٪ درست پاس کن.`;
+  }
+
+  window.SEE_PROGRESS = { recordAnswer, weakIds, levelProgress, dailyPlan, DAY,
+    passedLevels, setLevelPassed, levelOpen, lockMessage, LEVEL_ORDER, PASS_KEY, STATS_KEY, PROGRESS_KEY, MEMORY_KEY };
 })();
