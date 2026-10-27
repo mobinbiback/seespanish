@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2E2E33">
+<link rel="manifest" href="manifest.json">
+<title>seespanish · اسپانیایی از کتاب‌های واقعی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root {
+    --paper: #F7F3E8;
+    --paper-2: #EFE9D6;
+    --graphite: #2E2E33;
+    --graphite-soft: #6B6B73;
+    --pencil: #F2C230;
+    --eraser: #E9A3A3;
+    --sky: #9CC3E0;
+    --line: #D6CEB4;
+    --shadow: rgba(46, 46, 51, .18);
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+    --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--body);
+    color: var(--graphite);
+    background-color: var(--paper);
+    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
+    background-size: 100% 32px;
+    background-attachment: fixed;
+    line-height: 1.9;
+    min-height: 100vh;
+  }
+  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    padding-bottom: 12px; border-bottom: 2px solid var(--graphite); margin-bottom: 26px;
+  }
+  .logo { font-family: "Caveat", cursive; font-size: 3.2rem; font-weight: 700; line-height: 1; margin: 0; }
+  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
+  .tagline { font-size: .95rem; color: var(--graphite-soft); margin: 0; }
+
+  .levels { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; padding: 0; list-style: none; }
+  .levels button {
+    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
+    background: #fff; border: 2px solid var(--graphite);
+    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
+    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .levels button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--graphite); }
+  .levels button[aria-pressed="true"] { background: var(--pencil); }
+  .levels button.pending::after { content: " ·"; color: var(--graphite-soft); }
+
+  .notice {
+    font-size: .92rem; background: #fff; border: 2px dashed var(--graphite);
+    border-radius: 10px 4px 12px 6px; padding: 10px 14px; margin: 0 0 22px;
+  }
+
+  .books {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 22px; margin: 0 0 34px; padding: 0; list-style: none;
+  }
+  .book {
+    position: relative; background: #fff; border: 2px solid var(--graphite);
+    border-radius: 6px 14px 8px 12px; padding: 18px 18px 14px; text-align: right;
+    cursor: pointer; box-shadow: 4px 5px 0 var(--shadow); color: var(--graphite);
+    font: inherit; width: 100%; transition: transform .2s ease;
+  }
+  .book:nth-child(odd) { transform: rotate(-.8deg); }
+  .book:nth-child(even) { transform: rotate(.7deg); }
+  .book:hover { transform: rotate(0deg) translateY(-3px); }
+  .book::before {
+    content: ""; position: absolute; top: -10px; left: 50%; width: 64px; height: 20px;
+    margin-left: -32px; background: var(--sky); opacity: .75; transform: rotate(-3deg); border-radius: 2px;
+  }
+  .book-title { font-family: var(--head); font-size: 1.8rem; font-weight: 700; line-height: 1.1; margin: 6px 0 4px; }
+  .book-meta { font-size: .85rem; color: var(--graphite-soft); margin: 0; }
+  .book-progress { height: 8px; margin-top: 12px; border: 1.5px solid var(--graphite); border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .book-progress i { display: block; height: 100%; background: repeating-linear-gradient(45deg, var(--pencil) 0 6px, #f7d766 6px 12px); width: 0; transition: width .4s ease; }
+
+  .panel {
+    background: #fff; border: 2px solid var(--graphite); border-radius: 14px 6px 16px 8px;
+    padding: 26px 26px 20px; box-shadow: 6px 7px 0 var(--shadow);
+  }
+  .panel[hidden] { display: none; }
+  .panel h2 { font-family: var(--head); font-size: 2.4rem; font-weight: 700; margin: 0 0 4px; line-height: 1.1; }
+  .panel .sub { color: var(--graphite-soft); margin: 0 0 18px; font-size: .95rem; }
+  .back {
+    font: inherit; font-size: .9rem; background: none; border: 0;
+    border-bottom: 2px dashed var(--graphite); color: var(--graphite);
+    padding: 0 0 2px; cursor: pointer; margin-bottom: 14px;
+  }
+
+  .topics { list-style: none; padding: 0; margin: 0; }
+  .topics li {
+    display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: start;
+    padding: 12px 0; border-bottom: 1px dashed var(--line);
+  }
+  .topics li:last-child { border-bottom: 0; }
+  .topics input[type="checkbox"] {
+    appearance: none; width: 22px; height: 22px; margin-top: 4px;
+    border: 2px solid var(--graphite); border-radius: 4px 2px 5px 3px;
+    background: #fff; cursor: pointer; position: relative;
+  }
+  .topics input[type="checkbox"]:checked { background: var(--pencil); }
+  .topics input[type="checkbox"]:checked::after {
+    content: ""; position: absolute; left: 6px; top: 0; width: 6px; height: 12px;
+    border: solid var(--graphite); border-width: 0 3px 3px 0; transform: rotate(45deg);
+  }
+  .topic-title { font-weight: 800; margin: 0; }
+  .topic-note { margin: 2px 0 0; color: var(--graphite-soft); font-size: .92rem; }
+  .topic-ref {
+    display: inline-block; margin-top: 6px; font-family: var(--head); font-size: 1.1rem;
+    background: var(--paper-2); border: 1.5px solid var(--graphite); padding: 0 10px;
+    border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px;
+  }
+  .stars { font-family: var(--head); font-size: 1.3rem; letter-spacing: 1px; white-space: nowrap; }
+  .empty { color: var(--graphite-soft); margin: 10px 0; }
+  .path-wrap h2 { font-family: var(--head); font-size: 1.8rem; margin: 0 0 4px; }
+  .path { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 12px 0 18px; }
+  .node { position: relative; width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--graphite);
+    background: #fff; color: var(--graphite); font: inherit; font-weight: 800; font-size: 1.2rem; cursor: pointer;
+    box-shadow: 3px 4px 0 var(--shadow); transition: transform .2s ease; }
+  .node:nth-child(odd) { margin-left: -70px; }
+  .node:nth-child(even) { margin-left: 70px; }
+  .node:not(:first-child)::before { content: ""; position: absolute; top: -22px; left: 50%; width: 3px; height: 22px;
+    background: var(--graphite); transform: translateX(-50%); }
+  .node.done { background: var(--ok); }
+  .node.current { background: var(--pencil); transform: scale(1.12); }
+  .node.locked { background: var(--paper-2); color: var(--graphite-soft); border-style: dashed; }
+  .node:hover { transform: translateY(-2px); }
+  .pathdetail { background: #fff; border: 2px solid var(--graphite); border-radius: 12px; padding: 14px 16px;
+    box-shadow: 4px 5px 0 var(--shadow); margin-bottom: 20px; }
+  .pathdetail h3 { font-family: var(--head); font-size: 1.5rem; margin: 0 0 4px; }
+  .pathdetail .explain-text { white-space: pre-line; background: var(--paper-2); border-radius: 8px; padding: 10px 12px; font-size: .95rem; }
+  .pathdetail button { font-family: var(--head); font-size: 1.2rem; color: var(--graphite); background: var(--pencil); border: 2px solid var(--graphite);
+    min-height: 44px; padding: 2px 16px; margin-top: 10px; cursor: pointer; border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; }
+  .search { margin: 0 0 20px; }
+  .search input { font: inherit; width: 100%; padding: 10px 14px; min-height: 44px; border: 2px solid var(--graphite); border-radius: 10px; background: #fff; }
+  .results { list-style: none; padding: 0; margin: 8px 0 0; }
+  .results li { margin: 4px 0; }
+  .results button { font: inherit; width: 100%; text-align: right; background: #fff; border: 1.5px solid var(--graphite); border-radius: 8px; padding: 8px 12px; min-height: 44px; cursor: pointer; }
+  .results .lvl-tag { font-family: var(--head); font-size: 1.1rem; background: var(--paper-2); border: 1.5px solid var(--graphite); padding: 0 8px; border-radius: 999px; margin-left: 8px; }
+  .today { background: #fff; border: 2px solid var(--graphite); border-radius: 12px 5px 14px 7px; padding: 14px 18px; box-shadow: 5px 6px 0 var(--shadow); margin: 0 0 24px; }
+  .today h2 { font-family: var(--head); font-size: 1.8rem; margin: 0 0 4px; }
+  .today ul { padding-right: 18px; margin: 4px 0; }
+  .today .bars { display: grid; gap: 8px; margin-top: 10px; }
+  .today .bar-row { display: grid; grid-template-columns: 100px 1fr 70px; gap: 10px; align-items: center; font-size: .92rem; }
+  .today .bar { height: 12px; border: 2px solid var(--graphite); border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .today .bar i { display: block; height: 100%; background: repeating-linear-gradient(45deg, var(--pencil) 0 6px, #f7d766 6px 12px); }
+  .today a.go { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-left: 12px; }
+  details.explain { margin-top: 8px; }
+  details.explain summary { cursor: pointer; font-family: var(--head); font-size: 1.25rem; border-bottom: 1.5px dashed var(--graphite); display: inline-block; }
+  .explain-body { white-space: pre-line; margin-top: 8px; padding: 10px 12px; background: var(--paper-2); border-radius: 8px; font-size: .95rem; }
+  .navlink { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; }
+
+  footer {
+    margin-top: 40px; font-size: .9rem; color: var(--graphite-soft); text-align: center;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 520px) {
+    .logo { font-size: 2.6rem; }
+    .panel h2 { font-size: 2rem; }
+    .book:nth-child(n) { transform: none; }
+  }
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 6px;
+    background: #fff; border-top: 2px solid var(--graphite); padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); z-index: 50; }
+  .tabbar a { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); text-decoration: none; padding: 6px 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
+  .tabbar a[aria-current="page"] { background: var(--pencil); border: 2px solid var(--graphite); }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 84px; } }
+</style>
+<link rel="stylesheet" href="css/theme.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1 class="logo">see<span>spanish</span></h1>
+      <p class="tagline">اسپانیایی را از کتاب‌های واقعی، قدم‌به‌قدم و با اولویت بخوان.</p>
+    </div>
+    <nav><a class="navlink" href="memory.html">مرور واژگان</a> &nbsp; <a class="navlink" href="practice.html">تمرین امتحان</a> &nbsp; <a class="navlink" href="dictation.html">دیکته</a> &nbsp; <a class="navlink" href="listening.html">شنیداری</a> &nbsp; <a class="navlink" href="exams.html">امتحان‌ها</a></nav>
+  </header>
+
+  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
+
+  <div class="notice" id="notice"></div>
+
+  <div class="search">
+    <input id="q" type="search" dir="auto" placeholder="جستجوی گرامر یا واژه در همه‌ی سطح‌ها" aria-label="جستجو">
+    <ul class="results" id="results"></ul>
+  </div>
+
+  <section class="today" id="today" aria-label="برنامه‌ی امروز"></section>
+
+  <section class="path-wrap" aria-label="مسیر درس">
+    <h2>مسیر درس</h2>
+    <p class="muted">هر مرحله که خوانده شد، مرحله‌ی بعد باز می‌شود.</p>
+    <div class="path" id="path"></div>
+    <div class="pathdetail" id="pathDetail" hidden></div>
+  </section>
+
+  <ul class="books" id="books"></ul>
+
+  <section class="panel" id="panel" hidden aria-live="polite">
+    <button class="back" id="back" type="button">← برگشت به کتاب‌ها</button>
+    <h2 id="panelTitle"></h2>
+    <p class="sub" id="panelSub"></p>
+    <ol class="topics" id="topics"></ol>
+  </section>
+
+  <footer>
+    اولویت‌های ستاره‌ای، اولویت آموزشی است. اولویت امتحانی بعد از بررسی نمونه‌سوال‌های رسمی اضافه می‌شود.
+    پیشرفت شما فقط در همین مرورگر ذخیره می‌شود.
+  </footer>
+</div>
+
+<script src="data/data.js"></script>
+<script src="data/explain.js"></script>
+<script src="data/explain-b1.js"></script>
+<script src="data/explain-b2.js"></script>
+<script src="data/explain-c1.js"></script>
+<script src="data/explain-c2.js"></script>
+<script src="data/progress.js"></script>
+<script src="data/practice.js"></script>
+<script src="data/practice-extra.js"></script>
+<script src="data/practice-b1.js"></script>
+<script src="data/practice-b2.js"></script>
+<script src="data/vocab-more.js"></script>
+<script src="data/vocab-b1.js"></script>
+<script src="data/vocab-b2.js"></script>
+<script src="data/vocab-c1.js"></script>
+<script src="data/vocab-c2.js"></script>
+<script src="data/practice-more.js"></script>
+<script>
+  const SEE = window.SEE;
+  const PROGRESS_KEY = "seespanish:progress:v2";
+  let currentLevel = "A1";
+
+  const $ = (sel) => document.querySelector(sel);
+
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveProgress(p) {
+    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); }
+    catch { /* حافظه‌ی مرورگر در دسترس نیست؛ پیشرفت ذخیره نمی‌شود */ }
+  }
+
+  function renderLevels() {
+    const ul = $("#levels");
+    ul.innerHTML = "";
+    SEE.levels.forEach((lvl) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = lvl;
+      if (SEE.status[lvl] !== "ready") b.classList.add("pending");
+      b.setAttribute("aria-pressed", String(lvl === currentLevel));
+      b.addEventListener("click", () => {
+        currentLevel = lvl;
+        closePanel();
+        renderLevels();
+        renderBooks();
+      });
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  function renderNotice() {
+    const n = $("#notice");
+    const st = SEE.status[currentLevel];
+    if (st === "ready") {
+      n.textContent = `سطح ${currentLevel} کامل است. کتاب را انتخاب کنید تا فهرست گرامرها را ببینید.`;
+    } else if (st === "partial") {
+      n.textContent = `سطح ${currentLevel} بخشی از مطالب را دارد. منبع کتاب این سطح هنوز اضافه نشده است.`;
+    } else {
+      n.textContent = `سطح ${currentLevel} هنوز در حال آماده‌سازی است. به‌زودی اضافه می‌شود.`;
+    }
+  }
+
+  function itemsForBook(bookId, level) {
+    const all = (SEE.grammar[level] || []);
+    return all.filter((it) => it.refs && it.refs[bookId]);
+  }
+
+  function progressFor(bookId, level) {
+    const items = itemsForBook(bookId, level);
+    if (!items.length) return 0;
+    const p = loadProgress();
+    const done = items.filter((it) => p[it.id + "|" + bookId]).length;
+    return Math.round((done / items.length) * 100);
+  }
+
+  function renderBooks() {
+    if (typeof renderToday === "function") renderToday();
+    if (typeof renderPath === "function") renderPath();
+    renderNotice();
+    const ul = $("#books");
+    ul.innerHTML = "";
+    SEE.books
+      .filter((b) => b.levels.includes(currentLevel))
+      .forEach((book) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "book";
+        const pct = progressFor(book.id, currentLevel);
+        btn.innerHTML = `
+          <p class="book-title" dir="ltr"></p>
+          <p class="book-meta"></p>
+          <div class="book-progress" role="img" aria-label="پیشرفت ${pct}٪"><i style="width:${pct}%"></i></div>`;
+        btn.querySelector(".book-title").textContent = book.title;
+        btn.querySelector(".book-meta").textContent = book.note || `سطح ${currentLevel}`;
+        btn.addEventListener("click", () => openBook(book));
+        li.appendChild(btn);
+        ul.appendChild(li);
+      });
+  }
+
+  function openBook(book) {
+    $("#panelTitle").textContent = `${book.title}`;
+    const items = itemsForBook(book.id, currentLevel);
+    $("#panelSub").textContent = items.length
+      ? `گرامرهای این کتاب در سطح ${currentLevel}، همراه با شماره‌ی درس یا واحد.`
+      : `برای این کتاب در سطح ${currentLevel} هنوز مطلبی ثبت نشده است.`;
+
+    const ol = $("#topics");
+    ol.innerHTML = "";
+    const p = loadProgress();
+
+    items.forEach((it) => {
+      const key = it.id + "|" + book.id;
+      const li = document.createElement("li");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = !!p[key];
+      cb.setAttribute("aria-label", `علامت‌گذاری ${it.title}`);
+      cb.addEventListener("change", () => {
+        const data = loadProgress();
+        data[key] = cb.checked;
+        saveProgress(data);
+        renderBooks();
+      });
+
+      const body = document.createElement("div");
+      const t = document.createElement("p");
+      t.className = "topic-title";
+      t.dir = "auto";
+      t.textContent = it.title;
+      const n = document.createElement("p");
+      n.className = "topic-note";
+      n.dir = "auto";
+      n.textContent = it.note;
+      const ref = document.createElement("span");
+      ref.className = "topic-ref";
+      ref.dir = "auto";
+      ref.textContent = `${book.title} · ${it.refs[book.id]}`;
+      body.append(t, n, ref);
+      const ex = (window.SEE_EXPLAIN || {})[it.id];
+      if (ex) {
+        const d = document.createElement("details");
+        d.className = "explain";
+        const sm = document.createElement("summary");
+        sm.textContent = "توضیح کامل";
+        const pre = document.createElement("div");
+        pre.className = "explain-body";
+        pre.dir = "auto";
+        pre.textContent = ex;
+        d.append(sm, pre);
+        body.appendChild(d);
+      }
+
+      const st = document.createElement("span");
+      st.className = "stars";
+      st.setAttribute("aria-label", `اولویت ${it.stars} از ۳`);
+      st.textContent = "★".repeat(it.stars) + "☆".repeat(3 - it.stars);
+
+      li.append(cb, body, st);
+      ol.appendChild(li);
+    });
+
+    $("#panel").hidden = false;
+    $("#panel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function closePanel() { $("#panel").hidden = true; }
+
+  $("#back").addEventListener("click", () => {
+    closePanel();
+    renderBooks();
+    $("#books").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  function renderToday() {
+    const box = document.getElementById("today");
+    const plan = window.SEE_PROGRESS.dailyPlan(currentLevel);
+    const pr = window.SEE_PROGRESS.levelProgress(currentLevel);
+    const row = (label, d) => {
+      const pct = d.total ? Math.round((d.done / d.total) * 100) : 0;
+      return `<div class="bar-row"><span>${label}</span><div class="bar" role="img" aria-label="${label} ${pct}٪"><i style="width:${pct}%"></i></div><span>${d.done} از ${d.total}</span></div>`;
+    };
+    const words = plan.words.length
+      ? `<span dir="ltr">${plan.words.map((w) => w).join("، ")}</span>`
+      : "امروز کلمه‌ای برای مرور نداری.";
+    const grammar = plan.grammar ? plan.grammar.title : "همه‌ی گرامرهای این سطح خونده شده‌اند.";
+    const weak = window.SEE_PROGRESS.weakIds().length;
+    box.innerHTML = `
+      <h2>برنامه‌ی امروز (حدود ۱۵ دقیقه)</h2>
+      <ul>
+        <li>۵ واژه برای مرور: ${words} <a class="go" href="memory.html">شروع مرور</a></li>
+        <li>یک گرامر: <span dir="auto">${grammar}</span></li>
+        <li>یک تمرین: <a class="go" href="practice.html${weak ? "?weak=1" : ""}">${weak ? "تمرین نقاط ضعف (" + weak + ")" : "شروع تمرین"}</a></li>
+      </ul>
+      <div class="bars">
+        ${row("گرامر خونده‌شده", pr.grammar)}
+        ${row("واژه‌های بلد", pr.vocab)}
+        ${row("تمرین درست", pr.exercises)}
+      </div>`;
+  }
+
+  // مسیر درس: هر گرامر یک گره است؛ گره بعدی وقتی باز می‌شود که گره قبلی خوانده شده باشد
+  function doneOf(it) {
+    const p = loadProgress();
+    return Object.keys(it.refs || {}).some((b) => p[it.id + "|" + b]);
+  }
+
+  function renderPath() {
+    const box = document.getElementById("path");
+    if (!box) return;
+    const items = SEE.grammar[currentLevel] || [];
+    const open = items.findIndex((it) => !doneOf(it));
+    box.innerHTML = "";
+    items.forEach((it, i) => {
+      const state = doneOf(it) ? "done" : (i === open ? "current" : "locked");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "node " + state;
+      b.textContent = String(i + 1);
+      b.setAttribute("aria-label", `${i + 1}. ${it.title} (${state === "done" ? "خوانده شده" : state === "current" ? "مرحله‌ی فعلی" : "قفل"})`);
+      b.addEventListener("click", () => showPathDetail(it, i, state));
+      box.appendChild(b);
+    });
+    if (!items.length) box.innerHTML = '<p class="muted">برای این سطح هنوز مسیری ثبت نشده است.</p>';
+  }
+
+  function showPathDetail(it, i, state) {
+    const d = document.getElementById("pathDetail");
+    d.hidden = false;
+    d.innerHTML = "";
+    const h = document.createElement("h3");
+    h.dir = "auto";
+    h.textContent = `${i + 1}. ${it.title}`;
+    const note = document.createElement("p");
+    note.dir = "auto";
+    note.textContent = it.note;
+    d.append(h, note);
+    const ex = (window.SEE_EXPLAIN || {})[it.id];
+    if (ex) {
+      const e = document.createElement("div");
+      e.className = "explain-text";
+      e.dir = "auto";
+      e.textContent = ex;
+      d.appendChild(e);
+    }
+    const btn = document.createElement("button");
+    btn.type = "button";
+    if (state === "locked") {
+      const m = document.createElement("p");
+      m.className = "muted";
+      m.textContent = "این مرحله هنوز قفل است. اول مرحله‌ی قبلی را خوانده علامت بزن.";
+      d.appendChild(m);
+    } else {
+      btn.textContent = state === "done" ? "برگرداندن علامت" : "این مرحله را خواندم";
+      btn.addEventListener("click", () => {
+        const firstBook = Object.keys(it.refs || {})[0];
+        if (!firstBook) return;
+        const key = it.id + "|" + firstBook;
+        const data = loadProgress();
+        if (state === "done") delete data[key]; else data[key] = true;
+        saveProgress(data);
+        renderPath();
+        renderBooks();
+        renderToday();
+        const again = SEE.grammar[currentLevel].find((x) => x.id === it.id);
+        showPathDetail(again, i, doneOf(again) ? "done" : "current");
+      });
+      d.appendChild(btn);
+    }
+    d.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function searchAll(q) {
+    const needle = q.trim().toLowerCase();
+    const out = [];
+    if (needle.length < 2) return out;
+    for (const lvl of SEE.levels) {
+      for (const it of SEE.grammar[lvl] || []) {
+        if ((it.title + " " + it.note).toLowerCase().includes(needle)) out.push({ kind: "گرامر", lvl, text: it.title });
+      }
+      for (const v of (window.SEE_PRACTICE.vocab[lvl] || [])) {
+        if ((v.es + " " + v.fa).toLowerCase().includes(needle)) out.push({ kind: "واژه", lvl, text: v.es + " · " + v.fa });
+      }
+    }
+    return out.slice(0, 30);
+  }
+
+  document.getElementById("q").addEventListener("input", (e) => {
+    const ul = document.getElementById("results");
+    ul.innerHTML = "";
+    for (const r of searchAll(e.target.value)) {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.innerHTML = `<span class="lvl-tag">${r.lvl}</span>${r.kind}: `;
+      const t = document.createElement("span");
+      t.dir = "auto";
+      t.textContent = r.text;
+      b.appendChild(t);
+      b.addEventListener("click", () => {
+        currentLevel = r.lvl;
+        renderLevels();
+        renderBooks();
+        document.getElementById("books").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      li.appendChild(b);
+      ul.appendChild(li);
+    }
+  });
+
+  renderLevels();
+  renderBooks();
+  renderToday();
+</script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
+
+<nav class="tabbar" aria-label="منوی پایین"><a href="index.html" aria-current="page">خانه</a><a href="memory.html">مرور</a><a href="practice.html">تمرین</a><a href="exams.html">امتحان</a></nav>
+</body>
+</html>
