@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1E1E26">
+<link rel="manifest" href="manifest.json">
+<title>seespanish · من</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root {
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+    --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+  }
+  body { margin: 0; font-family: var(--body); line-height: 1.8; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 110px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+  h2 { font-family: var(--head); font-size: 1.3rem; margin: 22px 0 8px; }
+  .muted { color: var(--graphite-soft); font-size: .92rem; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 8px 24px var(--shadow); padding: 16px 18px; margin-bottom: 14px;
+  }
+  .segment {
+    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--paper-2);
+    border: 1px solid var(--line); list-style: none; margin: 10px 0 0;
+  }
+  .segment li { flex: 1 1 0; min-width: 0; }
+  .segment button {
+    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
+    color: var(--graphite-soft); font: inherit; cursor: pointer; padding: 0 6px;
+  }
+  .segment button[aria-pressed="true"] { background: var(--surface); color: var(--graphite); font-weight: 800; box-shadow: 0 2px 6px var(--shadow); }
+  .segment button:disabled { opacity: .45; cursor: not-allowed; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .switch {
+    width: 56px; height: 32px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper-2);
+    position: relative; cursor: pointer; flex: 0 0 auto;
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; right: 3px; width: 24px; height: 24px; border-radius: 50%;
+    background: var(--graphite-soft); transition: transform .2s ease;
+  }
+  .switch[aria-checked="true"] { background: var(--pencil); border-color: transparent; }
+  .switch[aria-checked="true"]::after { background: var(--accent-ink); transform: translateX(-24px); }
+  .stat { display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .stat:last-child { border-bottom: 0; }
+  .stat .lvl { font-family: "Nunito", system-ui, sans-serif; font-weight: 800; font-size: 1.15rem; }
+  .bars { display: grid; gap: 6px; }
+  .bar-row { display: grid; grid-template-columns: 84px 1fr 56px; gap: 8px; align-items: center; font-size: .86rem; color: var(--graphite-soft); }
+  .bar { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--pencil); }
+  .pass { font-size: .85rem; padding: 2px 10px; border-radius: 999px; background: var(--ok); }
+  .lock { font-size: .85rem; padding: 2px 10px; border-radius: 999px; background: var(--paper-2); color: var(--graphite-soft); }
+  .danger {
+    min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--graphite); font: inherit; cursor: pointer;
+  }
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px;
+    box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft);
+    text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
+  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
+  @media (max-width: 640px) { .tabbar { display: flex; } }
+</style>
+<link rel="stylesheet" href="css/theme.css">
+<script src="js/theme.js"></script>
+<script src="js/prefs.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+  </header>
+
+  <h2>نمایش</h2>
+  <div class="card">
+    <div>
+      <div>حالت نمایش</div>
+      <p class="muted">خودکار یعنی مطابق تنظیم گوشی یا کامپیوترت.</p>
+    </div>
+    <ul class="segment" id="themeSeg" role="group" aria-label="حالت نمایش"></ul>
+  </div>
+
+  <h2>صدا</h2>
+  <div class="card">
+    <div class="row">
+      <div>
+        <div>پخش صدا</div>
+        <p class="muted">تلفظ جمله‌ها در دیکته، شنیداری و مرور واژگان.</p>
+      </div>
+      <button class="switch" id="soundSw" role="switch" aria-label="پخش صدا"></button>
+    </div>
+  </div>
+
+  <h2>زبان رابط</h2>
+  <div class="card">
+    <ul class="segment" role="group" aria-label="زبان رابط">
+      <li><button type="button" aria-pressed="true">فارسی</button></li>
+      <li><button type="button" disabled>English (به‌زودی)</button></li>
+    </ul>
+  </div>
+
+  <h2>آمار مطالعه</h2>
+  <div class="card" id="stats"></div>
+
+  <h2>پیشرفت آزمون سطح‌ها</h2>
+  <div class="card" id="tests"></div>
+
+  <h2>داده‌ها</h2>
+  <div class="card">
+    <div class="row">
+      <div>
+        <div>پاک کردن پیشرفت روی این مرورگر</div>
+        <p class="muted">پیشرفت گرامر، مرور، تمرین، آزمون‌ها و برنامه‌ی امروز پاک می‌شود.</p>
+      </div>
+      <button class="danger" id="reset" type="button">پاک کن</button>
+    </div>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="منوی پایین">
+  <a href="index.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a>
+  <a href="plan.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a>
+  <a href="practice.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a>
+  <a href="notebook.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a>
+  <a href="me.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a>
+</nav>
+
+<script src="data/data.js"></script>
+<script src="data/progress.js"></script>
+<script src="data/practice.js"></script>
+<script src="data/practice-extra.js"></script>
+<script src="data/practice-b1.js"></script>
+<script src="data/practice-b2.js"></script>
+<script src="data/practice-more.js"></script>
+<script src="data/vocab-more.js"></script>
+<script src="data/vocab-b1.js"></script>
+<script src="data/vocab-b2.js"></script>
+<script src="data/vocab-c1.js"></script>
+<script src="data/vocab-c2.js"></script>
+<script>
+  const $ = (s) => document.querySelector(s);
+  const SP = window.SEE_PROGRESS;
+  const THEME_KEY = "seespanish:theme";
+
+  // ---- حالت نمایش ----
+  function currentChoice() {
+    try { return localStorage.getItem(THEME_KEY) || "auto"; } catch (e) { return "auto"; }
+  }
+  function setTheme(choice) {
+    try {
+      if (choice === "auto") localStorage.removeItem(THEME_KEY);
+      else localStorage.setItem(THEME_KEY, choice);
+    } catch (e) { /* ignore */ }
+    const effective = choice === "auto"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : choice;
+    document.documentElement.setAttribute("data-theme", effective);
+    renderTheme();
+  }
+  function renderTheme() {
+    const ul = $("#themeSeg"); ul.innerHTML = "";
+    const choice = currentChoice();
+    [["auto", "خودکار"], ["light", "روشن"], ["dark", "تیره"]].forEach(([v, label]) => {
+      const li = document.createElement("li"); const b = document.createElement("button");
+      b.type = "button"; b.textContent = label;
+      b.setAttribute("aria-pressed", String(v === choice));
+      b.addEventListener("click", () => setTheme(v));
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+
+  // ---- صدا ----
+  function renderSound() {
+    const sw = $("#soundSw");
+    const on = SEE_PREFS.soundOn();
+    sw.setAttribute("aria-checked", String(on));
+    sw.onclick = () => { SEE_PREFS.setSound(!SEE_PREFS.soundOn()); renderSound(); };
+  }
+
+  // ---- آمار ----
+  function renderStats() {
+    const box = $("#stats");
+    const W = window.SEE;
+    const rows = W.levels.map((lvl) => {
+      const pr = SP.levelProgress(lvl);
+      const pct = (d) => d.total ? Math.round((d.done / d.total) * 100) : 0;
+      return `<div class="stat">
+        <span class="lvl">${lvl}</span>
+        <div class="bars">
+          <div class="bar-row"><span>گرامر</span><div class="bar"><i style="width:${pct(pr.grammar)}%"></i></div><span>${pr.grammar.done}/${pr.grammar.total}</span></div>
+          <div class="bar-row"><span>واژه</span><div class="bar"><i style="width:${pct(pr.vocab)}%"></i></div><span>${pr.vocab.done}/${pr.vocab.total}</span></div>
+          <div class="bar-row"><span>تمرین</span><div class="bar"><i style="width:${pct(pr.exercises)}%"></i></div><span>${pr.exercises.done}/${pr.exercises.total}</span></div>
+        </div>
+      </div>`;
+    }).join("");
+    const weak = SP.weakIds().length;
+    box.innerHTML = rows + `<p class="muted" style="margin-top:10px">نقاط ضعف فعلی: ${weak} تمرین</p>`;
+  }
+
+  // ---- آزمون سطح‌ها ----
+  function renderTests() {
+    const passed = SP.passedLevels();
+    const box = $("#tests");
+    box.innerHTML = SP.LEVEL_ORDER.map((lvl) => {
+      const status = passed[lvl] ? `<span class="pass">پاس شده</span>` :
+        (SP.levelOpen(lvl) ? `<span class="lock">آزمون باز است</span>` : `<span class="lock">قفل</span>`);
+      return `<div class="stat"><span class="lvl">${lvl}</span><div class="row" style="justify-content:space-between">${status}<a href="test.html?level=${lvl}" style="color:var(--graphite);font-size:.92rem">${passed[lvl] ? "مرور" : "آزمون"}</a></div></div>`;
+    }).join("");
+  }
+
+  // ---- پاک کردن داده‌ها ----
+  $("#reset").addEventListener("click", () => {
+    if (!confirm("پیشرفت این مرورگر پاک شود؟ این کار برگشت ندارد.")) return;
+    [SP.PROGRESS_KEY, SP.MEMORY_KEY, SP.STATS_KEY, SP.PASS_KEY, "seespanish:today:v1", "seespanish:plan:pref"]
+      .forEach((k) => { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } });
+    renderAll();
+  });
+
+  function renderAll() { renderTheme(); renderSound(); renderStats(); renderTests(); }
+  renderAll();
+</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>

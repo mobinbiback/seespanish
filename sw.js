@@ -1,7 +1,7 @@
 // کش برای کار آفلاین: بعد از اولین باز شدن، صفحه‌ها و داده‌ها بدون اینترنت هم باز می‌شوند.
-const CACHE = "seespanish-v9";
+const CACHE = "seespanish-v12";
 const SHELL = [
-  "./", "index.html", "practice.html", "memory.html", "dictation.html", "exams.html",
+  "./", "index.html", "plan.html", "practice.html", "memory.html", "dictation.html", "exams.html",
   "manifest.json", "icon.svg",
   "data/data.js", "data/explain.js", "data/explain-b1.js", "data/explain-b2.js",
   "data/explain-c1.js", "data/explain-c2.js", "data/progress.js",
@@ -13,7 +13,8 @@ const SHELL = [
   "fonts/IRANYekanX-Medium.ttf", "fonts/IRANYekanX-DemiBold.ttf", "fonts/IRANYekanX-Bold.ttf", "fonts/IRANYekanX-Black.ttf",
   "fonts/Nunito-Regular.ttf", "fonts/Nunito-SemiBold.ttf", "fonts/Nunito-Bold.ttf", "fonts/Nunito-ExtraBold.ttf",
   "fonts/Vazirmatn-Regular.ttf", "fonts/Vazirmatn-Bold.ttf",
-  "css/theme.css", "js/theme.js"
+  "css/theme.css", "js/theme.js", "js/prefs.js",
+  "notebook.html", "me.html", "test.html", "plan.html", "data/verbs.js"
 ];
 
 self.addEventListener("install", (e) => {

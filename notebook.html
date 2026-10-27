@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1E1E26">
+<link rel="manifest" href="manifest.json">
+<title>seespanish · دفترچه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root {
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+    --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+  }
+  body { margin: 0; font-family: var(--body); line-height: 1.8; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 110px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+  h2 { font-family: var(--head); font-size: 1.5rem; margin: 20px 0 8px; }
+  .muted { color: var(--graphite-soft); font-size: .95rem; }
+  .segment {
+    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface);
+    border: 1px solid var(--line); box-shadow: 0 6px 18px var(--shadow); list-style: none; margin: 0 0 12px; padding-inline: 4px;
+  }
+  .segment li { flex: 1 1 0; min-width: 0; }
+  .segment button {
+    width: 100%; min-height: 38px; border: 0; border-radius: 999px; background: transparent;
+    color: var(--graphite-soft); font: inherit; font-size: 1rem; cursor: pointer; padding: 0 6px;
+  }
+  .segment button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; }
+  .search {
+    width: 100%; min-height: 44px; padding: 10px 14px; font: inherit; border-radius: 14px;
+    background: var(--surface); color: var(--graphite); border: 1px solid var(--line); margin-bottom: 10px;
+  }
+  .item {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: 0 6px 18px var(--shadow); padding: 12px 16px; margin-bottom: 10px;
+  }
+  .item summary { cursor: pointer; font-weight: 800; list-style: none; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .item summary::-webkit-details-marker { display: none; }
+  .stars { font-family: var(--head); letter-spacing: 1px; color: var(--graphite-soft); font-size: .95rem; }
+  .item .note { margin: 8px 0 4px; color: var(--graphite-soft); font-size: .95rem; }
+  .explain { white-space: pre-line; background: var(--paper-2); border-radius: 10px; padding: 10px 12px; font-size: .95rem; margin-top: 8px; }
+  .verb-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 16px; overflow: hidden; box-shadow: 0 6px 18px var(--shadow); }
+  .verb-table th, .verb-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--line); }
+  .verb-table th { color: var(--graphite-soft); font-weight: 600; font-size: .88rem; }
+  .verb-table td.pn { color: var(--graphite-soft); font-size: .9rem; }
+  .verb-table td.form { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-weight: 700; }
+  .verb-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 14px 0 6px; }
+  .verb-head b { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-size: 1.25rem; }
+  .verb-head span { color: var(--graphite-soft); font-size: .92rem; }
+  .empty { text-align: center; color: var(--graphite-soft); padding: 18px 0; }
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px;
+    box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft);
+    text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
+  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
+  @media (max-width: 640px) { .tabbar { display: flex; } }
+</style>
+<link rel="stylesheet" href="css/theme.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+  </header>
+
+  <h2>دفترچه</h2>
+  <p class="muted">قوانین هر سطح و جدول صرف افعال. با جستجو، هر چیزی را سریع پیدا کن.</p>
+
+  <ul class="segment" id="tabs" role="tablist" aria-label="بخش دفترچه">
+    <li><button type="button" data-tab="rules" aria-pressed="true">قوانین</button></li>
+    <li><button type="button" data-tab="verbs" aria-pressed="false">افعال</button></li>
+  </ul>
+
+  <ul class="segment" id="levels" role="group" aria-label="سطح"></ul>
+  <input class="search" id="q" type="search" placeholder="جستجو: ser، subjuntivo، por…" aria-label="جستجو در دفترچه">
+
+  <section id="rules"></section>
+  <section id="verbs" hidden></section>
+</div>
+
+<nav class="tabbar" aria-label="منوی پایین">
+  <a href="index.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a>
+  <a href="plan.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a>
+  <a href="practice.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a>
+  <a href="notebook.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a>
+  <a href="me.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a>
+</nav>
+
+<script src="data/data.js"></script>
+<script src="data/explain.js"></script>
+<script src="data/explain-b1.js"></script>
+<script src="data/explain-b2.js"></script>
+<script src="data/explain-c1.js"></script>
+<script src="data/explain-c2.js"></script>
+<script src="data/verbs.js"></script>
+<script>
+  const $ = (s) => document.querySelector(s);
+  const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  const TENSES = [["presente", "حال ساده"], ["indefinido", "گذشته‌ی کامل"], ["imperfecto", "گذشته‌ی استمراری"], ["futuro", "آینده"]];
+  const PRONOUNS = ["yo", "tú", "él / ella", "nosotros", "vosotros", "ellos / ellas"];
+  let tab = "rules";
+  let level = "A1";
+  let tense = "presente";
+
+  function segment(ul, items, selected, onPick) {
+    ul.innerHTML = "";
+    items.forEach(([val, label]) => {
+      const li = document.createElement("li"); const b = document.createElement("button");
+      b.type = "button"; b.textContent = label;
+      b.setAttribute("aria-pressed", String(val === selected));
+      b.addEventListener("click", () => onPick(val));
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+
+  function rulesList(q) {
+    const box = $("#rules");
+    box.innerHTML = "";
+    const needle = q.trim().toLowerCase();
+    const items = (window.SEE.grammar[level] || []).filter((it) =>
+      !needle || (it.title + " " + it.note + " " + (window.SEE_EXPLAIN[it.id] || "")).toLowerCase().includes(needle));
+    if (!items.length) { box.innerHTML = `<p class="empty">موردی پیدا نشد.</p>`; return; }
+    items.forEach((it) => {
+      const d = document.createElement("details");
+      d.className = "item";
+      const s = document.createElement("summary");
+      const t = document.createElement("span"); t.dir = "auto"; t.textContent = it.title;
+      const st = document.createElement("span"); st.className = "stars";
+      st.textContent = "★".repeat(it.stars) + "☆".repeat(3 - it.stars);
+      s.append(t, st);
+      d.appendChild(s);
+      const n = document.createElement("p"); n.className = "note"; n.dir = "auto"; n.textContent = it.note;
+      d.appendChild(n);
+      const ex = (window.SEE_EXPLAIN || {})[it.id];
+      if (ex) {
+        const e = document.createElement("div"); e.className = "explain"; e.dir = "auto"; e.textContent = ex;
+        d.appendChild(e);
+      }
+      box.appendChild(d);
+    });
+  }
+
+  function verbsList(q) {
+    const box = $("#verbs");
+    box.innerHTML = "";
+    const needle = q.trim().toLowerCase();
+    const list = window.SEE_VERBS.filter((v) => v.level === level &&
+      (!needle || v.verb.includes(needle) || v.meaning.includes(needle)));
+    if (!list.length) { box.innerHTML = `<p class="empty">فعلی در این سطح پیدا نشد. سطح دیگری را امتحان کن.</p>`; return; }
+    list.forEach((v) => {
+      const head = document.createElement("div"); head.className = "verb-head";
+      head.innerHTML = `<b></b><span></span>`;
+      head.querySelector("b").textContent = v.verb;
+      head.querySelector("span").textContent = v.meaning;
+      box.appendChild(head);
+
+      const forms = v.tenses[tense];
+      const table = document.createElement("table"); table.className = "verb-table";
+      table.innerHTML = `<tbody>${PRONOUNS.map((p, i) =>
+        `<tr><td class="pn">${p}</td><td class="form">${forms[i]}</td></tr>`).join("")}</tbody>`;
+      box.appendChild(table);
+    });
+  }
+
+  function render() {
+    segment($("#levels"), LEVELS.map((l) => [l, l]), level, (v) => { level = v; render(); });
+    const q = $("#q").value;
+    if (tab === "rules") {
+      $("#rules").hidden = false; $("#verbs").hidden = true;
+      rulesList(q);
+    } else {
+      $("#rules").hidden = true; $("#verbs").hidden = false;
+      segment($("#tenseTabs") || (() => {
+        const ul = document.createElement("ul"); ul.className = "segment"; ul.id = "tenseTabs";
+        $("#verbs").before(ul); return ul;
+      })(), TENSES, tense, (v) => { tense = v; render(); });
+      verbsList(q);
+    }
+  }
+
+  document.querySelectorAll("#tabs button").forEach((b) => {
+    b.addEventListener("click", () => {
+      tab = b.dataset.tab;
+      document.querySelectorAll("#tabs button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      render();
+    });
+  });
+  $("#q").addEventListener("input", render);
+  render();
+</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
