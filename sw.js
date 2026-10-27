@@ -1,5 +1,5 @@
 // کش برای کار آفلاین: بعد از اولین باز شدن، صفحه‌ها و داده‌ها بدون اینترنت هم باز می‌شوند.
-const CACHE = "seespanish-v8";
+const CACHE = "seespanish-v9";
 const SHELL = [
   "./", "index.html", "practice.html", "memory.html", "dictation.html", "exams.html",
   "manifest.json", "icon.svg",
