@@ -337,3 +337,108 @@ header > .theme-toggle { margin-inline-start: auto; }
 /* ---- دکمه‌ها: اندازه‌ی یکنواخت ---- */
 .btn, .act, .theme-toggle, .tabs button { min-height: 42px; }
 .btn { font-size: 1.1rem !important; padding: 4px 18px !important; }
+
+/* ==========================================================
+   نسخه‌ی دوم طراحی: کنترل‌های بخش‌بندی‌شده، منوی آیکون‌دار
+   ========================================================== */
+
+/* سطح‌ها: یک نوار بخش‌بندی‌شده به جای دکمه‌های جدا */
+.levels {
+  display: flex !important;
+  gap: 4px !important;
+  padding: 4px !important;
+  margin: 0 0 18px !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 6px 18px var(--shadow) !important;
+}
+.levels li { flex: 1 1 0; min-width: 0; }
+.levels button {
+  width: 100% !important;
+  min-height: 38px !important;
+  padding: 4px 0 !important;
+  font-size: 1.05rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  color: var(--graphite-soft) !important;
+  box-shadow: none !important;
+}
+.levels button[aria-pressed="true"] {
+  background: var(--pencil) !important;
+  color: var(--accent-ink) !important;
+  font-weight: 800 !important;
+}
+.levels button.pending::after { content: none !important; }
+
+/* منوی پایین: آیکون + برچسب، با نشانگر فعال */
+.tabbar a {
+  flex-direction: column !important;
+  gap: 2px !important;
+  font-size: .78rem !important;
+  padding: 6px 2px !important;
+  min-height: 52px !important;
+  color: var(--graphite-soft) !important;
+}
+.tabbar a svg { flex: 0 0 auto; }
+.tabbar a span { line-height: 1; }
+.tabbar a[aria-current="page"] {
+  background: transparent !important;
+  color: var(--graphite) !important;
+  font-weight: 800 !important;
+  position: relative;
+}
+.tabbar a[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--pencil);
+}
+.tabbar a[aria-current="page"] svg { color: var(--graphite); }
+
+/* دکمه‌ی تم، هم‌اندازه‌ی بقیه‌ی کنترل‌ها */
+.theme-toggle {
+  width: 42px !important;
+  height: 42px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- کارت کتاب با جلد ---- */
+.books {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  gap: 14px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+.book {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  width: 100% !important;
+  text-align: right !important;
+  padding: 12px !important;
+  cursor: pointer;
+}
+.book .cover {
+  width: 84px !important;
+  height: 118px !important;
+  border-radius: 10px !important;
+  object-fit: cover;
+  flex: 0 0 auto;
+  box-shadow: 0 8px 18px var(--shadow);
+}
+.book .book-text { display: block; min-width: 0; flex: 1 1 auto; }
+.book .book-title { font-size: 1.1rem; font-weight: 800; color: var(--graphite) !important; margin: 0 0 4px; }
+.book .book-meta { color: var(--graphite-soft) !important; font-size: .88rem; margin-bottom: 8px; }
+.book .book-progress { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+.book .book-progress i { display: block; height: 100%; background: var(--pencil); }
+.book::before { display: none !important; }
