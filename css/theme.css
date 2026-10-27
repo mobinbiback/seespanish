@@ -1,1 +1,262 @@
-/
+/* ==========================================================
+   seespanish · تم مدرن، روشن و تیره
+   این فایل بعد از استایل‌های هر صفحه بارگذاری می‌شود و آن‌ها را بازنویسی می‌کند.
+   ========================================================== */
+
+/* ---------- رنگ‌ها ---------- */
+:root,
+html[data-theme="light"] {
+  --paper: #F6F3EC;
+  --paper-2: #ECE7DA;
+  --surface: #FFFFFF;
+  --graphite: #1E1E26;
+  --graphite-soft: #6E6E7B;
+  --pencil: #F2C230;
+  --accent-ink: #1E1E26;
+  --ok: #D9EFD0;
+  --bad: #F8D7D7;
+  --line: #E3DDCD;
+  --shadow: rgba(30, 30, 38, .10);
+}
+
+html[data-theme="dark"] {
+  --paper: #111116;
+  --paper-2: #1B1B23;
+  --surface: #1C1C25;
+  --graphite: #F1EEE6;
+  --graphite-soft: #9D9DAB;
+  --pencil: #F2C230;
+  --accent-ink: #17171E;
+  --ok: #22402A;
+  --bad: #4A2727;
+  --line: #2A2A35;
+  --shadow: rgba(0, 0, 0, .45);
+}
+
+/* ---------- پس‌زمینه: نقطه‌های ظریف به جای خط‌های دفتر ---------- */
+body {
+  background-color: var(--paper) !important;
+  background-image: radial-gradient(var(--line) 1px, transparent 1px) !important;
+  background-size: 22px 22px !important;
+  background-attachment: fixed !important;
+  line-height: 1.8 !important;
+  color: var(--graphite) !important;
+}
+
+/* ---------- هدر ---------- */
+header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  border-bottom: none !important;
+  padding: 14px 0 16px !important;
+  margin-bottom: 18px !important;
+}
+
+.logo {
+  font-family: "Caveat", cursive !important;
+  font-size: 2.4rem !important;
+  color: var(--graphite) !important;
+}
+.logo span {
+  background: var(--pencil) !important;
+  color: var(--accent-ink) !important;
+  border-radius: 10px !important;
+  padding: 0 8px !important;
+}
+
+header nav {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+header nav a,
+.nav a,
+.navlink,
+.back {
+  font-family: var(--body) !important;
+  font-size: .95rem !important;
+  color: var(--graphite) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 2px var(--shadow) !important;
+  white-space: nowrap;
+}
+header nav a:hover,
+.nav a:hover,
+.navlink:hover,
+.back:hover { border-color: var(--pencil) !important; }
+
+/* دکمه‌ی تغییر حالت روشن/تیره */
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--graphite);
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 1px 2px var(--shadow);
+  flex: 0 0 auto;
+}
+
+/* روی موبایل، منوی بالا حذف می‌شود چون منوی پایین جایش را گرفته */
+@media (max-width: 640px) {
+  header nav { display: none !important; }
+  header { padding-top: 10px !important; }
+}
+
+/* ---------- کارت‌ها و سطح‌ها ---------- */
+.card,
+.panel,
+.book,
+.today,
+.pathdetail,
+.result,
+.opts li,
+.results button,
+.explain-body,
+.explain-text {
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 24px var(--shadow) !important;
+}
+.result { border-style: solid !important; }
+.result.ok { background: var(--ok) !important; }
+.result.bad { background: var(--bad) !important; }
+
+/* کارت‌های کج و سایه‌های سخت قبلی حذف شدند */
+.book,
+.book:nth-child(odd),
+.book:nth-child(even) {
+  transform: none !important;
+}
+.book:hover { transform: translateY(-3px) !important; }
+.book::before { display: none !important; }
+
+.panel h2,
+.today h2,
+.path-wrap h2 {
+  font-family: var(--head) !important;
+  color: var(--graphite) !important;
+}
+
+/* ---------- دکمه‌ها و سطح‌ها ---------- */
+.btn,
+.act,
+.levels button,
+.back,
+.tabs button,
+.results button {
+  font-family: var(--head) !important;
+  color: var(--graphite) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  min-height: 42px;
+}
+.btn.main,
+button.act,
+.levels button[aria-pressed="true"],
+.tabs button[aria-selected="true"],
+.pathdetail button {
+  background: var(--pencil) !important;
+  color: var(--accent-ink) !important;
+  border-color: transparent !important;
+}
+.btn:hover,
+.act:hover,
+.levels button:hover { border-color: var(--pencil) !important; transform: none !important; }
+
+/* حالت‌های مسیر درس */
+.node {
+  background: var(--surface) !important;
+  border: 2px solid var(--line) !important;
+  color: var(--graphite) !important;
+  box-shadow: 0 6px 16px var(--shadow) !important;
+}
+.node.done { background: var(--ok) !important; border-color: transparent !important; }
+.node.current { background: var(--pencil) !important; border-color: transparent !important; color: var(--accent-ink) !important; }
+.node.locked { background: var(--paper-2) !important; color: var(--graphite-soft) !important; border-style: dashed !important; }
+.node:not(:first-child)::before { background: var(--line) !important; }
+
+/* ---------- ورودی‌ها ---------- */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+textarea {
+  background: var(--surface) !important;
+  color: var(--graphite) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 14px !important;
+}
+input::placeholder, textarea::placeholder { color: var(--graphite-soft); }
+
+/* نوار پیشرفت */
+.bar, .book-progress {
+  background: var(--paper-2) !important;
+  border: none !important;
+}
+.bar i, .book-progress i, .today .bar i {
+  background: var(--pencil) !important;
+}
+
+/* ---------- منوی پایین موبایل: قرص شناور ---------- */
+.tabbar {
+  border: 1px solid var(--line) !important;
+  border-radius: 22px !important;
+  background: var(--surface) !important;
+  box-shadow: 0 10px 30px var(--shadow) !important;
+  padding: 6px !important;
+  gap: 4px !important;
+  justify-content: space-between !important;
+  left: 12px !important;
+  right: 12px !important;
+  bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  top: auto !important;
+}
+.tabbar a {
+  flex: 1 1 0;
+  justify-content: center !important;
+  font-family: var(--body) !important;
+  font-size: .95rem !important;
+  font-weight: 600;
+  color: var(--graphite-soft) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 8px 4px !important;
+  min-height: 44px !important;
+  text-align: center;
+}
+.tabbar a[aria-current="page"] {
+  background: var(--pencil) !important;
+  color: var(--accent-ink) !important;
+  font-weight: 800;
+}
+
+/* در نمایش موبایل، جای منوی پایین خالی می‌ماند */
+@media (max-width: 640px) {
+  .tabbar { display: flex !important; }
+  body { padding-bottom: 110px !important; }
+}
+
+/* ---------- تایپوگرافی ---------- */
+h1, h2, h3 { letter-spacing: 0; }
+.muted, .topic-note, .book-meta, .pct, .stat, .score, .count, .topic {
+  color: var(--graphite-soft) !important;
+}
+
+::selection { background: var(--pencil); color: var(--accent-ink); }
