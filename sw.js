@@ -1,7 +1,7 @@
 // seespanish · کش آفلاین
 // صفحه‌های HTML و فایل‌های JS/CSS همیشه از شبکه تازه گرفته می‌شوند (اگر اینترنت بود)،
 // و فقط در نبود اینترنت از کش استفاده می‌شود. فونت‌ها و تصاویر از کش سریع‌تر می‌آیند.
-const CACHE = "seespanish-v13";
+const CACHE = "seespanish-v15";
 const SHELL = [
   "./", "index.html", "plan.html", "practice.html", "memory.html", "dictation.html", "listening.html",
   "notebook.html", "me.html", "test.html", "exams.html",
@@ -10,12 +10,13 @@ const SHELL = [
   "data/data.js", "data/explain.js", "data/explain-b1.js", "data/explain-b2.js",
   "data/explain-c1.js", "data/explain-c2.js", "data/progress.js",
   "data/practice.js", "data/practice-extra.js", "data/practice-b1.js", "data/practice-b2.js",
-  "data/practice-more.js", "data/vocab-more.js", "data/vocab-b1.js", "data/vocab-b2.js",
+  "data/practice-more.js", "data/practice-expand.js", "data/vocab-more.js", "data/vocab-b1.js", "data/vocab-b2.js",
   "data/vocab-c1.js", "data/vocab-c2.js", "data/listening.js", "data/verbs.js",
   "fonts/fonts.css", "fonts/IRANYekanX-Light.ttf", "fonts/IRANYekanX-Regular.ttf",
   "fonts/IRANYekanX-Medium.ttf", "fonts/IRANYekanX-DemiBold.ttf", "fonts/IRANYekanX-Bold.ttf",
   "fonts/IRANYekanX-Black.ttf", "fonts/Nunito-Regular.ttf", "fonts/Nunito-SemiBold.ttf",
-  "fonts/Nunito-Bold.ttf", "fonts/Nunito-ExtraBold.ttf", "fonts/Vazirmatn-Regular.ttf", "fonts/Vazirmatn-Bold.ttf"
+  "fonts/Nunito-Bold.ttf", "fonts/Nunito-ExtraBold.ttf", "fonts/Vazirmatn-Regular.ttf", "fonts/Vazirmatn-Bold.ttf",
+  "covers/anaya.svg", "covers/aula1.svg", "covers/aula2.svg", "covers/aula3.svg", "covers/aula4.svg", "covers/aula5.svg", "covers/aula6.svg", "covers/general.svg", "covers/prisma-a1.svg", "covers/prisma-a2.svg", "covers/prisma-b1.svg", "covers/prisma-b2.svg", "covers/prisma-c1.svg", "covers/suena-a1a2.svg", "covers/suena-b1.svg", "covers/suena-b2.svg", "covers/suena-c1.svg", "covers/uso-elem.svg"
 ];
 
 self.addEventListener("install", (e) => {
