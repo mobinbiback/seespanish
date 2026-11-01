@@ -47,6 +47,21 @@
     return window.speechSynthesis.getVoices().filter(function (v) { return v.lang && v.lang.indexOf("es") === 0; });
   }
 
+  // فقط بخش‌های اسپانیایی متن را برای صدا نگه می‌داریم (فارسی و برچسب‌ها حذف می‌شوند)
+  function spanishOnly(text) {
+    var lines = String(text || "").split(/\n+/);
+    var out = [];
+    lines.forEach(function (line) {
+      var m = line.match(/[A-Za-zÁÉÍÓÚÑáéíóúüñ¿¡][A-Za-zÁÉÍÓÚÑáéíóúüñ¿¡?!.,;:'"()\- ]*/g);
+      if (!m) return;
+      m.forEach(function (chunk) {
+        var t = chunk.replace(/\s+/g, " ").trim();
+        if (/[A-Za-zÁÉÍÓÚÑáéíóúüñ]{2,}/.test(t)) out.push(t);
+      });
+    });
+    return out.join(" ").trim();
+  }
+
   var API = "https://seespanish-api.sub-ify.site/index.php";
   var audioCache = {};
 
@@ -85,20 +100,94 @@
     window.speechSynthesis.speak(u);
   }
 
-  function speakAs(id, text) {
+  // متن را به بخش‌های فارسی و اسپانیایی می‌شکنیم تا هر کدام با صدای خودش خوانده شود
+  function splitLangs(text) {
+    var words = String(text || "").replace(/\n+/g, " ").split(/\s+/).filter(Boolean);
+    var segs = [];
+    words.forEach(function (w) {
+      var lang = /[A-Za-zÁÉÍÓÚÑáéíóúüñ¿¡]/.test(w) ? "es" : (/[\u0600-\u06FF]/.test(w) ? "fa" : null);
+      var last = segs[segs.length - 1];
+      if (!lang) {
+        if (last) last.text += " " + w; else segs.push({ lang: "fa", text: w });
+        return;
+      }
+      if (last && last.lang === lang) last.text += " " + w;
+      else segs.push({ lang: lang, text: w });
+    });
+    return segs.map(function (x) { return { lang: x.lang, text: x.text.trim() }; })
+      .filter(function (x) { return x.text; });
+  }
+
+  function voicesFor(prefix) {
+    if (!("speechSynthesis" in window)) return [];
+    return window.speechSynthesis.getVoices().filter(function (v) {
+      return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0;
+    });
+  }
+
+  // پخش یک بخش با صدای مرورگر و برگرداندن وعده‌ای که وقتی تمام شد حل می‌شود
+  function browserPart(id, text, lang) {
+    return new Promise(function (resolve) {
+      if (!("speechSynthesis" in window)) return resolve();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = lang;
+      var vs = voicesFor(lang.slice(0, 2).toLowerCase());
+      if (id && CHARS[id]) {
+        u.pitch = CHARS[id].pitch;
+        u.rate = CHARS[id].rate;
+        if (vs.length) u.voice = vs[Math.min(CHARS[id].voiceIndex, vs.length - 1)];
+      } else if (vs.length) {
+        u.voice = vs[0];
+      }
+      u.onend = resolve;
+      u.onerror = resolve;
+      window.speechSynthesis.speak(u);
+    });
+  }
+
+  function playUrl(url) {
+    return new Promise(function (resolve, reject) {
+      var a = new Audio(url);
+      a.onended = resolve;
+      a.onerror = reject;
+      a.play().catch(reject);
+    });
+  }
+
+  // بخش اسپانیایی: اول صدای سرور با صدای شخصیت، و اگر نشد، صدای مرورگر
+  function spanishPart(id, text) {
+    return serverSpeak(id, text)
+      .then(playUrl)
+      .catch(function () { return browserPart(id, text, "es-ES"); });
+  }
+
+  // بخش فارسی: صدای فارسی مرورگر (اگر روی دستگاه باشد)
+  function persianPart(id, text) {
+    return browserPart(id, text, "fa-IR");
+  }
+
+  var currentRun = 0;
+
+  function speakAs(id, rawText) {
     if (window.SEE_PREFS && !SEE_PREFS.soundOn()) return;
-    if (!text) return;
-    serverSpeak(id, text)
-      .then(function (url) {
-        var a = new Audio(url);
-        return a.play();
-      })
-      .catch(function () { browserSpeak(id, text); });
+    var segs = splitLangs(rawText);
+    if (!segs.length) return;
+    var run = ++currentRun;
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    var i = 0;
+    function next() {
+      if (run !== currentRun || i >= segs.length) return Promise.resolve();
+      var seg = segs[i++];
+      var part = seg.lang === "es" ? spanishPart(id, seg.text) : persianPart(id, seg.text);
+      return part.catch(function () {}).then(next);
+    }
+    next();
   }
 
   window.SEE_CHARS = {
     list: CHARS,
     svg: svg,
-    speakAs: speakAs
+    speakAs: speakAs,
+    splitLangs: splitLangs
   };
 })();

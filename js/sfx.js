@@ -38,7 +38,8 @@
     tap:  function () { tone(880, 0, 0.06, "triangle", 0.12); },
     ok:   function () { tone(660, 0, 0.12, "sine"); tone(990, 0.09, 0.16, "sine"); },
     bad:  function () { tone(220, 0, 0.22, "sawtooth", 0.08); tone(180, 0.12, 0.22, "sawtooth", 0.08); },
-    done: function () { [523, 659, 784, 1046].forEach(function (f, i) { tone(f, i * 0.09, 0.2, "triangle", 0.16); }); }
+    done: function () { [523, 659, 784, 1046].forEach(function (f, i) { tone(f, i * 0.09, 0.2, "triangle", 0.16); }); },
+    streak: function () { [660, 880, 1100].forEach(function (f, i) { tone(f, i * 0.06, 0.12, "square", 0.08); }); }
   };
 
   function enabled() {
@@ -58,6 +59,9 @@
       setTimeout(function () { self.play("done"); }, 1100);
     }
   };
+
+  // مرورگرها تا وقتی کاربر لمس نکرده صدا را باز نمی‌کنند؛ با اولین لمس آماده‌اش می‌کنیم
+  document.addEventListener("pointerdown", function () { audio(); }, { once: true, capture: true });
 
   // هر دکمه یا پیوند روی صفحه، صدای کلیک کوتاه پخش می‌کند
   document.addEventListener("click", function (e) {
