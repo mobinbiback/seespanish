@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>seespanish · تست کلید AI</title>
+<style>
+  body { margin: 0; font-family: system-ui, Vazirmatn, sans-serif; background: #111116; color: #F1EEE6; line-height: 1.8; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
+  h1 { font-size: 1.4rem; margin: 0 0 6px; }
+  p.muted { color: #9D9DAB; font-size: .92rem; }
+  button {
+    min-height: 44px; padding: 8px 18px; margin: 6px 6px 6px 0; border: 0; border-radius: 999px;
+    background: #F2C230; color: #17171E; font: inherit; font-weight: 800; cursor: pointer;
+  }
+  button.ghost { background: #1C1C25; color: #F1EEE6; border: 1px solid #2A2A35; }
+  pre {
+    direction: ltr; text-align: left; white-space: pre-wrap; word-break: break-word;
+    background: #1C1C25; border: 1px solid #2A2A35; border-radius: 14px; padding: 14px; font-size: .9rem; min-height: 60px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>تست کلید هوش مصنوعی</h1>
+  <p class="muted">اول باید با حساب Google توی صفحه‌ی «من» وارد شده باشی. این صفحه فقط برای تست است و بعد از تأیید حذف میشه.</p>
+  <button type="button" id="cfg">بررسی تنظیمات</button>
+  <button type="button" class="ghost" id="live">تست زنده با Gemini</button>
+  <pre id="out">آماده‌ست. یکی از دکمه‌ها رو بزن.</pre>
+</div>
+<script>
+  (function () {
+    var API = "https://seespanish-api.sub-ify.site/index.php";
+    var out = document.getElementById("out");
+    function token() {
+      try { return localStorage.getItem("seespanish:token"); } catch (e) { return null; }
+    }
+    function run(path) {
+      var t = token();
+      if (!t) {
+        out.textContent = "توکن ورود پیدا نشد. اول توی صفحه‌ی «من» با Google وارد شو و برگرد اینجا.";
+        return;
+      }
+      out.textContent = "در حال بررسی...";
+      fetch(API + path, { headers: { "Authorization": "Bearer " + t } })
+        .then(function (r) { return r.text().then(function (txt) { return "HTTP " + r.status + "\n" + txt; }); })
+        .then(function (txt) { out.textContent = txt; })
+        .catch(function (e) { out.textContent = "خطای شبکه: " + e.message; });
+    }
+    document.getElementById("cfg").onclick = function () { run("/ai/ping"); };
+    document.getElementById("live").onclick = function () { run("/ai/ping?live=1"); };
+  })();
+</script>
+</body>
+</html>
