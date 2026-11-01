@@ -75,6 +75,59 @@
 <script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/sync.js"></script>
+<style id="auth-inline-style">
+/* ===== صفحه‌ی ورود (هم‌خانواده‌ی Subify) ===== */
+.auth-wrap { --acc: #7C5CFF; --acc-2: #6A4CF0; display: flex; justify-content: center; margin: 4px 0 26px; }
+.auth-card {
+  width: 100%; max-width: 440px; box-sizing: border-box;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 28px;
+  box-shadow: 0 18px 50px var(--shadow); padding: 30px 24px 22px;
+}
+.auth-card h3 { font-family: var(--head); font-size: 1.6rem; margin: 0 0 8px; color: var(--graphite); text-align: right; }
+.auth-card .lead { color: var(--graphite-soft); font-size: .98rem; line-height: 1.9; margin: 0 0 22px; text-align: right; }
+.auth-provider {
+  position: relative; display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box;
+  min-height: 58px; padding: 0 56px; margin: 0 0 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--paper-2); color: var(--graphite);
+  font: inherit; font-weight: 700; font-size: 1rem; text-decoration: none; cursor: pointer;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.auth-provider:hover { border-color: var(--acc); }
+.auth-provider:active { transform: translateY(1px); }
+.auth-provider .ico {
+  position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); border: 1px solid var(--line); color: var(--graphite);
+}
+.auth-provider[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+.auth-provider[aria-disabled="true"]:hover { border-color: var(--line); }
+.auth-or { display: flex; align-items: center; gap: 12px; color: var(--graphite-soft); margin: 18px 0; font-size: .92rem; }
+.auth-or::before, .auth-or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.auth-seg {
+  display: flex; padding: 5px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); margin-bottom: 18px;
+}
+.auth-seg button {
+  flex: 1; min-height: 46px; border: 0; border-radius: 999px; background: transparent;
+  color: var(--graphite-soft); font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer;
+}
+.auth-seg button[aria-pressed="true"] { background: var(--acc); color: #fff; box-shadow: 0 6px 18px rgba(124,92,255,.35); }
+.auth-label { display: block; font-size: .95rem; color: var(--graphite-soft); margin: 14px 6px 8px; text-align: right; }
+.auth-input {
+  width: 100%; min-height: 56px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--graphite); font: inherit; font-size: 1rem; box-sizing: border-box;
+  direction: ltr; text-align: left; outline: none;
+}
+.auth-input:focus { border-color: var(--acc); box-shadow: 0 0 0 4px rgba(124,92,255,.18); }
+.auth-input[dir="rtl"] { direction: rtl; text-align: right; }
+.auth-submit {
+  width: 100%; min-height: 58px; margin-top: 22px; border: 0; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(180deg, var(--acc), var(--acc-2)); color: #fff; font: inherit; font-weight: 800; font-size: 1.08rem;
+  box-shadow: 0 10px 26px rgba(124,92,255,.35);
+}
+.auth-submit:disabled { opacity: .6; cursor: not-allowed; }
+.auth-note { color: var(--graphite-soft); font-size: .86rem; text-align: center; margin: 18px 0 0; line-height: 2; }
+.auth-msg { color: #E5484D; font-size: .92rem; min-height: 1.4em; margin: 10px 6px 0; text-align: right; }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -289,6 +342,10 @@
   // ---- حساب کاربری: ورود با Google و نمایش نام ----
   (function () {
     var API = "https://seespanish-api.sub-ify.site/index.php";
+    var GOOGLE_SVG = "<svg viewBox=\"0 0 48 48\" width=\"22\" height=\"22\" aria-hidden=\"true\"><path fill=\"#EA4335\" d=\"M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6C12.3 13.5 17.7 9.5 24 9.5z\"/><path fill=\"#4285F4\" d=\"M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7-10.1 7-17.5z\"/><path fill=\"#FBBC05\" d=\"M10.4 28.8c-.5-1.5-.8-3-.8-4.8s.3-3.3.8-4.8l-7.8-6C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.8-6z\"/><path fill=\"#34A853\" d=\"M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.7-4.2-13.6-9.9l-7.8 6C6.5 42.6 14.6 48 24 48z\"/></svg>";
+    var GITHUB_SVG = "<svg viewBox=\"0 0 16 16\" width=\"22\" height=\"22\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"/></svg>";
+    var LINKEDIN_SVG = "<svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" aria-hidden=\"true\"><rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#0A66C2\"/><path fill=\"#fff\" d=\"M5.5 9.2h2.7V18H5.5zM6.85 4.9a1.55 1.55 0 110 3.1 1.55 1.55 0 010-3.1zM10 9.2h2.6v1.2h.04c.36-.68 1.25-1.4 2.57-1.4 2.75 0 3.26 1.81 3.26 4.16V18h-2.7v-4.4c0-1.05-.02-2.4-1.46-2.4-1.46 0-1.69 1.14-1.69 2.32V18H10z\"/></svg>";
+
     var KEY = "seespanish:token";
 
     // بعد از برگشت از Google، توکن در آدرس (#token=...) می‌آید؛ آن را ذخیره و از آدرس پاک می‌کنیم
@@ -302,12 +359,12 @@
 
     function loginButton() {
       render(
-        '<div class="auth-card">' +
+        '<div class="auth-wrap"><div class="auth-card">' +
           '<h3>ورود به See Spanish</h3>' +
           '<p class="lead">با یکی از روش‌های زیر وارد شو. اگر حساب نداشته باشی، همان‌جا ساخته می‌شود.</p>' +
-          '<a class="auth-provider" href="' + API + '/auth/google"><span>ادامه با Google</span><span class="ico">G</span></a>' +
-          '<span class="auth-provider" aria-disabled="true"><span>ادامه با GitHub (به‌زودی)</span><span class="ico">GH</span></span>' +
-          '<span class="auth-provider" aria-disabled="true"><span>ادامه با LinkedIn (به‌زودی)</span><span class="ico">in</span></span>' +
+          '<a class="auth-provider" href="' + API + '/auth/google"><span class="ico">' + GOOGLE_SVG + '</span><span>ادامه با Google</span></a>' +
+          '<a class="auth-provider" href="' + API + '/auth/github"><span class="ico">' + GITHUB_SVG + '</span><span>ادامه با GitHub</span></a>' +
+          '<a class="auth-provider" href="' + API + '/auth/linkedin"><span class="ico">' + LINKEDIN_SVG + '</span><span>ادامه با LinkedIn</span></a>' +
           '<div class="auth-or">یا</div>' +
           '<div class="auth-seg" role="group" aria-label="نوع ورود">' +
             '<button type="button" id="tabLogin" aria-pressed="true">ورود</button>' +
@@ -325,8 +382,8 @@
             '<button class="auth-submit" type="submit" id="authSubmit">ورود</button>' +
           '</form>' +
           '<p class="auth-msg" id="authMsg" role="alert"></p>' +
-          '<p class="auth-note" id="authNote">فقط نام کاربری، ایمیل و نام نمایشی ذخیره می‌شود. رمز عبور به‌صورت رمزنگاری‌شده ذخیره می‌شود.</p>' +
-        '</div>'
+          '<p class="auth-note">فقط نام کاربری، ایمیل و نام نمایشی ذخیره می‌شود. رمز عبور به‌صورت رمزنگاری‌شده ذخیره می‌شود.</p>' +
+        '</div></div>'
       );
       var mode = "login";
       var tabLogin = document.getElementById("tabLogin");
