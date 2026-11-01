@@ -88,6 +88,7 @@
 <script src="js/theme.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -230,6 +231,7 @@
           if (!sel) { fb.innerHTML = `<p class="muted">اول یک گزینه را انتخاب کن.</p>`; return; }
           const ok = Number(sel.value) === it.answer;
           window.SEE_PROGRESS.recordAnswer(it.id, ok);
+          if (window.SEE_FX) SEE_FX.result(ok, card);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
             <h4>${ok ? "درست است" : "پاسخ درست: " + it.options[it.answer]}</h4>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
@@ -244,6 +246,7 @@
         btn.addEventListener("click", () => {
           const ok = it.accept.map(norm).includes(norm(input.value));
           window.SEE_PROGRESS.recordAnswer(it.id, ok);
+          if (window.SEE_FX) SEE_FX.result(ok, card);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
             <h4>${ok ? "درست است" : "پاسخ درست: " + it.answer}</h4>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
@@ -276,6 +279,7 @@
           const inRange = n >= it.minWords && n <= it.maxWords;
           const ok = inRange && checked === it.checklist.length;
           window.SEE_PROGRESS.recordAnswer(it.id, ok);
+          if (window.SEE_FX) SEE_FX.result(ok, card);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
             <h4>${ok ? "متن کامل است" : "هنوز کامل نیست"}</h4>
             <p>${inRange ? "طول متن مناسب است." : "طول متن باید بین " + it.minWords + " و " + it.maxWords + " کلمه باشد. الان " + n + " کلمه داری."}

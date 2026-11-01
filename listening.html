@@ -67,6 +67,7 @@
 <script src="js/prefs.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -172,6 +173,7 @@
       right += hits;
       $("#score").textContent = `درست: ${right} از ${total}`;
       const ok = hits === item.questions.length;
+      if (window.SEE_FX) SEE_FX.result(ok, out);
       out.innerHTML = "";
       const box = document.createElement("div");
       box.className = "result " + (ok ? "ok" : "bad");

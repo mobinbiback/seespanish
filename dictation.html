@@ -65,6 +65,7 @@
 <script src="js/prefs.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -178,6 +179,7 @@
     if (!ok) box.append(s);
     else box.append(s);
     box.hidden = false;
+    if (window.SEE_FX) SEE_FX.result(ok, box);
   });
 
   renderLevels();

@@ -61,6 +61,7 @@
 <script src="js/theme.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -189,6 +190,7 @@
         ${fixHtml}
       </div>`;
     out.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (pass && window.SEE_FX) SEE_FX.celebrate();
   }
 
   if (!valid) {
