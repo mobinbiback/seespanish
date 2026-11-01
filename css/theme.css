@@ -539,3 +539,81 @@ html[data-theme="dark"] { --edge: #0B0B0F; --edge-accent: #9A7410; }
 .node.current { box-shadow: 0 5px 0 var(--edge-accent) !important; }
 
 .tabbar a[aria-current="page"] { font-weight: 800 !important; }
+
+/* ==========================================================
+   انیمیشن‌های تشویق و پاسخ (js/fx.js)
+   ========================================================== */
+@keyframes fx-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.04); box-shadow: 0 0 0 6px rgba(242, 194, 48, .35); }
+  100% { transform: scale(1); }
+}
+@keyframes fx-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+.fx-pop { animation: fx-pop .6s ease; }
+.fx-shake { animation: fx-shake .5s ease; }
+
+.fx-confetti {
+  position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 999;
+}
+.fx-confetti span {
+  position: absolute; top: -12px; width: 10px; height: 14px; border-radius: 3px;
+  animation-name: fx-fall; animation-timing-function: cubic-bezier(.2,.6,.4,1); animation-fill-mode: forwards;
+}
+@keyframes fx-fall {
+  to { transform: translateY(110vh) rotate(540deg); opacity: .2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-pop, .fx-shake { animation: none; }
+  .fx-confetti { display: none; }
+}
+
+/* ==========================================================
+   صفحه‌ی ورود و ثبت‌نام (هم‌خانواده‌ی طراحی Subify)
+   ========================================================== */
+.auth-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 26px;
+  box-shadow: 0 10px 30px var(--shadow); padding: 26px 22px 22px; margin: 6px 0 18px;
+}
+.auth-card h3 { font-family: var(--head); font-size: 1.5rem; margin: 0 0 6px; }
+.auth-card .lead { color: var(--graphite-soft); font-size: .95rem; margin: 0 0 18px; }
+.auth-provider {
+  display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 56px;
+  padding: 0 10px 0 18px; margin-bottom: 10px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--paper-2); color: var(--graphite); font: inherit; font-weight: 700; cursor: pointer;
+  text-decoration: none; box-sizing: border-box;
+}
+.auth-provider .ico {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); border: 1px solid var(--line); font-weight: 800; flex: 0 0 auto;
+}
+.auth-provider[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.auth-or { display: flex; align-items: center; gap: 10px; color: var(--graphite-soft); margin: 14px 0; font-size: .9rem; }
+.auth-or::before, .auth-or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.auth-seg {
+  display: flex; padding: 4px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); margin-bottom: 14px;
+}
+.auth-seg button {
+  flex: 1; min-height: 44px; border: 0; border-radius: 999px; background: transparent;
+  color: var(--graphite-soft); font: inherit; font-weight: 700; cursor: pointer;
+}
+.auth-seg button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); }
+.auth-label { font-size: .9rem; color: var(--graphite-soft); margin: 10px 4px 6px; display: block; }
+.auth-input {
+  width: 100%; min-height: 54px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--graphite); font: inherit; box-sizing: border-box; direction: ltr; text-align: left;
+}
+.auth-input[dir="rtl"] { direction: rtl; text-align: right; }
+.auth-submit {
+  width: 100%; min-height: 56px; margin-top: 16px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; font-size: 1.05rem;
+  box-shadow: 0 4px 0 #B98F12;
+}
+.auth-submit:disabled { opacity: .55; cursor: not-allowed; }
+.auth-note { color: var(--graphite-soft); font-size: .85rem; text-align: center; margin: 14px 0 0; line-height: 1.9; }
+.auth-msg { color: var(--bad-ink, #B3261E); font-size: .92rem; min-height: 1.4em; margin: 8px 4px 0; }
