@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1E1E26">
+<link rel="manifest" href="manifest.json">
+<title>seespanish · مربی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root {
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+    --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+  }
+  body { margin: 0; font-family: var(--body); line-height: 1.8; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 120px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; flex-wrap: wrap; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+  h2 { font-family: var(--head); font-size: 1.5rem; margin: 10px 0 4px; }
+  .muted { color: var(--graphite-soft); font-size: .95rem; }
+  .meter { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 10px 0 14px; }
+  .bar { flex: 1; height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--pencil); }
+  .chat { display: flex; flex-direction: column; gap: 10px; min-height: 180px; }
+  .msg {
+    max-width: 88%; padding: 10px 14px; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--surface); box-shadow: 0 4px 14px var(--shadow); white-space: pre-wrap;
+  }
+  .msg.me { align-self: flex-start; background: var(--pencil); color: var(--accent-ink); border-color: transparent; }
+  .msg.bot { align-self: flex-end; }
+  .msg.err { align-self: flex-end; background: var(--bad); }
+  .composer { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
+    display: flex; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+    padding: 8px; box-shadow: 0 10px 30px var(--shadow); max-width: 696px; margin: 0 auto; }
+  textarea {
+    flex: 1; min-height: 44px; max-height: 120px; resize: vertical; padding: 10px 12px; font: inherit;
+    background: transparent; color: var(--graphite); border: 0; outline: none;
+  }
+  .send {
+    min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; box-shadow: 0 4px 0 #B98F12;
+  }
+  .send:disabled { opacity: .5; cursor: not-allowed; }
+  .login {
+    display: inline-block; min-height: 44px; line-height: 44px; padding: 0 22px; border-radius: 999px;
+    background: var(--pencil); color: var(--accent-ink); font-weight: 800; text-decoration: none; margin-top: 10px;
+  }
+</style>
+<link rel="stylesheet" href="css/theme.css">
+<script src="js/theme.js"></script>
+<script src="js/sync.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <nav class="top-nav" aria-label="منوی اصلی">
+      <a class="navlink" href="index.html">خانه</a>
+      <a class="navlink" href="plan.html">برنامه</a>
+      <a class="navlink" href="practice.html">تمرین</a>
+      <a class="navlink" href="notebook.html">دفترچه</a>
+      <a class="navlink" href="me.html">من</a>
+    </nav>
+  </header>
+
+  <h2>مربی</h2>
+  <p class="muted">سؤال‌ت رو درباره‌ی اسپانیایی بپرس. جواب فارسی با مثال اسپانیایی میاد.</p>
+
+  <div id="auth"></div>
+  <div class="meter" id="meter" hidden>
+    <span class="muted" id="meterText"></span>
+  </div>
+  <div class="bar" id="meterBar" hidden><i style="width:0%"></i></div>
+
+  <div class="chat" id="chat" aria-live="polite"></div>
+</div>
+
+<div class="composer" id="composer" hidden>
+  <textarea id="q" rows="1" placeholder="سؤالت رو بنویس…" aria-label="سؤال"></textarea>
+  <button type="button" class="send" id="send">ارسال</button>
+</div>
+
+<script>
+  (function () {
+    var API = "https://seespanish-api.sub-ify.site/index.php";
+    var KEY = "seespanish:token";
+    var token = null;
+    try { token = localStorage.getItem(KEY); } catch (e) {}
+
+    var chat = document.getElementById("chat");
+    var auth = document.getElementById("auth");
+    var composer = document.getElementById("composer");
+    var meter = document.getElementById("meter");
+    var meterText = document.getElementById("meterText");
+    var meterBar = document.getElementById("meterBar");
+    var sendBtn = document.getElementById("send");
+    var input = document.getElementById("q");
+
+    function addMsg(text, cls) {
+      var d = document.createElement("div");
+      d.className = "msg " + cls;
+      d.textContent = text;
+      chat.appendChild(d);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+
+    function showUsage(used, limit) {
+      meter.hidden = false;
+      meterBar.hidden = false;
+      meterText.textContent = "امروز " + used + " از " + limit + " پرسش";
+      meterBar.firstChild.style.width = Math.min(100, Math.round((used / limit) * 100)) + "%";
+    }
+
+    function needLogin() {
+      auth.innerHTML = '<p class="muted">برای استفاده از مربی، اول با Google وارد شو.</p>' +
+        '<a class="login" href="' + API + '/auth/google">ورود با Google</a>';
+    }
+
+    if (!token) { needLogin(); return; }
+
+    composer.hidden = false;
+    fetch(API + "/ai/usage", { headers: { "Authorization": "Bearer " + token } })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) { try { localStorage.removeItem(KEY); } catch (e) {} needLogin(); composer.hidden = true; return; }
+        showUsage(j.tutor.used, j.tutor.limit);
+      })
+      .catch(function () { addMsg("اتصال با سرور برقرار نشد.", "err"); });
+
+    function send() {
+      var q = input.value.trim();
+      if (!q) return;
+      input.value = "";
+      addMsg(q, "me");
+      sendBtn.disabled = true;
+      fetch(API + "/ai/tutor", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+        body: JSON.stringify({ question: q })
+      })
+        .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); })
+        .then(function (res) {
+          var j = res.body;
+          if (j.ok) {
+            addMsg(j.answer, "bot");
+            showUsage(j.used, j.limit);
+          } else if (res.status === 429) {
+            addMsg("سهمیه‌ی امروزت تموم شد (" + j.limit + " پرسش). فردا دوباره می‌تونی بپرسی.", "err");
+            showUsage(j.limit, j.limit);
+          } else if (res.status === 401) {
+            addMsg("ورودت منقضی شده. دوباره با Google وارد شو.", "err");
+          } else {
+            addMsg("مربی الان جواب نداد. کمی بعد دوباره امتحان کن.", "err");
+          }
+        })
+        .catch(function () { addMsg("اتصال با سرور برقرار نشد.", "err"); })
+        .then(function () { sendBtn.disabled = false; input.focus(); });
+    }
+
+    sendBtn.addEventListener("click", send);
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+  })();
+</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>

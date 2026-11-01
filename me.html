@@ -91,10 +91,11 @@
     <p class="muted">هر سطح مسیر و پیشرفت جدا دارد.</p>
     <ul class="segment" id="levelSeg" role="group" aria-label="سطح"></ul>
   </div>
-  <div class="card">
+  <div class="card" id="aiCard">
     <div>مربی هوش مصنوعی</div>
-    <p class="muted">به‌زودی: پاسخ به سؤال‌ها و تصحیح نوشتن. سهمیه‌ی روزانه اینجا نشون داده میشه.</p>
-    <div class="bar" style="margin-top:8px"><i style="width:0%"></i></div>
+    <p class="muted" id="aiText">در حال بررسی...</p>
+    <div class="bar" style="margin-top:8px"><i id="aiBar" style="width:0%"></i></div>
+    <a href="tutor.html" style="display:inline-block;margin-top:10px;min-height:44px;line-height:44px;padding:0 22px;border-radius:999px;background:var(--pencil);color:var(--accent-ink);font-weight:800;text-decoration:none">باز کردن مربی</a>
   </div>
 
   <h2>نمایش</h2>
@@ -381,6 +382,23 @@
       deferred = null;
       installBtn.hidden = true;
     };
+  })();
+</script>
+<script>
+  (function () {
+    var API = "https://seespanish-api.sub-ify.site/index.php";
+    var t = null;
+    try { t = localStorage.getItem("seespanish:token"); } catch (e) {}
+    var txt = document.getElementById("aiText");
+    if (!t) { txt.textContent = "برای استفاده از مربی، اول وارد حسابت شو."; return; }
+    fetch(API + "/ai/usage", { headers: { "Authorization": "Bearer " + t } })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) { txt.textContent = "برای استفاده از مربی، دوباره وارد شو."; return; }
+        txt.textContent = "امروز " + j.tutor.used + " از " + j.tutor.limit + " پرسش";
+        document.getElementById("aiBar").style.width = Math.min(100, Math.round(j.tutor.used / j.tutor.limit * 100)) + "%";
+      })
+      .catch(function () { txt.textContent = "اتصال با سرور برقرار نشد."; });
   })();
 </script>
 </body>
