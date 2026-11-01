@@ -442,3 +442,53 @@ header > .theme-toggle { margin-inline-start: auto; }
 .book .book-progress { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
 .book .book-progress i { display: block; height: 100%; background: var(--pencil); }
 .book::before { display: none !important; }
+
+/* ==========================================================
+   نمای دسکتاپ: عرض بیشتر، منوی بالا کامل، شبکه‌ی مرتب
+   (روی گوشی هیچ تغییری نمی‌کند)
+   ========================================================== */
+@media (min-width: 900px) {
+  .wrap {
+    max-width: 1120px !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+  header {
+    flex-wrap: wrap !important;
+    padding-top: 22px !important;
+  }
+  header nav.top-nav {
+    display: flex !important;
+    gap: 8px !important;
+  }
+  header nav.top-nav a.navlink {
+    font-size: .98rem !important;
+    padding: 8px 16px !important;
+    min-height: 40px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+  header nav.top-nav a.navlink[aria-current="page"] {
+    background: var(--pencil) !important;
+    color: var(--accent-ink) !important;
+    border-color: transparent !important;
+    font-weight: 800 !important;
+  }
+  .books {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  }
+  .path {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, 64px) !important;
+    justify-content: center !important;
+    gap: 18px 40px !important;
+  }
+  .node:nth-child(odd),
+  .node:nth-child(even) { margin: 0 !important; }
+  .node:not(:first-child)::before { display: none !important; }
+}
+
+/* روی گوشی، منوی بالا پنهان است و منوی پایین کار را انجام می‌دهد */
+@media (max-width: 899px) {
+  header nav.top-nav { display: none !important; }
+}
