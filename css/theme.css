@@ -492,3 +492,50 @@ header > .theme-toggle { margin-inline-start: auto; }
 @media (max-width: 899px) {
   header nav.top-nav { display: none !important; }
 }
+
+/* ==========================================================
+   نسخه‌ی سوم ظاهر: کارت‌ها و دکمه‌ها با لبه‌ی سه‌بعدی (مثل اپ‌های آموزشی)
+   ========================================================== */
+:root { --edge: #CFC6AE; --edge-accent: #B98F12; }
+html[data-theme="dark"] { --edge: #0B0B0F; --edge-accent: #9A7410; }
+
+.book,
+.today,
+.card,
+.pathdetail,
+.result {
+  box-shadow: 0 6px 0 var(--edge), 0 12px 24px var(--shadow) !important;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.book:hover { transform: translateY(-2px) !important; }
+.book:active { transform: translateY(3px) !important; box-shadow: 0 2px 0 var(--edge) !important; }
+
+.btn.main,
+.levels button[aria-pressed="true"],
+.pathdetail button {
+  box-shadow: 0 4px 0 var(--edge-accent) !important;
+}
+.btn.main:active,
+.levels button[aria-pressed="true"]:active,
+.pathdetail button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--edge-accent) !important;
+}
+
+.btn:not(.main),
+.levels button:not([aria-pressed="true"]) {
+  box-shadow: 0 4px 0 var(--edge) !important;
+}
+.btn:not(.main):active,
+.levels button:not([aria-pressed="true"]):active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--edge) !important;
+}
+
+.node {
+  box-shadow: 0 5px 0 var(--edge) !important;
+}
+.node:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--edge) !important; }
+.node.current { box-shadow: 0 5px 0 var(--edge-accent) !important; }
+
+.tabbar a[aria-current="page"] { font-weight: 800 !important; }
