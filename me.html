@@ -80,6 +80,9 @@
     <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
   </header>
 
+  <h2>حساب کاربری</h2>
+  <div class="card" id="account"><p class="muted">در حال بررسی...</p></div>
+
   <h2>نمایش</h2>
   <div class="card">
     <div>
@@ -233,6 +236,49 @@
 </script>
 <script>
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+<script>
+  // ---- حساب کاربری: ورود با Google و نمایش نام ----
+  (function () {
+    var API = "https://seespanish-api.sub-ify.site/index.php";
+    var KEY = "seespanish:token";
+
+    // بعد از برگشت از Google، توکن در آدرس (#token=...) می‌آید؛ آن را ذخیره و از آدرس پاک می‌کنیم
+    var m = location.hash.match(/token=([a-f0-9]{64})/);
+    if (m) {
+      try { localStorage.setItem(KEY, m[1]); } catch (e) {}
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+
+    function render(html) { document.getElementById("account").innerHTML = html; }
+
+    function loginButton() {
+      render('<p class="muted">با Google وارد شو تا پیشرفتت همه‌جا همگام بشه.</p>' +
+        '<a href="' + API + '/auth/google" style="display:inline-block;min-height:44px;line-height:44px;padding:0 22px;border-radius:999px;background:var(--pencil);color:var(--accent-ink);font-weight:800;text-decoration:none">ورود با Google</a>');
+    }
+
+    function show(user) {
+      render('<p>وارد شدی: <b id="acc-name"></b></p>' +
+        '<button id="acc-logout" class="danger">خروج</button>');
+      document.getElementById("acc-name").textContent = user.name || user.email || "کاربر";
+      document.getElementById("acc-logout").onclick = function () {
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        loginButton();
+      };
+    }
+
+    var token = null;
+    try { token = localStorage.getItem(KEY); } catch (e) {}
+    if (!token) { loginButton(); return; }
+
+    fetch(API + "/auth/me", { headers: { Authorization: "Bearer " + token } })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && j.ok) { show(j.user); }
+        else { try { localStorage.removeItem(KEY); } catch (e) {} loginButton(); }
+      })
+      .catch(function () { render('<p class="muted">اتصال با سرور برقرار نشد.</p>'); });
+  })();
 </script>
 </body>
 </html>
