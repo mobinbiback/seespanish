@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>پنل مدیریت · See Spanish</title>
+<style>
+  :root { --bg:#0E0E13; --card:#1A1A23; --line:#2A2A35; --ink:#F1EEE6; --soft:#9D9DAB; --acc:#F2C230; --bad:#E5484D; --ok:#3FB950; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, Vazirmatn, sans-serif; line-height:1.7; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 22px 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  h1 { font-size:1.35rem; margin:0; }
+  h2 { font-size:1.05rem; margin:24px 0 10px; color:var(--soft); font-weight:700; }
+  .muted { color: var(--soft); font-size:.9rem; }
+  .btn { min-height:40px; padding:0 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--ink); font:inherit; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; }
+  .btn.acc { background:var(--acc); color:#17171E; border-color:transparent; }
+  .btn.bad { color:var(--bad); }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap:12px; }
+  .stat { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; }
+  .stat .n { font-size:1.8rem; font-weight:800; font-variant-numeric: tabular-nums; }
+  .stat .l { color:var(--soft); font-size:.88rem; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:14px; overflow:hidden; }
+  .toolbar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+  input[type=search] {
+    flex:1; min-width:200px; min-height:42px; padding:0 14px; border-radius:999px; border:1px solid var(--line);
+    background:var(--bg); color:var(--ink); font:inherit; direction:ltr; text-align:left;
+  }
+  table { width:100%; border-collapse:collapse; font-size:.92rem; }
+  th, td { padding:10px 8px; border-bottom:1px solid var(--line); text-align:right; vertical-align:middle; }
+  th { color:var(--soft); font-weight:600; font-size:.85rem; }
+  td.ltr { direction:ltr; text-align:left; }
+  .tag { display:inline-block; padding:2px 10px; border-radius:999px; background:var(--bg); border:1px solid var(--line); font-size:.8rem; }
+  .pager { display:flex; justify-content:space-between; align-items:center; margin-top:12px; gap:8px; }
+  .msg { min-height:1.4em; margin:8px 0 0; color:var(--soft); }
+  .scroll { overflow-x:auto; }
+  .gate { text-align:center; padding:40px 10px; }
+  @media (max-width:640px) { th.hide, td.hide { display:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>پنل مدیریت See Spanish</h1>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="refresh" type="button">بروزرسانی</button>
+      <a class="btn" href="index.html">برگشت به سایت</a>
+    </div>
+  </header>
+
+  <div id="gate" class="gate" hidden></div>
+
+  <div id="app" hidden>
+    <h2>خلاصه</h2>
+    <div class="grid">
+      <div class="stat"><div class="n" id="sTotal">–</div><div class="l">کل کاربران</div></div>
+      <div class="stat"><div class="n" id="sToday">–</div><div class="l">ثبت‌نام امروز</div></div>
+      <div class="stat"><div class="n" id="s7">–</div><div class="l">ثبت‌نام ۷ روز</div></div>
+      <div class="stat"><div class="n" id="sLogin">–</div><div class="l">ورود امروز</div></div>
+      <div class="stat"><div class="n" id="sSess">–</div><div class="l">نشست‌های فعال</div></div>
+    </div>
+
+    <h2>روش ورود کاربران</h2>
+    <div class="grid" id="providers"></div>
+
+    <h2>مصرف امروز هوش مصنوعی</h2>
+    <div class="grid" id="ai"></div>
+
+    <h2>کاربران</h2>
+    <div class="panel">
+      <div class="toolbar">
+        <input type="search" id="q" placeholder="جستجو با نام، ایمیل یا روش ورود" aria-label="جستجو">
+      </div>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>نام</th><th>ایمیل</th><th class="hide">روش ورود</th>
+              <th class="hide">ثبت‌نام</th><th>آخرین ورود</th><th>نشست</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <button class="btn" id="prev" type="button">قبلی</button>
+        <span class="muted" id="pageInfo"></span>
+        <button class="btn" id="next" type="button">بعدی</button>
+      </div>
+      <p class="msg" id="msg"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var API = "https://seespanish-api.sub-ify.site/index.php";
+    var token = null;
+    try { token = localStorage.getItem("seespanish:token"); } catch (e) {}
+    var gate = document.getElementById("gate");
+    var app = document.getElementById("app");
+    var msg = document.getElementById("msg");
+    var page = 1, total = 0, per = 30, timer = null;
+
+    function h(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+    function num(n) { return (n == null ? 0 : n).toLocaleString("fa-IR"); }
+    function fmt(d) { return d ? h(d) : "—"; }
+
+    function api(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({ "Authorization": "Bearer " + token }, opts.headers || {});
+      return fetch(API + path, opts).then(function (r) { return r.json().then(function (j) { j._status = r.status; return j; }); });
+    }
+
+    function showGate(text, withLogin) {
+      app.hidden = true;
+      gate.hidden = false;
+      gate.innerHTML = '<p>' + h(text) + '</p>' + (withLogin ? '<p><a class="btn acc" href="me.html">ورود به حساب</a></p>' : '');
+    }
+
+    function loadStats() {
+      return api("/admin/stats").then(function (j) {
+        if (!j.ok) throw j;
+        var u = j.users;
+        document.getElementById("sTotal").textContent = num(u.total);
+        document.getElementById("sToday").textContent = num(u.signups_today);
+        document.getElementById("s7").textContent = num(u.signups_7d);
+        document.getElementById("sLogin").textContent = num(u.logins_today);
+        document.getElementById("sSess").textContent = num(j.sessions_active);
+        var names = { google: "Google", github: "GitHub", linkedin: "LinkedIn", email: "ایمیل و رمز" };
+        document.getElementById("providers").innerHTML = Object.keys(names).map(function (k) {
+          return '<div class="stat"><div class="n">' + num(u.by_provider[k] || 0) + '</div><div class="l">' + names[k] + '</div></div>';
+        }).join("");
+        var labels = { tutor: "پرسش از مربی", lookup: "واژه‌یاب", tts: "صدای شخصیت" };
+        var ai = j.ai_today || {};
+        document.getElementById("ai").innerHTML = Object.keys(labels).map(function (k) {
+          var v = ai[k] || { requests: 0, users: 0 };
+          return '<div class="stat"><div class="n">' + num(v.requests) + '</div><div class="l">' + labels[k] + ' · ' + num(v.users) + ' کاربر</div></div>';
+        }).join("");
+      });
+    }
+
+    function loadUsers() {
+      var q = document.getElementById("q").value.trim();
+      msg.textContent = "در حال بارگذاری...";
+      return api("/admin/users?page=" + page + "&q=" + encodeURIComponent(q)).then(function (j) {
+        if (!j.ok) throw j;
+        total = j.total;
+        var tbody = document.getElementById("rows");
+        if (!j.items.length) {
+          tbody.innerHTML = '<tr><td colspan="8" class="muted">کاربری پیدا نشد.</td></tr>';
+        } else {
+          tbody.innerHTML = j.items.map(function (u) {
+            return '<tr>' +
+              '<td>' + u.id + '</td>' +
+              '<td>' + h(u.name || "—") + '</td>' +
+              '<td class="ltr">' + h(u.email || "—") + '</td>' +
+              '<td class="hide"><span class="tag">' + h(u.provider) + '</span></td>' +
+              '<td class="hide">' + fmt(u.created_at) + '</td>' +
+              '<td>' + fmt(u.last_login_at) + '</td>' +
+              '<td>' + num(u.active_sessions) + '</td>' +
+              '<td><button class="btn bad" data-revoke="' + u.id + '" type="button">خروج از همه</button></td>' +
+              '</tr>';
+          }).join("");
+        }
+        var pages = Math.max(1, Math.ceil(total / per));
+        document.getElementById("pageInfo").textContent = "صفحه " + num(page) + " از " + num(pages) + " · " + num(total) + " کاربر";
+        document.getElementById("prev").disabled = page <= 1;
+        document.getElementById("next").disabled = page >= pages;
+        msg.textContent = "";
+      });
+    }
+
+    document.getElementById("rows").addEventListener("click", function (e) {
+      var id = e.target && e.target.getAttribute && e.target.getAttribute("data-revoke");
+      if (!id) return;
+      if (!confirm("همه‌ی نشست‌های این کاربر بسته بشه؟ کاربر دوباره باید وارد شه.")) return;
+      api("/admin/revoke", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: Number(id) })
+      }).then(function (j) {
+        msg.textContent = j.ok ? "نشست‌های کاربر بسته شد." : "خطا: " + (j.error || "unknown");
+        return loadUsers();
+      }).catch(function () { msg.textContent = "اتصال با سرور برقرار نشد."; });
+    });
+
+    document.getElementById("q").addEventListener("input", function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { page = 1; loadUsers(); }, 300);
+    });
+    document.getElementById("prev").onclick = function () { if (page > 1) { page--; loadUsers(); } };
+    document.getElementById("next").onclick = function () { page++; loadUsers(); };
+    document.getElementById("refresh").onclick = function () { loadStats(); loadUsers(); };
+
+    if (!token) { showGate("برای ورود به پنل، اول با حساب مالک وارد شو.", true); return; }
+    api("/admin/stats").then(function (j) {
+      if (j._status === 401) { showGate("نشست ورود منقضی شده. دوباره وارد شو.", true); return; }
+      if (j._status === 403) { showGate("این حساب دسترسی مدیریت ندارد."); return; }
+      if (!j.ok) { showGate("خطا در دریافت اطلاعات (" + (j.error || "unknown") + ")."); return; }
+      app.hidden = false;
+      gate.hidden = true;
+      loadStats();
+      loadUsers();
+    }).catch(function () { showGate("اتصال با سرور برقرار نشد."); });
+  })();
+</script>
+</body>
+</html>
