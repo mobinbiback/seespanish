@@ -51,6 +51,7 @@
       if (!enabled()) return;
       if (SOUNDS[name]) SOUNDS[name]();
     },
+    state: function () { return ctx ? ctx.state : "none"; },
     test: function () {
       var self = this;
       self.play("tap");
