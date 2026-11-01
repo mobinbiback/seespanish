@@ -302,24 +302,39 @@
 
     function loginButton() {
       render(
-        '<div class="auth-tabs" style="display:flex;gap:6px;margin-bottom:10px">' +
-          '<button type="button" id="tabLogin" class="auth-tab" aria-pressed="true">ورود</button>' +
-          '<button type="button" id="tabRegister" class="auth-tab" aria-pressed="false">ثبت‌نام</button>' +
-        '</div>' +
-        '<form id="authForm" style="display:grid;gap:8px">' +
-          '<input id="authName" type="text" placeholder="نام کاربری (فقط برای ثبت‌نام)" maxlength="40" style="display:none;min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font:inherit">' +
-          '<input id="authEmail" type="email" placeholder="ایمیل" autocomplete="email" required style="min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font:inherit;direction:ltr;text-align:left">' +
-          '<input id="authPass" type="password" placeholder="رمز عبور (حداقل ۸ کاراکتر)" autocomplete="current-password" required minlength="8" style="min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font:inherit;direction:ltr;text-align:left">' +
-          '<button type="submit" id="authSubmit" style="min-height:44px;border:0;border-radius:999px;background:var(--pencil);color:var(--accent-ink);font:inherit;font-weight:800;cursor:pointer">ورود</button>' +
-        '</form>' +
-        '<p id="authMsg" class="muted" style="margin:8px 0 0"></p>' +
-        '<p class="muted" style="margin:10px 0 4px">یا</p>' +
-        '<a href="' + API + '/auth/google" style="display:inline-block;min-height:44px;line-height:44px;padding:0 22px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font-weight:700;text-decoration:none">ورود با Google</a>'
+        '<div class="auth-card">' +
+          '<h3>ورود به See Spanish</h3>' +
+          '<p class="lead">با یکی از روش‌های زیر وارد شو. اگر حساب نداشته باشی، همان‌جا ساخته می‌شود.</p>' +
+          '<a class="auth-provider" href="' + API + '/auth/google"><span>ادامه با Google</span><span class="ico">G</span></a>' +
+          '<span class="auth-provider" aria-disabled="true"><span>ادامه با GitHub (به‌زودی)</span><span class="ico">GH</span></span>' +
+          '<span class="auth-provider" aria-disabled="true"><span>ادامه با LinkedIn (به‌زودی)</span><span class="ico">in</span></span>' +
+          '<div class="auth-or">یا</div>' +
+          '<div class="auth-seg" role="group" aria-label="نوع ورود">' +
+            '<button type="button" id="tabLogin" aria-pressed="true">ورود</button>' +
+            '<button type="button" id="tabRegister" aria-pressed="false">ساخت حساب</button>' +
+          '</div>' +
+          '<form id="authForm" novalidate>' +
+            '<div id="fieldName" style="display:none"><label class="auth-label" for="authName">نام کاربری</label>' +
+              '<input class="auth-input" id="authName" type="text" maxlength="40" autocomplete="username" dir="rtl"></div>' +
+            '<label class="auth-label" id="labelLogin" for="authLogin">نام کاربری یا ایمیل</label>' +
+            '<div id="fieldEmail" style="display:none"><label class="auth-label" for="authEmail">ایمیل</label>' +
+              '<input class="auth-input" id="authEmail" type="email" autocomplete="email"></div>' +
+            '<input class="auth-input" id="authLogin" type="text" autocomplete="username">' +
+            '<label class="auth-label" for="authPass">رمز عبور</label>' +
+            '<input class="auth-input" id="authPass" type="password" autocomplete="current-password">' +
+            '<button class="auth-submit" type="submit" id="authSubmit">ورود</button>' +
+          '</form>' +
+          '<p class="auth-msg" id="authMsg" role="alert"></p>' +
+          '<p class="auth-note" id="authNote">فقط نام کاربری، ایمیل و نام نمایشی ذخیره می‌شود. رمز عبور به‌صورت رمزنگاری‌شده ذخیره می‌شود.</p>' +
+        '</div>'
       );
       var mode = "login";
       var tabLogin = document.getElementById("tabLogin");
       var tabRegister = document.getElementById("tabRegister");
-      var nameInput = document.getElementById("authName");
+      var fieldName = document.getElementById("fieldName");
+      var fieldEmail = document.getElementById("fieldEmail");
+      var labelLogin = document.getElementById("labelLogin");
+      var loginInput = document.getElementById("authLogin");
       var submit = document.getElementById("authSubmit");
       var msg = document.getElementById("authMsg");
       var form = document.getElementById("authForm");
@@ -328,9 +343,11 @@
         mode = m;
         tabLogin.setAttribute("aria-pressed", String(m === "login"));
         tabRegister.setAttribute("aria-pressed", String(m === "register"));
-        nameInput.style.display = m === "register" ? "block" : "none";
-        nameInput.required = m === "register";
-        submit.textContent = m === "register" ? "ثبت‌نام" : "ورود";
+        fieldName.style.display = m === "register" ? "block" : "none";
+        fieldEmail.style.display = m === "register" ? "block" : "none";
+        loginInput.style.display = m === "register" ? "none" : "block";
+        labelLogin.style.display = m === "register" ? "none" : "block";
+        submit.textContent = m === "register" ? "ساخت حساب" : "ورود";
         document.getElementById("authPass").autocomplete = m === "register" ? "new-password" : "current-password";
         msg.textContent = "";
       }
@@ -342,19 +359,29 @@
         bad_password: "رمز عبور باید حداقل ۸ کاراکتر باشه.",
         bad_name: "نام کاربری باید بین ۲ تا ۴۰ کاراکتر باشه.",
         email_taken: "با این ایمیل قبلاً حساب ساخته شده؛ وارد شو.",
-        bad_credentials: "ایمیل یا رمز عبور اشتباهه.",
+        name_taken: "این نام کاربری قبلاً گرفته شده.",
+        bad_credentials: "اطلاعات ورود اشتباهه.",
         network: "اتصال با سرور برقرار نشد."
       };
 
       form.onsubmit = function (e) {
         e.preventDefault();
-        var email = document.getElementById("authEmail").value.trim();
         var pass = document.getElementById("authPass").value;
-        var name = nameInput.value.trim();
+        var body, path;
+        if (mode === "register") {
+          body = {
+            name: document.getElementById("authName").value.trim(),
+            email: document.getElementById("authEmail").value.trim(),
+            password: pass
+          };
+          path = "/auth/register";
+        } else {
+          body = { login: loginInput.value.trim(), password: pass };
+          path = "/auth/login";
+        }
         submit.disabled = true;
         msg.textContent = "در حال بررسی...";
-        var body = mode === "register" ? { name: name, email: email, password: pass } : { email: email, password: pass };
-        fetch(API + (mode === "register" ? "/auth/register" : "/auth/login"), {
+        fetch(API + path, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
