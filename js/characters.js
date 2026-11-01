@@ -161,9 +161,12 @@
       .catch(function () { return browserPart(id, text, "es-ES"); });
   }
 
-  // بخش فارسی: صدای فارسی مرورگر (اگر روی دستگاه باشد)
+  // بخش فارسی: اگر صدای فارسی روی دستگاه هست از آن استفاده می‌کنیم؛ وگرنه صدای سرور
   function persianPart(id, text) {
-    return browserPart(id, text, "fa-IR");
+    if (voicesFor("fa").length) return browserPart(id, text, "fa-IR");
+    return serverSpeak(id, text)
+      .then(playUrl)
+      .catch(function () { return browserPart(id, text, "fa-IR"); });
   }
 
   var currentRun = 0;
