@@ -20,6 +20,7 @@
     try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; }
   }
 
+  if (typeof Storage === "undefined") return;
   var origSet = Storage.prototype.setItem;
   var timers = {};
 
