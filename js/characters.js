@@ -47,9 +47,33 @@
     return window.speechSynthesis.getVoices().filter(function (v) { return v.lang && v.lang.indexOf("es") === 0; });
   }
 
-  function speakAs(id, text) {
-    if (window.SEE_PREFS && !SEE_PREFS.soundOn()) return;
-    if (!("speechSynthesis" in window) || !text) return;
+  var API = "https://seespanish-api.sub-ify.site/index.php";
+  var audioCache = {};
+
+  // صدای ساخته‌شده‌ی سرور (Gemini TTS) با کلید و سهمیه‌ی خود سایت
+  function serverSpeak(id, text) {
+    var key = id + "|" + text;
+    if (audioCache[key]) return Promise.resolve(audioCache[key]);
+    var t = null;
+    try { t = localStorage.getItem("seespanish:token"); } catch (e) {}
+    if (!t) return Promise.reject(new Error("no-token"));
+    return fetch(API + "/ai/tts", {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + t, "Content-Type": "application/json" },
+      body: JSON.stringify({ text: text, voice: id })
+    }).then(function (r) {
+      if (!r.ok) throw new Error("tts " + r.status);
+      return r.blob();
+    }).then(function (b) {
+      var url = URL.createObjectURL(b);
+      audioCache[key] = url;
+      return url;
+    });
+  }
+
+  // صدای داخل مرورگر (پشتیبان، بدون اینترنت)
+  function browserSpeak(id, text) {
+    if (!("speechSynthesis" in window)) return;
     var c = CHARS[id] || CHARS.lola;
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
@@ -59,6 +83,17 @@
     if (vs.length) u.voice = vs[Math.min(c.voiceIndex, vs.length - 1)];
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
+  }
+
+  function speakAs(id, text) {
+    if (window.SEE_PREFS && !SEE_PREFS.soundOn()) return;
+    if (!text) return;
+    serverSpeak(id, text)
+      .then(function (url) {
+        var a = new Audio(url);
+        return a.play();
+      })
+      .catch(function () { browserSpeak(id, text); });
   }
 
   window.SEE_CHARS = {
