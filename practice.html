@@ -202,7 +202,7 @@
     list.forEach((it) => {
       const card = document.createElement("div");
       card.className = "card";
-      const askText = "این تمرین رو با من مرور کن و راهنمایی بده، بدون اینکه جواب کامل رو بگی: " +
+      const askText = "یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: " +
         it.prompt + " " + (it.question || "");
       card.innerHTML = `<span class="badge">${it.level} · ${it.skill}</span>
         <div class="prompt" dir="ltr">${it.prompt}</div>
