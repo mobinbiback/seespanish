@@ -16,26 +16,51 @@
     --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   body { margin: 0; font-family: var(--body); line-height: 1.8; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 120px; }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; flex-wrap: wrap; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 130px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 12px; flex-wrap: wrap; }
   .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
   .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
-  h2 { font-family: var(--head); font-size: 1.5rem; margin: 10px 0 4px; }
-  .muted { color: var(--graphite-soft); font-size: .95rem; }
-  .meter { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 10px 0 14px; }
-  .bar { flex: 1; height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .home {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--graphite); text-decoration: none;
+    font-weight: 700; box-shadow: 0 4px 0 var(--edge, #CFC6AE);
+  }
+  .hero { display: flex; align-items: center; gap: 14px; margin: 8px 0 12px; }
+  .hero .speech {
+    flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    padding: 12px 14px; box-shadow: 0 6px 0 var(--edge, #CFC6AE); min-height: 60px;
+  }
+  .hero .speech b { display: block; font-family: var(--head); font-size: 1.1rem; }
+  .segment {
+    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface);
+    border: 1px solid var(--line); list-style: none; margin: 0 0 10px;
+  }
+  .segment li { flex: 1 1 0; }
+  .segment button {
+    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
+    color: var(--graphite-soft); font: inherit; cursor: pointer;
+  }
+  .segment button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; }
+  .meter { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 6px 0 4px; color: var(--graphite-soft); font-size: .92rem; }
+  .bar { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-bottom: 12px; }
   .bar i { display: block; height: 100%; background: var(--pencil); }
-  .chat { display: flex; flex-direction: column; gap: 10px; min-height: 180px; }
+  .chat { display: flex; flex-direction: column; gap: 10px; min-height: 160px; }
   .msg {
     max-width: 88%; padding: 10px 14px; border-radius: 16px; border: 1px solid var(--line);
-    background: var(--surface); box-shadow: 0 4px 14px var(--shadow); white-space: pre-wrap;
+    background: var(--surface); box-shadow: 0 4px 14px var(--shadow); white-space: pre-wrap; word-break: break-word;
   }
   .msg.me { align-self: flex-start; background: var(--pencil); color: var(--accent-ink); border-color: transparent; }
   .msg.bot { align-self: flex-end; }
   .msg.err { align-self: flex-end; background: var(--bad); }
-  .composer { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
+  .msg .speak {
+    margin-top: 6px; min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--paper-2); color: var(--graphite); cursor: pointer; font: inherit;
+  }
+  .composer {
+    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
     display: flex; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
-    padding: 8px; box-shadow: 0 10px 30px var(--shadow); max-width: 696px; margin: 0 auto; }
+    padding: 8px; box-shadow: 0 10px 30px var(--shadow); max-width: 696px; margin: 0 auto;
+  }
   textarea {
     flex: 1; min-height: 44px; max-height: 120px; resize: vertical; padding: 10px 12px; font: inherit;
     background: transparent; color: var(--graphite); border: 0; outline: none;
@@ -52,28 +77,29 @@
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
-<script src="js/sync.js"></script>
+<script src="js/prefs.js"></script>
+<script src="js/characters.js"></script>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
-    <nav class="top-nav" aria-label="منوی اصلی">
-      <a class="navlink" href="index.html">خانه</a>
-      <a class="navlink" href="plan.html">برنامه</a>
-      <a class="navlink" href="practice.html">تمرین</a>
-      <a class="navlink" href="notebook.html">دفترچه</a>
-      <a class="navlink" href="me.html">من</a>
-    </nav>
+    <a class="home" href="index.html" aria-label="برگشت به خانه">🏠 خانه</a>
   </header>
 
-  <h2>مربی</h2>
-  <p class="muted">سؤال‌ت رو درباره‌ی اسپانیایی بپرس. جواب فارسی با مثال اسپانیایی میاد.</p>
+  <div class="hero">
+    <div id="mascot" aria-hidden="true"></div>
+    <div class="speech"><b id="heroName">لولا</b><span id="heroText" class="muted">سؤالت رو بپرس.</span></div>
+  </div>
 
   <div id="auth"></div>
-  <div class="meter" id="meter" hidden>
-    <span class="muted" id="meterText"></span>
-  </div>
+
+  <ul class="segment" id="modes" role="group" aria-label="حالت">
+    <li><button type="button" data-mode="tutor" aria-pressed="true">مربی</button></li>
+    <li><button type="button" data-mode="lookup" aria-pressed="false">واژه‌یاب</button></li>
+  </ul>
+
+  <div class="meter" id="meter" hidden><span id="meterText"></span></div>
   <div class="bar" id="meterBar" hidden><i style="width:0%"></i></div>
 
   <div class="chat" id="chat" aria-live="polite"></div>
@@ -91,6 +117,7 @@
     var token = null;
     try { token = localStorage.getItem(KEY); } catch (e) {}
 
+    var mode = "tutor";
     var chat = document.getElementById("chat");
     var auth = document.getElementById("auth");
     var composer = document.getElementById("composer");
@@ -99,37 +126,83 @@
     var meterBar = document.getElementById("meterBar");
     var sendBtn = document.getElementById("send");
     var input = document.getElementById("q");
+    var mascot = document.getElementById("mascot");
+    var heroName = document.getElementById("heroName");
+    var heroText = document.getElementById("heroText");
 
-    function addMsg(text, cls) {
+    function setMascot(id, mood, text) {
+      var c = window.SEE_CHARS.list[id];
+      mascot.innerHTML = window.SEE_CHARS.svg(id, mood);
+      heroName.textContent = c.name;
+      heroText.textContent = text;
+    }
+
+    function addMsg(text, cls, speakId) {
       var d = document.createElement("div");
       d.className = "msg " + cls;
       d.textContent = text;
+      if (speakId) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "speak"; b.textContent = "🔊 گوش بده";
+        b.addEventListener("click", function () { window.SEE_CHARS.speakAs(speakId, text); });
+        d.appendChild(b);
+      }
       chat.appendChild(d);
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     }
 
     function showUsage(used, limit) {
-      meter.hidden = false;
-      meterBar.hidden = false;
-      meterText.textContent = "امروز " + used + " از " + limit + " پرسش";
+      meter.hidden = false; meterBar.hidden = false;
+      meterText.textContent = (mode === "tutor" ? "پرسش‌های امروز: " : "واژه‌های امروز: ") + used + " از " + limit;
       meterBar.firstChild.style.width = Math.min(100, Math.round((used / limit) * 100)) + "%";
+    }
+
+    function refreshUsage() {
+      fetch(API + "/ai/usage", { headers: { "Authorization": "Bearer " + token } })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (!j.ok) return;
+          var k = mode === "tutor" ? j.tutor : j.lookup;
+          showUsage(k.used, k.limit);
+        })
+        .catch(function () {});
     }
 
     function needLogin() {
       auth.innerHTML = '<p class="muted">برای استفاده از مربی، اول با Google وارد شو.</p>' +
         '<a class="login" href="' + API + '/auth/google">ورود با Google</a>';
+      composer.hidden = true;
     }
 
-    if (!token) { needLogin(); return; }
+    function setMode(m) {
+      mode = m;
+      document.querySelectorAll("#modes button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.mode === m));
+      });
+      chat.innerHTML = "";
+      if (m === "tutor") {
+        setMascot("lola", "normal", "سؤالت رو درباره‌ی اسپانیایی بپرس.");
+        input.placeholder = "سؤالت رو بنویس…";
+      } else {
+        setMascot("tomas", "normal", "یک کلمه‌ی اسپانیایی یا فارسی بنویس تا معنیش رو بگم.");
+        input.placeholder = "مثلاً: madrugada یا صبح زود";
+      }
+      if (token) refreshUsage();
+    }
 
+    document.querySelectorAll("#modes button").forEach(function (b) {
+      b.addEventListener("click", function () { setMode(b.dataset.mode); });
+    });
+
+    if (!token) { needLogin(); setMode("tutor"); return; }
     composer.hidden = false;
-    fetch(API + "/ai/usage", { headers: { "Authorization": "Bearer " + token } })
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (!j.ok) { try { localStorage.removeItem(KEY); } catch (e) {} needLogin(); composer.hidden = true; return; }
-        showUsage(j.tutor.used, j.tutor.limit);
-      })
-      .catch(function () { addMsg("اتصال با سرور برقرار نشد.", "err"); });
+    setMode("tutor");
+
+    // سؤال از صفحه‌ی تمرین: ?q=... را در کادر می‌گذاریم تا کاربر خودش بفرستد
+    try {
+      var pre = new URLSearchParams(location.search).get("q");
+      if (pre) input.value = pre;
+    } catch (e) {}
 
     function send() {
       var q = input.value.trim();
@@ -137,24 +210,32 @@
       input.value = "";
       addMsg(q, "me");
       sendBtn.disabled = true;
-      fetch(API + "/ai/tutor", {
+      var isTutor = mode === "tutor";
+      var url = API + (isTutor ? "/ai/tutor" : "/ai/lookup");
+      var body = isTutor ? { question: q } : { word: q };
+      fetch(url, {
         method: "POST",
         headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
-        body: JSON.stringify({ question: q })
+        body: JSON.stringify(body)
       })
         .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); })
         .then(function (res) {
           var j = res.body;
+          var who = isTutor ? "lola" : "tomas";
           if (j.ok) {
-            addMsg(j.answer, "bot");
+            addMsg(j.answer, "bot", who);
             showUsage(j.used, j.limit);
+            setMascot(who, "happy", isTutor ? "آفرین! ادامه بده." : "این هم معنیش.");
           } else if (res.status === 429) {
-            addMsg("سهمیه‌ی امروزت تموم شد (" + j.limit + " پرسش). فردا دوباره می‌تونی بپرسی.", "err");
+            addMsg("سهمیه‌ی امروزت تموم شد (" + j.limit + "). فردا دوباره می‌تونی.", "err");
             showUsage(j.limit, j.limit);
+            setMascot(who, "sad", "امروز دیگه نمی‌تونیم ادامه بدیم.");
           } else if (res.status === 401) {
             addMsg("ورودت منقضی شده. دوباره با Google وارد شو.", "err");
+            setMascot(who, "sad", "");
           } else {
-            addMsg("مربی الان جواب نداد. کمی بعد دوباره امتحان کن.", "err");
+            addMsg("الان جواب نداد. کمی بعد دوباره امتحان کن.", "err");
+            setMascot(who, "sad", "");
           }
         })
         .catch(function () { addMsg("اتصال با سرور برقرار نشد.", "err"); })
