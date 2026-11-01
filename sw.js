@@ -1,7 +1,7 @@
 // seespanish · کش آفلاین
 // صفحه‌های HTML و فایل‌های JS/CSS همیشه از شبکه تازه گرفته می‌شوند (اگر اینترنت بود)،
 // و فقط در نبود اینترنت از کش استفاده می‌شود. فونت‌ها و تصاویر از کش سریع‌تر می‌آیند.
-const CACHE = "seespanish-v20";
+const CACHE = "seespanish-v21";
 const SHELL = [
   "./", "index.html", "plan.html", "practice.html", "memory.html", "dictation.html", "listening.html",
   "notebook.html", "me.html", "test.html", "exams.html",
@@ -57,5 +57,17 @@ self.addEventListener("fetch", (e) => {
     e.respondWith(networkFirst(req));
   } else {
     e.respondWith(cacheFirst(req));
+  }
+});
+
+// دانلود همه‌ی فایل‌ها برای حالت آفلاین (وقتی کاربر از صفحه‌ی من درخواست کند)
+self.addEventListener("message", (e) => {
+  if (e.data && e.data.type === "PRECACHE") {
+    e.waitUntil(
+      caches.open(CACHE)
+        .then((c) => c.addAll(SHELL))
+        .then(() => self.clients.matchAll())
+        .then((clients) => clients.forEach((c) => c.postMessage({ type: "PRECACHE_DONE" })))
+    );
   }
 });

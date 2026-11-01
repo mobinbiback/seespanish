@@ -73,6 +73,7 @@
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
 <script src="js/prefs.js"></script>
+<script src="js/sfx.js"></script>
 <script src="js/sync.js"></script>
 </head>
 <body>
@@ -83,6 +84,18 @@
 
   <h2>حساب کاربری</h2>
   <div class="card" id="account"><p class="muted">در حال بررسی...</p></div>
+
+  <h2>سطح و مربی</h2>
+  <div class="card">
+    <div>سطح من</div>
+    <p class="muted">هر سطح مسیر و پیشرفت جدا دارد.</p>
+    <ul class="segment" id="levelSeg" role="group" aria-label="سطح"></ul>
+  </div>
+  <div class="card">
+    <div>مربی هوش مصنوعی</div>
+    <p class="muted">به‌زودی: پاسخ به سؤال‌ها و تصحیح نوشتن. سهمیه‌ی روزانه اینجا نشون داده میشه.</p>
+    <div class="bar" style="margin-top:8px"><i style="width:0%"></i></div>
+  </div>
 
   <h2>نمایش</h2>
   <div class="card">
@@ -104,6 +117,16 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="row">
+      <div>
+        <div>تست صداها</div>
+        <p class="muted">نمونه‌ی صدای کلیک، درست، غلط و تکمیل.</p>
+      </div>
+      <button class="btn main no-sfx" id="sfxTest" type="button">تست</button>
+    </div>
+  </div>
+
   <h2>زبان رابط</h2>
   <div class="card">
     <ul class="segment" role="group" aria-label="زبان رابط">
@@ -117,6 +140,26 @@
 
   <h2>پیشرفت آزمون سطح‌ها</h2>
   <div class="card" id="tests"></div>
+
+  <h2>آفلاین و نصب</h2>
+  <div class="card">
+    <div class="row">
+      <div>
+        <div>ذخیره‌ی همه برای آفلاین</div>
+        <p class="muted">بعد از ذخیره، درس‌ها و تمرین‌ها بدون اینترنت هم باز میشن.</p>
+      </div>
+      <button class="btn main no-sfx" id="offlineBtn" type="button">ذخیره</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="row">
+      <div>
+        <div>نصب به‌عنوان اپ</div>
+        <p class="muted">روی صفحه‌ی اصلی گوشی یا کامپیوتر.</p>
+      </div>
+      <button class="btn main no-sfx" id="installBtn" type="button" hidden>نصب</button>
+    </div>
+  </div>
 
   <h2>داده‌ها</h2>
   <div class="card">
@@ -279,6 +322,65 @@
         else { try { localStorage.removeItem(KEY); } catch (e) {} loginButton(); }
       })
       .catch(function () { render('<p class="muted">اتصال با سرور برقرار نشد.</p>'); });
+  })();
+</script>
+<script>
+  (function () {
+    var LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+    var cur = "A1";
+    try { cur = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
+
+    var seg = document.getElementById("levelSeg");
+    function renderLevel() {
+      seg.innerHTML = "";
+      LEVELS.forEach(function (l) {
+        var li = document.createElement("li");
+        var b = document.createElement("button");
+        b.type = "button";
+        b.textContent = l;
+        b.setAttribute("aria-pressed", String(l === cur));
+        b.onclick = function () {
+          cur = l;
+          try { localStorage.setItem("seespanish:level", l); } catch (e) {}
+          renderLevel();
+        };
+        li.appendChild(b);
+        seg.appendChild(li);
+      });
+    }
+    renderLevel();
+
+    document.getElementById("sfxTest").onclick = function () {
+      if (window.SEE_SFX) window.SEE_SFX.test();
+    };
+
+    var off = document.getElementById("offlineBtn");
+    off.onclick = function () {
+      if (!("serviceWorker" in navigator)) { off.textContent = "پشتیبانی نمی‌شود"; return; }
+      navigator.serviceWorker.ready.then(function (reg) {
+        if (reg.active) reg.active.postMessage({ type: "PRECACHE" });
+        off.textContent = "در حال ذخیره...";
+      });
+    };
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", function (ev) {
+        if (ev.data && ev.data.type === "PRECACHE_DONE") off.textContent = "ذخیره شد ✓";
+      });
+    }
+
+    var deferred = null;
+    var installBtn = document.getElementById("installBtn");
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      deferred = e;
+      installBtn.hidden = false;
+    });
+    installBtn.onclick = function () {
+      if (!deferred) return;
+      deferred.prompt();
+      deferred = null;
+      installBtn.hidden = true;
+    };
   })();
 </script>
 </body>
