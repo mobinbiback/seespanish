@@ -249,6 +249,7 @@
 <script src="data/practice-expand.js"></script>
 <script src="data/practice-expand2.js"></script>
 <script src="data/practice-expand3.js"></script>
+<script src="data/books.js"></script>
 <script>
   const SEE = window.SEE;
   const PROGRESS_KEY = "seespanish:progress:v2";
@@ -363,6 +364,37 @@
     const ol = $("#topics");
     ol.innerHTML = "";
     const p = loadProgress();
+
+    // واحدهای کتاب (اگر ساختارش ثبت شده باشد)
+    const bookUnits = (window.SEE_BOOK_UNITS || {})[book.id];
+    if (bookUnits) {
+      const pu = loadProgress();
+      bookUnits.units.forEach((u) => {
+        const ukey = "unit|" + book.id + "|" + u.n;
+        const li = document.createElement("li");
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!pu[ukey];
+        cb.setAttribute("aria-label", `خواندن واحد ${u.n}`);
+        cb.addEventListener("change", () => {
+          const d = loadProgress();
+          d[ukey] = cb.checked;
+          saveProgress(d);
+        });
+        const body = document.createElement("div");
+        const t = document.createElement("p");
+        t.className = "topic-title";
+        t.dir = "auto";
+        t.textContent = `واحد ${u.n} · ${u.title}`;
+        const n = document.createElement("p");
+        n.className = "topic-note";
+        n.dir = "auto";
+        n.textContent = u.topics.join(" · ");
+        body.append(t, n);
+        li.append(cb, body);
+        ol.appendChild(li);
+      });
+    }
 
     items.forEach((it) => {
       const key = it.id + "|" + book.id;

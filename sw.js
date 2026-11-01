@@ -1,17 +1,17 @@
 // seespanish · کش آفلاین
 // صفحه‌های HTML و فایل‌های JS/CSS همیشه از شبکه تازه گرفته می‌شوند (اگر اینترنت بود)،
 // و فقط در نبود اینترنت از کش استفاده می‌شود. فونت‌ها و تصاویر از کش سریع‌تر می‌آیند.
-const CACHE = "seespanish-v17";
+const CACHE = "seespanish-v19";
 const SHELL = [
   "./", "index.html", "plan.html", "practice.html", "memory.html", "dictation.html", "listening.html",
   "notebook.html", "me.html", "test.html", "exams.html",
   "manifest.json", "icon.svg",
-  "css/theme.css", "js/theme.js", "js/prefs.js",
+  "css/theme.css", "js/theme.js", "js/prefs.js", "js/sync.js",
   "data/data.js", "data/explain.js", "data/explain-b1.js", "data/explain-b2.js",
   "data/explain-c1.js", "data/explain-c2.js", "data/progress.js",
   "data/practice.js", "data/practice-extra.js", "data/practice-b1.js", "data/practice-b2.js",
   "data/practice-more.js", "data/practice-expand.js", "data/practice-expand2.js", "data/practice-expand3.js", "data/listening-extra.js", "data/vocab-more.js", "data/vocab-b1.js", "data/vocab-b2.js",
-  "data/vocab-c1.js", "data/vocab-c2.js", "data/listening.js", "data/verbs.js",
+  "data/vocab-c1.js", "data/vocab-c2.js", "data/listening.js", "data/verbs.js", "data/books.js",
   "fonts/fonts.css", "fonts/IRANYekanX-Light.ttf", "fonts/IRANYekanX-Regular.ttf",
   "fonts/IRANYekanX-Medium.ttf", "fonts/IRANYekanX-DemiBold.ttf", "fonts/IRANYekanX-Bold.ttf",
   "fonts/IRANYekanX-Black.ttf", "fonts/Nunito-Regular.ttf", "fonts/Nunito-SemiBold.ttf",
