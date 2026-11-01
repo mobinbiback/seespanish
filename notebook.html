@@ -17,18 +17,18 @@
   }
   body { margin: 0; font-family: var(--body); line-height: 1.8; }
   .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 110px; }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; flex-wrap: wrap; }
   .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
   .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
-  h2 { font-family: var(--head); font-size: 1.5rem; margin: 20px 0 8px; }
+  h2 { font-family: var(--head); font-size: 1.5rem; margin: 18px 0 6px; }
   .muted { color: var(--graphite-soft); font-size: .95rem; }
   .segment {
     display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface);
-    border: 1px solid var(--line); box-shadow: 0 6px 18px var(--shadow); list-style: none; margin: 0 0 12px; padding-inline: 4px;
+    border: 1px solid var(--line); box-shadow: 0 6px 18px var(--shadow); list-style: none; margin: 0 0 12px;
   }
   .segment li { flex: 1 1 0; min-width: 0; }
   .segment button {
-    width: 100%; min-height: 38px; border: 0; border-radius: 999px; background: transparent;
+    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
     color: var(--graphite-soft); font: inherit; font-size: 1rem; cursor: pointer; padding: 0 6px;
   }
   .segment button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; }
@@ -45,14 +45,44 @@
   .stars { font-family: var(--head); letter-spacing: 1px; color: var(--graphite-soft); font-size: .95rem; }
   .item .note { margin: 8px 0 4px; color: var(--graphite-soft); font-size: .95rem; }
   .explain { white-space: pre-line; background: var(--paper-2); border-radius: 10px; padding: 10px 12px; font-size: .95rem; margin-top: 8px; }
+  .verb-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 14px 0 6px; }
+  .verb-head b { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-size: 1.25rem; }
+  .verb-head span.m { color: var(--graphite-soft); font-size: .92rem; }
+  .speak {
+    min-width: 40px; min-height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 1rem;
+    box-shadow: 0 4px 0 #CFC6AE;
+  }
   .verb-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 16px; overflow: hidden; box-shadow: 0 6px 18px var(--shadow); }
   .verb-table th, .verb-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--line); }
-  .verb-table th { color: var(--graphite-soft); font-weight: 600; font-size: .88rem; }
   .verb-table td.pn { color: var(--graphite-soft); font-size: .9rem; }
   .verb-table td.form { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-weight: 700; }
-  .verb-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 14px 0 6px; }
-  .verb-head b { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-size: 1.25rem; }
-  .verb-head span { color: var(--graphite-soft); font-size: .92rem; }
+  .verb-table td.act { width: 56px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 8px 24px var(--shadow); padding: 16px 18px; margin-bottom: 12px;
+  }
+  .btn {
+    display: inline-block; min-height: 44px; padding: 8px 22px; border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; font-size: 1.02rem; margin: 8px 6px 0 0;
+    box-shadow: 0 4px 0 #B98F12;
+  }
+  .btn.ghost { background: var(--surface); color: var(--graphite); border: 1px solid var(--line); box-shadow: 0 4px 0 #CFC6AE; }
+  .drill-q { font-family: "Nunito", system-ui, sans-serif; font-size: 1.25rem; direction: ltr; text-align: left; margin: 8px 0; }
+  .drill-q small { display: block; color: var(--graphite-soft); font-family: var(--body); direction: rtl; text-align: right; font-size: .92rem; }
+  .drill-input {
+    width: 100%; min-height: 46px; padding: 8px 12px; font: inherit; direction: ltr; text-align: left;
+    background: var(--surface); color: var(--graphite); border: 1px solid var(--line); border-radius: 14px;
+  }
+  .feedback { margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px dashed var(--line); }
+  .feedback.ok { background: var(--ok); }
+  .feedback.bad { background: var(--bad); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; list-style: none; padding: 0; }
+  .chip {
+    min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--graphite); font: inherit; cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; border-color: transparent; }
   .empty { text-align: center; color: var(--graphite-soft); padding: 18px 0; }
   .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px;
     background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px;
@@ -60,25 +90,33 @@
   .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft);
     text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
   .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
-  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
   @media (max-width: 640px) { .tabbar { display: flex; } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
+<script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1><nav class="top-nav" aria-label="منوی اصلی"><a class="navlink" href="index.html">خانه</a><a class="navlink" href="plan.html">برنامه</a><a class="navlink" href="practice.html">تمرین</a><a class="navlink" href="notebook.html" aria-current="page">دفترچه</a><a class="navlink" href="me.html">من</a></nav>
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <nav class="top-nav" aria-label="منوی اصلی">
+      <a class="navlink" href="index.html">خانه</a>
+      <a class="navlink" href="plan.html">برنامه</a>
+      <a class="navlink" href="practice.html">تمرین</a>
+      <a class="navlink" href="notebook.html" aria-current="page">دفترچه</a>
+      <a class="navlink" href="me.html">من</a>
+    </nav>
   </header>
 
   <h2>دفترچه</h2>
-  <p class="muted">قوانین هر سطح و جدول صرف افعال. با جستجو، هر چیزی را سریع پیدا کن.</p>
+  <p class="muted">قوانین هر سطح، جدول صرف افعال و تمرین صرف.</p>
 
   <ul class="segment" id="tabs" role="tablist" aria-label="بخش دفترچه">
     <li><button type="button" data-tab="rules" aria-pressed="true">قوانین</button></li>
     <li><button type="button" data-tab="verbs" aria-pressed="false">افعال</button></li>
+    <li><button type="button" data-tab="drill" aria-pressed="false">تمرین صرف</button></li>
   </ul>
 
   <ul class="segment" id="levels" role="group" aria-label="سطح"></ul>
@@ -86,6 +124,7 @@
 
   <section id="rules"></section>
   <section id="verbs" hidden></section>
+  <section id="drill" hidden></section>
 </div>
 
 <nav class="tabbar" aria-label="منوی پایین">
@@ -108,9 +147,11 @@
   const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
   const TENSES = [["presente", "حال ساده"], ["indefinido", "گذشته‌ی کامل"], ["imperfecto", "گذشته‌ی استمراری"], ["futuro", "آینده"]];
   const PRONOUNS = ["yo", "tú", "él / ella", "nosotros", "vosotros", "ellos / ellas"];
+  const WEAK_KEY = "seespanish:verbs:weak:v1";
   let tab = "rules";
   let level = "A1";
   let tense = "presente";
+  let drill = null;
 
   function segment(ul, items, selected, onPick) {
     ul.innerHTML = "";
@@ -121,6 +162,12 @@
       b.addEventListener("click", () => onPick(val));
       li.appendChild(b); ul.appendChild(li);
     });
+  }
+
+  function speakText(t) { if (window.SEE_PREFS) SEE_PREFS.speak(t, 0.85); }
+
+  function normalize(t) {
+    return String(t).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ");
   }
 
   function rulesList(q) {
@@ -159,38 +206,172 @@
     if (!list.length) { box.innerHTML = `<p class="empty">فعلی در این سطح پیدا نشد. سطح دیگری را امتحان کن.</p>`; return; }
     list.forEach((v) => {
       const head = document.createElement("div"); head.className = "verb-head";
-      head.innerHTML = `<b></b><span></span>`;
-      head.querySelector("b").textContent = v.verb;
-      head.querySelector("span").textContent = v.meaning;
+      const left = document.createElement("span");
+      left.innerHTML = `<b></b> <span class="m"></span>`;
+      left.querySelector("b").textContent = v.verb;
+      left.querySelector(".m").textContent = v.meaning;
+      const all = document.createElement("button");
+      all.type = "button"; all.className = "speak"; all.textContent = "🔊";
+      all.setAttribute("aria-label", "پخش کل جدول");
+      all.addEventListener("click", () => speakText(v.tenses[tense].join(", ")));
+      head.append(left, all);
       box.appendChild(head);
 
       const forms = v.tenses[tense];
       const table = document.createElement("table"); table.className = "verb-table";
-      table.innerHTML = `<tbody>${PRONOUNS.map((p, i) =>
-        `<tr><td class="pn">${p}</td><td class="form">${forms[i]}</td></tr>`).join("")}</tbody>`;
+      const tbody = document.createElement("tbody");
+      PRONOUNS.forEach((p, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td class="pn"></td><td class="form"></td><td class="act"></td>`;
+        tr.children[0].textContent = p;
+        tr.children[1].textContent = forms[i];
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "speak"; b.textContent = "🔊";
+        b.setAttribute("aria-label", "پخش " + forms[i]);
+        b.addEventListener("click", () => speakText(forms[i]));
+        tr.children[2].appendChild(b);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
       box.appendChild(table);
     });
   }
 
+  // ---------- تمرین صرف ----------
+  function loadWeak() {
+    try { return JSON.parse(localStorage.getItem(WEAK_KEY)) || []; } catch (e) { return []; }
+  }
+  function saveWeak(list) {
+    try { localStorage.setItem(WEAK_KEY, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  }
+
+  function buildPool() {
+    const pool = [];
+    window.SEE_VERBS.filter((v) => v.level === level).forEach((v) => {
+      PRONOUNS.forEach((p, i) => {
+        pool.push({ key: v.verb + "|" + tense + "|" + i, verb: v.verb, meaning: v.meaning, pron: p, ans: v.tenses[tense][i] });
+      });
+    });
+    return pool;
+  }
+
+  function startDrill() {
+    const pool = buildPool();
+    const weak = new Set(loadWeak());
+    const weakItems = pool.filter((x) => weak.has(x.key));
+    const rest = pool.filter((x) => !weak.has(x.key));
+    const shuffle = (a) => a.sort(() => Math.random() - 0.5);
+    const picked = shuffle(weakItems).slice(0, 5).concat(shuffle(rest)).slice(0, 10);
+    drill = { items: picked, i: 0, right: 0 };
+    renderDrill();
+  }
+
+  function renderDrill() {
+    const box = $("#drill");
+    box.innerHTML = "";
+    const pool = buildPool();
+    const weakSet = new Set(loadWeak());
+    const weakCount = pool.filter((x) => weakSet.has(x.key)).length;
+
+    if (!drill) {
+      const card = document.createElement("div"); card.className = "card";
+      card.innerHTML = `
+        <div><b>تمرین صرف</b></div>
+        <p class="muted">فرم درست فعل را برای هر ضمیر بنویس. ۱۰ سؤال در هر دور؛ فرم‌هایی که اشتباه زدی، دفعه‌ی بعد زودتر میان.</p>
+        <div class="muted">زمان:</div>
+        <ul class="chips" id="dTense"></ul>
+        <p class="muted">فرم‌های ضعیف ذخیره‌شده: ${weakCount}</p>
+        <button class="btn" type="button" id="dStart">شروع ۱۰ سؤال</button>`;
+      box.appendChild(card);
+      const tl = card.querySelector("#dTense");
+      TENSES.forEach(([val, label]) => {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "chip"; b.textContent = label;
+        b.setAttribute("aria-pressed", String(val === tense));
+        b.addEventListener("click", () => { tense = val; renderDrill(); });
+        li.appendChild(b); tl.appendChild(li);
+      });
+      card.querySelector("#dStart").addEventListener("click", () => {
+        if (pool.length) startDrill();
+      });
+      return;
+    }
+
+    if (drill.i >= drill.items.length) {
+      const card = document.createElement("div"); card.className = "card";
+      card.innerHTML = `
+        <div><b>پایان دور</b></div>
+        <p>${drill.right} از ${drill.items.length} درست</p>
+        <button class="btn" type="button" id="dAgain">دور تازه</button>
+        <button class="btn ghost" type="button" id="dBack">برگشت</button>`;
+      box.appendChild(card);
+      card.querySelector("#dAgain").addEventListener("click", startDrill);
+      card.querySelector("#dBack").addEventListener("click", () => { drill = null; renderDrill(); });
+      if (window.SEE_SFX) SEE_SFX.play(drill.right >= 7 ? "done" : "ok");
+      return;
+    }
+
+    const cur = drill.items[drill.i];
+    const tenseLabel = TENSES.find((t) => t[0] === tense)[1];
+    const card = document.createElement("div"); card.className = "card";
+    card.innerHTML = `
+      <div class="muted">سؤال ${drill.i + 1} از ${drill.items.length} · ${cur.verb} (${cur.meaning}) · ${tenseLabel}</div>
+      <div class="drill-q">${cur.pron}<small>${cur.meaning}</small></div>
+      <input class="drill-input" id="dIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="فرم درست">
+      <div>
+        <button class="btn" type="button" id="dCheck">بررسی</button>
+        <button class="btn ghost" type="button" id="dListen">🔊 گوش بده</button>
+      </div>
+      <div id="dFb"></div>`;
+    box.appendChild(card);
+
+    const input = card.querySelector("#dIn");
+    input.focus();
+    const check = () => {
+      if (!input.value.trim()) return;
+      const ok = normalize(input.value) === normalize(cur.ans);
+      if (ok) drill.right += 1;
+      const weak = new Set(loadWeak());
+      if (ok) weak.delete(cur.key); else weak.add(cur.key);
+      saveWeak([...weak]);
+      if (window.SEE_SFX) SEE_SFX.play(ok ? "ok" : "bad");
+      const fb = card.querySelector("#dFb");
+      fb.className = "feedback " + (ok ? "ok" : "bad");
+      fb.innerHTML = ok ? "درست بود ✓" : `جواب درست: <b dir="ltr"></b>`;
+      if (!ok) fb.querySelector("b").textContent = cur.ans;
+      const btn = card.querySelector("#dCheck");
+      btn.textContent = "ادامه";
+      btn.onclick = () => { drill.i += 1; renderDrill(); };
+    };
+    card.querySelector("#dCheck").addEventListener("click", check);
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
+    card.querySelector("#dListen").addEventListener("click", () => speakText(cur.ans));
+  }
+
   function render() {
-    segment($("#levels"), LEVELS.map((l) => [l, l]), level, (v) => { level = v; render(); });
+    segment($("#levels"), LEVELS.map((l) => [l, l]), level, (v) => { level = v; drill = null; render(); });
     const q = $("#q").value;
-    if (tab === "rules") {
-      $("#rules").hidden = false; $("#verbs").hidden = true;
-      rulesList(q);
-    } else {
-      $("#rules").hidden = true; $("#verbs").hidden = false;
-      segment($("#tenseTabs") || (() => {
-        const ul = document.createElement("ul"); ul.className = "segment"; ul.id = "tenseTabs";
-        $("#verbs").before(ul); return ul;
-      })(), TENSES, tense, (v) => { tense = v; render(); });
+    $("#rules").hidden = tab !== "rules";
+    $("#verbs").hidden = tab !== "verbs";
+    $("#drill").hidden = tab !== "drill";
+    if (tab === "rules") rulesList(q);
+    if (tab === "verbs") {
+      let tl = document.getElementById("tenseTabs");
+      if (!tl) {
+        tl = document.createElement("ul"); tl.className = "segment"; tl.id = "tenseTabs";
+        $("#verbs").before(tl);
+      }
+      segment(tl, TENSES, tense, (v) => { tense = v; render(); });
       verbsList(q);
     }
+    if (tab === "drill") renderDrill();
   }
 
   document.querySelectorAll("#tabs button").forEach((b) => {
     b.addEventListener("click", () => {
       tab = b.dataset.tab;
+      drill = null;
       document.querySelectorAll("#tabs button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       render();
     });
