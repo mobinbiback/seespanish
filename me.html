@@ -127,6 +127,9 @@
       <button class="btn main no-sfx" id="sfxTest" type="button">تست</button>
     </div>
   </div>
+  <div class="card">
+    <p class="muted" id="sfxStatus">برای تست صدا و انیمیشن، دکمه‌ی تست رو بزن.</p>
+  </div>
 
   <h2>زبان رابط</h2>
   <div class="card">
@@ -298,8 +301,76 @@
     function render(html) { document.getElementById("account").innerHTML = html; }
 
     function loginButton() {
-      render('<p class="muted">با Google وارد شو تا پیشرفتت همه‌جا همگام بشه.</p>' +
-        '<a href="' + API + '/auth/google" style="display:inline-block;min-height:44px;line-height:44px;padding:0 22px;border-radius:999px;background:var(--pencil);color:var(--accent-ink);font-weight:800;text-decoration:none">ورود با Google</a>');
+      render(
+        '<div class="auth-tabs" style="display:flex;gap:6px;margin-bottom:10px">' +
+          '<button type="button" id="tabLogin" class="auth-tab" aria-pressed="true">ورود</button>' +
+          '<button type="button" id="tabRegister" class="auth-tab" aria-pressed="false">ثبت‌نام</button>' +
+        '</div>' +
+        '<form id="authForm" style="display:grid;gap:8px">' +
+          '<input id="authName" type="text" placeholder="نام کاربری (فقط برای ثبت‌نام)" maxlength="40" style="display:none;min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font:inherit">' +
+          '<input id="authEmail" type="email" placeholder="ایمیل" autocomplete="email" required style="min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font:inherit;direction:ltr;text-align:left">' +
+          '<input id="authPass" type="password" placeholder="رمز عبور (حداقل ۸ کاراکتر)" autocomplete="current-password" required minlength="8" style="min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font:inherit;direction:ltr;text-align:left">' +
+          '<button type="submit" id="authSubmit" style="min-height:44px;border:0;border-radius:999px;background:var(--pencil);color:var(--accent-ink);font:inherit;font-weight:800;cursor:pointer">ورود</button>' +
+        '</form>' +
+        '<p id="authMsg" class="muted" style="margin:8px 0 0"></p>' +
+        '<p class="muted" style="margin:10px 0 4px">یا</p>' +
+        '<a href="' + API + '/auth/google" style="display:inline-block;min-height:44px;line-height:44px;padding:0 22px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);font-weight:700;text-decoration:none">ورود با Google</a>'
+      );
+      var mode = "login";
+      var tabLogin = document.getElementById("tabLogin");
+      var tabRegister = document.getElementById("tabRegister");
+      var nameInput = document.getElementById("authName");
+      var submit = document.getElementById("authSubmit");
+      var msg = document.getElementById("authMsg");
+      var form = document.getElementById("authForm");
+
+      function setMode(m) {
+        mode = m;
+        tabLogin.setAttribute("aria-pressed", String(m === "login"));
+        tabRegister.setAttribute("aria-pressed", String(m === "register"));
+        nameInput.style.display = m === "register" ? "block" : "none";
+        nameInput.required = m === "register";
+        submit.textContent = m === "register" ? "ثبت‌نام" : "ورود";
+        document.getElementById("authPass").autocomplete = m === "register" ? "new-password" : "current-password";
+        msg.textContent = "";
+      }
+      tabLogin.onclick = function () { setMode("login"); };
+      tabRegister.onclick = function () { setMode("register"); };
+
+      var messages = {
+        bad_email: "ایمیل معتبر نیست.",
+        bad_password: "رمز عبور باید حداقل ۸ کاراکتر باشه.",
+        bad_name: "نام کاربری باید بین ۲ تا ۴۰ کاراکتر باشه.",
+        email_taken: "با این ایمیل قبلاً حساب ساخته شده؛ وارد شو.",
+        bad_credentials: "ایمیل یا رمز عبور اشتباهه.",
+        network: "اتصال با سرور برقرار نشد."
+      };
+
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var email = document.getElementById("authEmail").value.trim();
+        var pass = document.getElementById("authPass").value;
+        var name = nameInput.value.trim();
+        submit.disabled = true;
+        msg.textContent = "در حال بررسی...";
+        var body = mode === "register" ? { name: name, email: email, password: pass } : { email: email, password: pass };
+        fetch(API + (mode === "register" ? "/auth/register" : "/auth/login"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (j) {
+            if (j && j.ok && j.token) {
+              try { localStorage.setItem(KEY, j.token); } catch (err) {}
+              location.reload();
+              return;
+            }
+            msg.textContent = messages[(j && j.error) || "network"] || "خطایی پیش آمد، دوباره امتحان کن.";
+            submit.disabled = false;
+          })
+          .catch(function () { msg.textContent = messages.network; submit.disabled = false; });
+      };
     }
 
     function show(user) {
@@ -351,8 +422,17 @@
     }
     renderLevel();
 
-    document.getElementById("sfxTest").onclick = function () {
-      if (window.SEE_SFX) window.SEE_SFX.test();
+    var sfxBtn = document.getElementById("sfxTest");
+    var sfxStatus = document.getElementById("sfxStatus");
+    sfxBtn.onclick = function () {
+      var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true;
+      var hasSfx = !!window.SEE_SFX;
+      var audioOk = !!window.AudioContext || !!window.webkitAudioContext;
+      if (hasSfx) SEE_SFX.test();
+      if (window.SEE_FX) SEE_FX.result(true, sfxBtn);
+      sfxStatus.textContent = "صدا روشن: " + (on ? "بله" : "خیر") +
+        " | سیستم صدا: " + (audioOk ? "پشتیبانی می‌شود" : "پشتیبانی نمی‌شود") +
+        " | وضعیت: " + (hasSfx && window.SEE_SFX.state ? SEE_SFX.state() : "بارگذاری نشده");
     };
 
     var off = document.getElementById("offlineBtn");
@@ -395,6 +475,7 @@
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (!j.ok) { txt.textContent = "برای استفاده از مربی، دوباره وارد شو."; return; }
+        if (j.unlimited) { txt.textContent = "حساب مدیر: بدون محدودیت"; return; }
         txt.textContent = "امروز " + j.tutor.used + " از " + j.tutor.limit + " پرسش";
         document.getElementById("aiBar").style.width = Math.min(100, Math.round(j.tutor.used / j.tutor.limit * 100)) + "%";
       })

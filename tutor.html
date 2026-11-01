@@ -79,6 +79,7 @@
 <script src="js/theme.js"></script>
 <script src="js/prefs.js"></script>
 <script src="js/characters.js"></script>
+<script src="js/fx.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -153,6 +154,7 @@
 
     function showUsage(used, limit) {
       meter.hidden = false; meterBar.hidden = false;
+      if (!limit) { meterText.textContent = "نامحدود"; meterBar.firstChild.style.width = "0%"; return; }
       meterText.textContent = (mode === "tutor" ? "پرسش‌های امروز: " : "واژه‌های امروز: ") + used + " از " + limit;
       meterBar.firstChild.style.width = Math.min(100, Math.round((used / limit) * 100)) + "%";
     }
@@ -163,14 +165,14 @@
         .then(function (j) {
           if (!j.ok) return;
           var k = mode === "tutor" ? j.tutor : j.lookup;
-          showUsage(k.used, k.limit);
+          showUsage(k.used, j.unlimited ? 0 : k.limit);
         })
         .catch(function () {});
     }
 
     function needLogin() {
-      auth.innerHTML = '<p class="muted">برای استفاده از مربی، اول با Google وارد شو.</p>' +
-        '<a class="login" href="' + API + '/auth/google">ورود با Google</a>';
+      auth.innerHTML = '<p class="muted">برای استفاده از مربی، اول وارد حسابت شو.</p>' +
+        '<a class="login" href="me.html">ورود یا ثبت‌نام</a>';
       composer.hidden = true;
     }
 
