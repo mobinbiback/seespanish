@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1E1E26">
 <link rel="manifest" href="manifest.json">
-<title>seespanish · مربی</title>
+<title>seespanish · تمرین با هوش مصنوعی</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
@@ -16,99 +16,149 @@
     --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   body { margin: 0; font-family: var(--body); line-height: 1.8; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 130px; }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 12px; flex-wrap: wrap; }
   .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
   .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
-  .home {
-    display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px;
-    border: 1px solid var(--line); background: var(--surface); color: var(--graphite); text-decoration: none;
-    font-weight: 700; box-shadow: 0 4px 0 var(--edge, #CFC6AE);
+
+  /* ===== ساختار صفحه‌ی هوش مصنوعی (هم‌خانواده‌ی Subify) با رنگ‌های See Spanish ===== */
+  .r18-ai {
+    --r18-surface: var(--surface);
+    --r18-surface-2: var(--paper-2);
+    --r18-line: var(--line);
+    --r18-text: var(--graphite);
+    --r18-muted: var(--graphite-soft);
+    --r18-accent-bg: var(--pencil);
+    --r18-accent-text: #B98F12;
+    --r18-on-accent: var(--accent-ink);
+    max-width: 720px; margin: 0 auto; padding: 0 18px 150px;
   }
-  .hero { display: flex; align-items: center; gap: 14px; margin: 8px 0 12px; }
-  .hero .speech {
-    flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
-    padding: 12px 14px; box-shadow: 0 6px 0 var(--edge, #CFC6AE); min-height: 60px;
+  .r18-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0 10px; }
+  .r18-back, .r18-home {
+    min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--r18-line);
+    background: var(--r18-surface); color: var(--r18-text); font: inherit; font-weight: 700; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
   }
-  .hero .speech b { display: block; font-family: var(--head); font-size: 1.1rem; }
-  .segment {
-    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface);
-    border: 1px solid var(--line); list-style: none; margin: 0 0 10px;
+  .r18-title { font-family: var(--head); font-size: 1.35rem; margin: 6px 0 4px; color: var(--r18-text); }
+  .r18-lead { color: var(--r18-muted); font-size: 12.5px; line-height: 1.9; margin: 0 0 14px; }
+  .r18-hub { display: grid; gap: 10px; margin-top: 8px; }
+  .r18-hub-card {
+    cursor: pointer; width: 100%; min-height: 44px; padding: 12px 14px; border-radius: 15px;
+    border: 1px solid var(--r18-line); background: var(--r18-surface); color: var(--r18-text); font: inherit;
+    display: grid; grid-template-columns: 40px 1fr 18px; align-items: center; gap: 12px; text-align: right;
   }
-  .segment li { flex: 1 1 0; }
-  .segment button {
-    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
-    color: var(--graphite-soft); font: inherit; cursor: pointer;
+  .r18-hub-icon {
+    width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center;
+    color: var(--r18-accent-text); background: var(--r18-surface-2); border: 1px solid var(--r18-line); font-size: 18px;
   }
-  .segment button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; }
-  .meter { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 6px 0 4px; color: var(--graphite-soft); font-size: .92rem; }
-  .bar { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-bottom: 12px; }
-  .bar i { display: block; height: 100%; background: var(--pencil); }
-  .chat { display: flex; flex-direction: column; gap: 10px; min-height: 160px; }
-  .msg {
-    max-width: 88%; padding: 10px 14px; border-radius: 16px; border: 1px solid var(--line);
-    background: var(--surface); box-shadow: 0 4px 14px var(--shadow); white-space: pre-wrap; word-break: break-word;
+  .r18-hub-copy { display: grid; gap: 3px; }
+  .r18-hub-copy strong { font-size: 14px; }
+  .r18-hub-copy span { color: var(--r18-muted); font-size: 11px; line-height: 1.7; }
+  .r18-hub-arrow { color: var(--r18-muted); }
+
+  .r18-panel { background: var(--r18-surface); border: 1px solid var(--r18-line); border-radius: 18px; padding: 14px; margin: 10px 0; }
+  .r18-meter { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--r18-muted); font-size: 12px; margin-bottom: 6px; }
+  .r18-bar { height: 8px; border-radius: 999px; background: var(--r18-surface-2); overflow: hidden; }
+  .r18-bar i { display: block; height: 100%; background: var(--r18-accent-bg); }
+  .r18-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
+  .r18-tabs button {
+    cursor: pointer; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--r18-line);
+    background: var(--r18-surface); color: var(--r18-text); font: inherit; font-size: 12.5px; font-weight: 700;
   }
-  .msg.me { align-self: flex-start; background: var(--pencil); color: var(--accent-ink); border-color: transparent; }
-  .msg.bot { align-self: flex-end; }
-  .msg.err { align-self: flex-end; background: var(--bad); }
-  .msg .speak {
-    margin-top: 6px; min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--paper-2); color: var(--graphite); cursor: pointer; font: inherit;
+  .r18-tabs button[aria-pressed="true"] { background: var(--r18-accent-bg); color: var(--r18-on-accent); border-color: transparent; }
+  .r18-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+  .r18-chip {
+    cursor: pointer; min-height: 40px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--r18-line);
+    background: var(--r18-surface); color: var(--r18-text); font: inherit; font-size: 11.5px;
   }
-  .composer {
+  .r18-chat { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; min-height: 120px; }
+  .r18-msg { max-width: 88%; padding: 10px 14px; border-radius: 16px; border: 1px solid var(--r18-line); background: var(--r18-surface); }
+  .r18-msg.me { align-self: flex-start; background: var(--r18-accent-bg); color: var(--r18-on-accent); border-color: transparent; }
+  .r18-msg.bot { align-self: flex-end; }
+  .r18-msg.err { align-self: flex-end; background: var(--bad, #f8d7d7); color: #5a1f1f; }
+  .r18-msg-who { display: block; color: var(--r18-muted); font-size: 10.5px; font-weight: 700; margin-bottom: 4px; }
+  .r18-msg p { margin: 0; white-space: pre-wrap; line-height: 1.9; font-size: 13px; word-break: break-word; }
+  .r18-msg .speak { margin-top: 8px; min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--r18-line); background: var(--r18-surface-2); color: var(--r18-text); font: inherit; font-size: 12px; cursor: pointer; }
+  .r18-empty { color: var(--r18-muted); font-size: 12.5px; text-align: center; padding: 18px 0; }
+  .r18-hero { display: flex; align-items: center; gap: 12px; margin: 6px 0 10px; }
+  .r18-hero-speech { flex: 1; background: var(--r18-surface); border: 1px solid var(--r18-line); border-radius: 16px; padding: 10px 14px; }
+  .r18-hero-speech b { display: block; font-size: 14px; }
+  .r18-hero-speech span { color: var(--r18-muted); font-size: 12px; }
+  .r18-composer {
     position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
-    display: flex; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
-    padding: 8px; box-shadow: 0 10px 30px var(--shadow); max-width: 696px; margin: 0 auto;
+    max-width: 696px; margin: 0 auto; display: flex; gap: 8px; align-items: flex-end;
+    background: var(--r18-surface); border: 1px solid var(--r18-line); border-radius: 22px; padding: 8px; box-shadow: 0 10px 30px var(--shadow);
   }
-  textarea {
-    flex: 1; min-height: 44px; max-height: 120px; resize: vertical; padding: 10px 12px; font: inherit;
-    background: transparent; color: var(--graphite); border: 0; outline: none;
+  .r18-composer textarea {
+    flex: 1; min-height: 44px; max-height: 120px; resize: vertical; padding: 10px 12px; font: inherit; font-size: 13px;
+    background: transparent; color: var(--r18-text); border: 0; outline: none;
   }
-  .send {
+  .r18-btn-primary {
     min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; cursor: pointer;
-    background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; box-shadow: 0 4px 0 #B98F12;
+    color: var(--r18-on-accent); background: var(--r18-accent-bg); font: inherit; font-weight: 800; box-shadow: 0 4px 0 #B98F12;
   }
-  .send:disabled { opacity: .5; cursor: not-allowed; }
-  .login {
-    display: inline-block; min-height: 44px; line-height: 44px; padding: 0 22px; border-radius: 999px;
-    background: var(--pencil); color: var(--accent-ink); font-weight: 800; text-decoration: none; margin-top: 10px;
+  .r18-btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+  .r18-btn-ghost {
+    min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--r18-line);
+    background: var(--r18-surface); color: var(--r18-text); font: inherit; font-weight: 700; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center;
   }
+  .r18-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--r18-accent-text); color: var(--r18-accent-text); font-size: 11px; font-weight: 700; }
+  .r18-login { display: flex; flex-direction: column; gap: 10px; }
+  .r18-login a.r18-btn-primary { text-align: center; line-height: 44px; text-decoration: none; display: block; }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
 <script src="js/prefs.js"></script>
 <script src="js/characters.js"></script>
-<script src="js/fx.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <header>
+<div class="r18-ai">
+
+  <header class="r18-top">
+    <a class="r18-home" href="index.html" aria-label="برگشت به خانه">🏠 خانه</a>
     <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
-    <a class="home" href="index.html" aria-label="برگشت به خانه">🏠 خانه</a>
   </header>
 
-  <div class="hero">
-    <div id="mascot" aria-hidden="true"></div>
-    <div class="speech"><b id="heroName">لولا</b><span id="heroText" class="muted">سؤالت رو بپرس.</span></div>
-  </div>
+  <!-- ===== منوی اصلی: کارت‌های ابزار ===== -->
+  <section id="hubView">
+    <h2 class="r18-title">تمرین با هوش مصنوعی</h2>
+    <p class="r18-lead">این بخش با کمک هوش مصنوعی به تو کمک می‌کند. سهمیه‌ی امروزت در هر ابزار جداست.</p>
+    <div id="authHub"></div>
+    <div class="r18-hub" id="hubCards" hidden>
+      <button type="button" class="r18-hub-card" data-open="tutor">
+        <span class="r18-hub-icon" aria-hidden="true">💬</span>
+        <span class="r18-hub-copy"><strong>پرسش از مربی</strong><span>سؤال بپرس، توضیح بگیر و راهنمایی بگیر.</span></span>
+        <span class="r18-hub-arrow" aria-hidden="true">‹</span>
+      </button>
+      <button type="button" class="r18-hub-card" data-open="lookup">
+        <span class="r18-hub-icon" aria-hidden="true">🔎</span>
+        <span class="r18-hub-copy"><strong>واژه‌یاب</strong><span>معنی هر کلمه‌ی اسپانیایی یا فارسی را با مثال بگیر.</span></span>
+        <span class="r18-hub-arrow" aria-hidden="true">‹</span>
+      </button>
+    </div>
+  </section>
 
-  <div id="auth"></div>
-
-  <ul class="segment" id="modes" role="group" aria-label="حالت">
-    <li><button type="button" data-mode="tutor" aria-pressed="true">مربی</button></li>
-    <li><button type="button" data-mode="lookup" aria-pressed="false">واژه‌یاب</button></li>
-  </ul>
-
-  <div class="meter" id="meter" hidden><span id="meterText"></span></div>
-  <div class="bar" id="meterBar" hidden><i style="width:0%"></i></div>
-
-  <div class="chat" id="chat" aria-live="polite"></div>
+  <!-- ===== صفحه‌ی ابزار: مربی یا واژه‌یاب ===== -->
+  <section id="toolView" hidden>
+    <div class="r18-top">
+      <button type="button" class="r18-back" id="backHub">‹ برگشت</button>
+      <span class="r18-badge" id="toolBadge"></span>
+    </div>
+    <div class="r18-hero">
+      <div id="mascot" aria-hidden="true"></div>
+      <div class="r18-hero-speech"><b id="heroName"></b><span id="heroText"></span></div>
+    </div>
+    <div class="r18-panel">
+      <div class="r18-meter"><span id="meterText"></span></div>
+      <div class="r18-bar" id="meterBar"><i style="width:0%"></i></div>
+    </div>
+    <div class="r18-chips" id="chips"></div>
+    <div class="r18-chat" id="chat" aria-live="polite"></div>
+  </section>
 </div>
 
-<div class="composer" id="composer" hidden>
+<div class="r18-composer" id="composer" hidden>
   <textarea id="q" rows="1" placeholder="سؤالت رو بنویس…" aria-label="سؤال"></textarea>
-  <button type="button" class="send" id="send">ارسال</button>
+  <button type="button" class="r18-btn-primary" id="send">ارسال</button>
 </div>
 
 <script>
@@ -119,29 +169,53 @@
     try { token = localStorage.getItem(KEY); } catch (e) {}
 
     var mode = "tutor";
-    var chat = document.getElementById("chat");
-    var auth = document.getElementById("auth");
-    var composer = document.getElementById("composer");
-    var meter = document.getElementById("meter");
-    var meterText = document.getElementById("meterText");
-    var meterBar = document.getElementById("meterBar");
-    var sendBtn = document.getElementById("send");
-    var input = document.getElementById("q");
-    var mascot = document.getElementById("mascot");
-    var heroName = document.getElementById("heroName");
-    var heroText = document.getElementById("heroText");
+    var $ = function (id) { return document.getElementById(id); };
+    var chat = $("chat"), composer = $("composer"), input = $("q"), sendBtn = $("send");
+    var hubView = $("hubView"), toolView = $("toolView"), hubCards = $("hubCards"), authHub = $("authHub");
+    var meterText = $("meterText"), meterBar = $("meterBar").firstChild;
+
+    var CHIPS = {
+      tutor: ["فرق ser و estar چیه؟", "یه مثال از زمان pretérito بگو", "این جمله‌ام درسته؟ Yo soy aburrido hoy", "راهنمایی کن برای تمرین صرف"],
+      lookup: ["madrugada", "sobremesa", "quedarse", "ilusión"]
+    };
+
+    function setAuthGate() {
+      authHub.innerHTML = '<div class="r18-panel r18-login"><b>برای استفاده از مربی، اول وارد حسابت شو.</b>' +
+        '<a class="r18-btn-primary" href="me.html">ورود یا ثبت‌نام</a></div>';
+      hubCards.hidden = true;
+    }
+
+    function showHub() {
+      toolView.hidden = true; hubView.hidden = false; composer.hidden = true;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderChips() {
+      var box = $("chips"); box.innerHTML = "";
+      (CHIPS[mode] || []).forEach(function (t) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "r18-chip"; b.textContent = t;
+        b.addEventListener("click", function () { input.value = t; input.focus(); });
+        box.appendChild(b);
+      });
+    }
 
     function setMascot(id, mood, text) {
       var c = window.SEE_CHARS.list[id];
-      mascot.innerHTML = window.SEE_CHARS.svg(id, mood);
-      heroName.textContent = c.name;
-      heroText.textContent = text;
+      $("mascot").innerHTML = window.SEE_CHARS.svg(id, mood);
+      $("heroName").textContent = c.name;
+      $("heroText").textContent = text;
     }
 
     function addMsg(text, cls, speakId) {
       var d = document.createElement("div");
-      d.className = "msg " + cls;
-      d.textContent = text;
+      d.className = "r18-msg " + cls;
+      var who = document.createElement("span");
+      who.className = "r18-msg-who";
+      who.textContent = cls === "me" ? "تو" : (speakId ? window.SEE_CHARS.list[speakId].name : "خطا");
+      var p = document.createElement("p");
+      p.textContent = text;
+      d.append(who, p);
       if (speakId) {
         var b = document.createElement("button");
         b.type = "button"; b.className = "speak"; b.textContent = "🔊 گوش بده";
@@ -153,10 +227,9 @@
     }
 
     function showUsage(used, limit) {
-      meter.hidden = false; meterBar.hidden = false;
-      if (!limit) { meterText.textContent = "نامحدود"; meterBar.firstChild.style.width = "0%"; return; }
+      if (!limit) { meterText.textContent = "حساب مدیر: بدون محدودیت"; meterBar.style.width = "0%"; return; }
       meterText.textContent = (mode === "tutor" ? "پرسش‌های امروز: " : "واژه‌های امروز: ") + used + " از " + limit;
-      meterBar.firstChild.style.width = Math.min(100, Math.round((used / limit) * 100)) + "%";
+      meterBar.style.width = Math.min(100, Math.round((used / limit) * 100)) + "%";
     }
 
     function refreshUsage() {
@@ -166,22 +239,14 @@
           if (!j.ok) return;
           var k = mode === "tutor" ? j.tutor : j.lookup;
           showUsage(k.used, j.unlimited ? 0 : k.limit);
-        })
-        .catch(function () {});
+        }).catch(function () {});
     }
 
-    function needLogin() {
-      auth.innerHTML = '<p class="muted">برای استفاده از مربی، اول وارد حسابت شو.</p>' +
-        '<a class="login" href="me.html">ورود یا ثبت‌نام</a>';
-      composer.hidden = true;
-    }
-
-    function setMode(m) {
+    function openTool(m) {
       mode = m;
-      document.querySelectorAll("#modes button").forEach(function (b) {
-        b.setAttribute("aria-pressed", String(b.dataset.mode === m));
-      });
+      hubView.hidden = true; toolView.hidden = false; composer.hidden = false;
       chat.innerHTML = "";
+      $("toolBadge").textContent = m === "tutor" ? "مربی" : "واژه‌یاب";
       if (m === "tutor") {
         setMascot("lola", "normal", "سؤالت رو درباره‌ی اسپانیایی بپرس.");
         input.placeholder = "سؤالت رو بنویس…";
@@ -189,21 +254,22 @@
         setMascot("tomas", "normal", "یک کلمه‌ی اسپانیایی یا فارسی بنویس تا معنیش رو بگم.");
         input.placeholder = "مثلاً: madrugada یا صبح زود";
       }
-      if (token) refreshUsage();
+      renderChips();
+      refreshUsage();
+      input.focus();
     }
 
-    document.querySelectorAll("#modes button").forEach(function (b) {
-      b.addEventListener("click", function () { setMode(b.dataset.mode); });
+    hubCards.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-open]");
+      if (b) openTool(b.dataset.open);
     });
+    $("backHub").addEventListener("click", showHub);
 
-    if (!token) { needLogin(); setMode("tutor"); return; }
-    composer.hidden = false;
-    setMode("tutor");
-
-    // سؤال از صفحه‌ی تمرین: ?q=... را در کادر می‌گذاریم تا کاربر خودش بفرستد
+    if (!token) { setAuthGate(); return; }
+    hubCards.hidden = false;
     try {
       var pre = new URLSearchParams(location.search).get("q");
-      if (pre) input.value = pre;
+      if (pre) { input.value = pre; openTool("tutor"); }
     } catch (e) {}
 
     function send() {
