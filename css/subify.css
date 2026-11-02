@@ -1,0 +1,30 @@
+/* ==========================================================
+   توکن‌های ظاهری هم‌خانواده‌ی Subify (تم تیره‌ی حساب و پنل)
+   ========================================================== */
+:root {
+  --sfy-bg: #0b0f17;
+  --sfy-surface: #111621;
+  --sfy-surface-2: #0b0f17;
+  --sfy-line: #35425a;
+  --sfy-text: #eef1f8;
+  --sfy-muted: #b8c2d4;
+  --sfy-accent: #7C5CFF;
+  --sfy-accent-2: #6A4CF0;
+  --sfy-focus: #b3a4ff;
+  --sfy-ok-bg: rgba(16, 185, 129, .12);
+  --sfy-ok-text: #a6eed4;
+  --sfy-bad-bg: rgba(229, 72, 77, .12);
+  --sfy-bad-text: #ffb3c1;
+  --sfy-radius: 18px;
+  --sfy-font: "VazirmatnVar", "Vazirmatn", "IRANYekanX", system-ui, Tahoma, sans-serif;
+}
+.sfy { font-family: var(--sfy-font); color: var(--sfy-text); }
+.sfy .card { background: var(--sfy-surface); border: 1px solid var(--sfy-line); border-radius: var(--sfy-radius); }
+.sfy .muted { color: var(--sfy-muted); }
+.sfy .pill-ok { color: var(--sfy-ok-text); background: var(--sfy-ok-bg); border: 1px solid rgba(166,238,212,.25); }
+.sfy .pill-bad { color: var(--sfy-bad-text); background: var(--sfy-bad-bg); border: 1px solid rgba(255,179,193,.25); }
+.sfy input, .sfy textarea, .sfy select {
+  background: var(--sfy-surface-2); color: var(--sfy-text); border: 1px solid var(--sfy-line); border-radius: 14px;
+}
+.sfy input:focus, .sfy textarea:focus { outline: none; border-color: var(--sfy-focus); box-shadow: 0 0 0 3px rgba(179,164,255,.2); }
+.sfy .btn-acc { background: linear-gradient(180deg, var(--sfy-accent), var(--sfy-accent-2)); color: #fff; border: 0; border-radius: 999px; }
