@@ -129,11 +129,43 @@
         <span class="r18-hub-copy"><strong>پرسش از مربی</strong><span>سؤال بپرس، توضیح بگیر و راهنمایی بگیر.</span></span>
         <span class="r18-hub-arrow" aria-hidden="true">‹</span>
       </button>
+      <button type="button" class="r18-hub-card" data-open="settings">
+        <span class="r18-hub-icon" aria-hidden="true">🔑</span>
+        <span class="r18-hub-copy"><strong>کلید و سرویس من</strong><span>کلید Gemini خودت یا سرویس سفارشی خودت رو وصل کن.</span></span>
+        <span class="r18-hub-arrow" aria-hidden="true">‹</span>
+      </button>
       <button type="button" class="r18-hub-card" data-open="lookup">
         <span class="r18-hub-icon" aria-hidden="true">🔎</span>
         <span class="r18-hub-copy"><strong>واژه‌یاب</strong><span>معنی هر کلمه‌ی اسپانیایی یا فارسی را با مثال بگیر.</span></span>
         <span class="r18-hub-arrow" aria-hidden="true">‹</span>
       </button>
+    </div>
+  </section>
+
+  <!-- ===== صفحه‌ی کلید و سرویس شخصی ===== -->
+  <section id="setView" hidden>
+    <div class="r18-top">
+      <button type="button" class="r18-back" id="backHub2">‹ برگشت</button>
+      <span class="r18-badge">کلید و سرویس</span>
+    </div>
+    <h2 class="r18-title">کلید و سرویس من</h2>
+    <p class="r18-lead">اگه کلید خودت رو وصل کنی، درخواست‌ها با همون انجام میشن و سهمیه‌ی سایت استفاده نمیشه. کلید فقط رمزنگاری‌شده روی سرور ذخیره میشه و هیچ‌وقت دوباره نشون داده نمی‌شه.</p>
+    <div class="r18-panel">
+      <div class="r18-meter"><span id="setStatus">در حال بررسی…</span></div>
+    </div>
+    <div class="r18-panel">
+      <div class="r18-tabs" role="tablist">
+        <button type="button" data-prov="gemini" aria-pressed="true">Gemini</button>
+        <button type="button" data-prov="custom" aria-pressed="false">سرویس سفارشی</button>
+      </div>
+      <div class="r18-field" id="fieldBase" hidden><label for="setBase">آدرس سرویس (https، مثلاً https://api.example.com/v1)</label><input id="setBase" type="text" dir="ltr" autocomplete="off"></div>
+      <div class="r18-field"><label for="setModel" id="lblModel">مدل (اختیاری برای Gemini)</label><input id="setModel" type="text" dir="ltr" autocomplete="off"></div>
+      <div class="r18-field"><label for="setKey">کلید API</label><input id="setKey" type="password" dir="ltr" autocomplete="new-password" placeholder="برای نگه داشتن کلید قبلی، خالی بگذار"></div>
+      <div class="r18-chips">
+        <button type="button" class="r18-btn-primary" id="setSave">ذخیره</button>
+        <button type="button" class="r18-btn-ghost" id="setDelete">حذف کلید من</button>
+      </div>
+      <p class="r18-note" id="setMsg" role="status"></p>
     </div>
   </section>
 
@@ -259,9 +291,58 @@
       input.focus();
     }
 
+    var setView = $("setView"), chosenProv = "gemini";
+    function paintProv() {
+      document.querySelectorAll("#setView [data-prov]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.prov === chosenProv));
+      });
+      $("fieldBase").hidden = chosenProv !== "custom";
+      $("lblModel").textContent = chosenProv === "custom" ? "مدل (الزامی)" : "مدل (اختیاری برای Gemini)";
+    }
+    function openSettings() {
+      hubView.hidden = true; toolView.hidden = true; composer.hidden = true; setView.hidden = false;
+      $("setMsg").textContent = "";
+      fetch(API + "/ai/settings", { headers: { "Authorization": "Bearer " + token } })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (!j.ok) { $("setStatus").textContent = "برای این بخش دوباره وارد شو."; return; }
+          chosenProv = j.provider || "gemini";
+          $("setBase").value = j.base_url || "";
+          $("setModel").value = j.model || "";
+          $("setStatus").textContent = j.configured ? "کلید شخصی فعاله؛ درخواست‌ها با کلید خودت انجام میشه." : "کلید شخصی نداری؛ از سهمیه‌ی سایت استفاده میشه.";
+          paintProv();
+        }).catch(function () { $("setStatus").textContent = "اتصال با سرور برقرار نشد."; });
+    }
+    document.querySelectorAll("#setView [data-prov]").forEach(function (b) {
+      b.addEventListener("click", function () { chosenProv = b.dataset.prov; paintProv(); });
+    });
+    $("backHub2").addEventListener("click", showHub);
+    $("setSave").addEventListener("click", function () {
+      $("setMsg").textContent = "در حال ذخیره…";
+      fetch(API + "/ai/settings", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+        body: JSON.stringify({ provider: chosenProv, base_url: $("setBase").value.trim(), model: $("setModel").value.trim(), api_key: $("setKey").value.trim() })
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        var map = { bad_base_url: "آدرس سرویس باید https باشه و آدرس عمومی.", model_required: "برای سرویس سفارشی، مدل رو وارد کن.",
+          key_required: "کلید API رو وارد کن.", enc_not_configured: "رمزنگاری روی سرور تنظیم نشده." };
+        if (j.ok) { $("setKey").value = ""; $("setMsg").textContent = "ذخیره شد ✓"; openSettings(); }
+        else $("setMsg").textContent = map[j.error] || "خطا: " + (j.error || "unknown");
+      }).catch(function () { $("setMsg").textContent = "اتصال با سرور برقرار نشد."; });
+    });
+    $("setDelete").addEventListener("click", function () {
+      fetch(API + "/ai/settings", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "delete" })
+      }).then(function () { $("setMsg").textContent = "کلید شخصی حذف شد."; openSettings(); });
+    });
+
     hubCards.addEventListener("click", function (e) {
       var b = e.target.closest("[data-open]");
-      if (b) openTool(b.dataset.open);
+      if (!b) return;
+      if (b.dataset.open === "settings") openSettings();
+      else openTool(b.dataset.open);
     });
     $("backHub").addEventListener("click", showHub);
 
@@ -279,8 +360,8 @@
       addMsg(q, "me");
       sendBtn.disabled = true;
       var isTutor = mode === "tutor";
-      var url = API + (isTutor ? "/ai/tutor" : "/ai/lookup");
-      var body = isTutor ? { question: q } : { word: q };
+      var url = API + "/ai/ask";
+      var body = { mode: isTutor ? "tutor" : "lookup", text: q };
       fetch(url, {
         method: "POST",
         headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
@@ -292,7 +373,8 @@
           var who = isTutor ? "lola" : "tomas";
           if (j.ok) {
             addMsg(j.answer, "bot", who);
-            showUsage(j.used, j.limit);
+            if (j.own_key) meterText.textContent = "با کلید شخصی خودت (بدون محدودیت سایت)";
+            else showUsage(j.used, j.limit);
             setMascot(who, "happy", isTutor ? "آفرین! ادامه بده." : "این هم معنیش.");
           } else if (res.status === 429) {
             addMsg("سهمیه‌ی امروزت تموم شد (" + j.limit + "). فردا دوباره می‌تونی.", "err");

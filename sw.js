@@ -1,7 +1,7 @@
 // seespanish · کش آفلاین
 // صفحه‌های HTML و فایل‌های JS/CSS همیشه از شبکه تازه گرفته می‌شوند (اگر اینترنت بود)،
 // و فقط در نبود اینترنت از کش استفاده می‌شود. فونت‌ها و تصاویر از کش سریع‌تر می‌آیند.
-const CACHE = "seespanish-v35";
+const CACHE = "seespanish-v36";
 const SHELL = [
   "./", "index.html", "plan.html", "practice.html", "memory.html", "dictation.html", "listening.html",
   "notebook.html", "me.html", "test.html", "exams.html", "tutor.html",
