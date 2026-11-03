@@ -131,6 +131,10 @@
   }
 
   // پخش یک بخش با صدای مرورگر و برگرداندن وعده‌ای که وقتی تمام شد حل می‌شود
+  // هر صدای انتخابی زیر و بمی متفاوتی دارد تا در حالت پشتیبان هم با هم فرق داشته باشند
+  var VOICE_PITCH = { Kore: 1.0, Puck: 0.8, Aoede: 1.22, Charon: 0.7 };
+  var VOICE_RATE = { Kore: 1.0, Puck: 0.95, Aoede: 1.05, Charon: 0.9 };
+
   function browserPart(id, text, lang) {
     return new Promise(function (resolve) {
       if (!("speechSynthesis" in window)) return resolve();
@@ -138,8 +142,9 @@
       u.lang = lang;
       var vs = voicesFor(lang.slice(0, 2).toLowerCase());
       if (id && CHARS[id]) {
-        u.pitch = CHARS[id].pitch;
-        u.rate = CHARS[id].rate;
+        var vn = voicePref(id);
+        u.pitch = CHARS[id].pitch * (VOICE_PITCH[vn] || 1);
+        u.rate = CHARS[id].rate * (VOICE_RATE[vn] || 1);
         if (vs.length) u.voice = vs[Math.min(CHARS[id].voiceIndex, vs.length - 1)];
       } else if (vs.length) {
         u.voice = vs[0];

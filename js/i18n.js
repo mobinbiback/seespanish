@@ -142,7 +142,16 @@
     });
   }
 
-  window.SEE_I18N = { lang: lang, setLang: setLang, apply: apply, LANGS: LANGS };
+  // ترجمه‌ی یک فیلد محتوای درس (مثلاً title یا note) برای زبان فعلی؛ اگر ترجمه نبود، متن اصلی
+  function tx(item, field) {
+    var l = lang();
+    var src = item && item[field];
+    if (l === "fa" || !item || !window.SEE_CONTENT) return src;
+    var t = window.SEE_CONTENT[item.id];
+    return (t && t[l] && t[l][field]) || src;
+  }
+
+  window.SEE_I18N = { lang: lang, setLang: setLang, apply: apply, LANGS: LANGS, tx: tx };
   applyDirection(lang());
   document.addEventListener("DOMContentLoaded", apply);
 })();
