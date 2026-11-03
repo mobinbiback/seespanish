@@ -13,7 +13,8 @@
     "seespanish:stats:v1",
     "seespanish:passed:v1",
     "seespanish:plan:pref",
-    "seespanish:today:v1"
+    "seespanish:today:v1",
+    "seespanish:xp:v1"
   ];
 
   function token() {
