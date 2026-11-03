@@ -617,3 +617,18 @@ html[data-theme="dark"] { --edge: #0B0B0F; --edge-accent: #9A7410; }
 .auth-submit:disabled { opacity: .55; cursor: not-allowed; }
 .auth-note { color: var(--graphite-soft); font-size: .85rem; text-align: center; margin: 14px 0 0; line-height: 1.9; }
 .auth-msg { color: var(--bad-ink, #B3261E); font-size: .92rem; min-height: 1.4em; margin: 8px 4px 0; }
+
+/* ===== نوار انگیزه: روز پیاپی، امتیاز و هدف روزانه ===== */
+#gameBar { display:grid; grid-template-columns: auto auto 1fr; gap:10px; align-items:center; margin:6px 0 16px; }
+.gb-item { display:flex; flex-direction:column; align-items:center; min-width:74px; padding:10px 12px; border-radius:18px; background:var(--surface); border:1px solid var(--line); box-shadow:0 4px 0 var(--edge, #CFC6AE); text-align:center; }
+.gb-item span { font-size:20px; line-height:1.1; }
+.gb-item b { font-size:17px; font-variant-numeric: tabular-nums; color:var(--graphite); }
+.gb-item small, .gb-goal small { color:var(--graphite-soft); font-size:11px; }
+.gb-goal { padding:10px 14px; border-radius:18px; background:var(--surface); border:1px solid var(--line); box-shadow:0 4px 0 var(--edge, #CFC6AE); }
+.gb-goal-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.gb-goal-top b { font-size:13px; color:var(--graphite); }
+.gb-bar { height:12px; border-radius:999px; background:var(--paper-2); overflow:hidden; }
+.gb-bar i { display:block; height:100%; background:linear-gradient(90deg, var(--pencil), #B98F12); border-radius:999px; transition:width .4s ease; }
+.gb-goal.done .gb-bar i { background:#B3D93B; }
+.gb-goal.done .gb-goal-top b::after { content:" ✓"; color:#3F6B0A; }
+@media (max-width:420px) { #gameBar { grid-template-columns: auto auto; } .gb-goal { grid-column: 1 / -1; } }
