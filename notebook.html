@@ -98,6 +98,7 @@
 <script src="js/sfx.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/i18n.js"></script>
+<script src="data/i18n-content.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -177,18 +178,18 @@
     box.innerHTML = "";
     const needle = q.trim().toLowerCase();
     const items = (window.SEE.grammar[level] || []).filter((it) =>
-      !needle || (it.title + " " + it.note + " " + (window.SEE_EXPLAIN[it.id] || "")).toLowerCase().includes(needle));
+      !needle || (SEE_I18N.tx(it, "title") + " " + SEE_I18N.tx(it, "note") + " " + (window.SEE_EXPLAIN[it.id] || "")).toLowerCase().includes(needle));
     if (!items.length) { box.innerHTML = `<p class="empty">موردی پیدا نشد.</p>`; return; }
     items.forEach((it) => {
       const d = document.createElement("details");
       d.className = "item";
       const s = document.createElement("summary");
-      const t = document.createElement("span"); t.dir = "auto"; t.textContent = it.title;
+      const t = document.createElement("span"); t.dir = "auto"; t.textContent = SEE_I18N.tx(it, "title");
       const st = document.createElement("span"); st.className = "stars";
       st.textContent = "★".repeat(it.stars) + "☆".repeat(3 - it.stars);
       s.append(t, st);
       d.appendChild(s);
-      const n = document.createElement("p"); n.className = "note"; n.dir = "auto"; n.textContent = it.note;
+      const n = document.createElement("p"); n.className = "note"; n.dir = "auto"; n.textContent = SEE_I18N.tx(it, "note");
       d.appendChild(n);
       const ex = (window.SEE_EXPLAIN || {})[it.id];
       if (ex) {

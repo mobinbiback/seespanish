@@ -185,6 +185,7 @@
 <script src="js/sfx.js"></script>
 <script src="js/gamify.js"></script>
 <script src="js/i18n.js"></script>
+<script src="data/i18n-content.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -412,7 +413,7 @@
       const cb = document.createElement("input");
       cb.type = "checkbox";
       cb.checked = !!p[key];
-      cb.setAttribute("aria-label", `علامت‌گذاری ${it.title}`);
+      cb.setAttribute("aria-label", `علامت‌گذاری ${SEE_I18N.tx(it, "title")}`);
       cb.addEventListener("change", () => {
         const data = loadProgress();
         data[key] = cb.checked;
@@ -424,11 +425,11 @@
       const t = document.createElement("p");
       t.className = "topic-title";
       t.dir = "auto";
-      t.textContent = it.title;
+      t.textContent = SEE_I18N.tx(it, "title");
       const n = document.createElement("p");
       n.className = "topic-note";
       n.dir = "auto";
-      n.textContent = it.note;
+      n.textContent = SEE_I18N.tx(it, "note");
       const ref = document.createElement("span");
       ref.className = "topic-ref";
       ref.dir = "auto";
@@ -514,7 +515,7 @@
       b.type = "button";
       b.className = "node " + state;
       b.textContent = String(i + 1);
-      b.setAttribute("aria-label", `${i + 1}. ${it.title} (${state === "done" ? "خوانده شده" : state === "current" ? "مرحله‌ی فعلی" : "قفل"})`);
+      b.setAttribute("aria-label", `${i + 1}. ${SEE_I18N.tx(it, "title")} (${state === "done" ? "خوانده شده" : state === "current" ? "مرحله‌ی فعلی" : "قفل"})`);
       b.addEventListener("click", () => showPathDetail(it, i, state));
       box.appendChild(b);
     });
@@ -527,10 +528,10 @@
     d.innerHTML = "";
     const h = document.createElement("h3");
     h.dir = "auto";
-    h.textContent = `${i + 1}. ${it.title}`;
+    h.textContent = `${i + 1}. ${SEE_I18N.tx(it, "title")}`;
     const note = document.createElement("p");
     note.dir = "auto";
-    note.textContent = it.note;
+    note.textContent = SEE_I18N.tx(it, "note");
     d.append(h, note);
     const ex = (window.SEE_EXPLAIN || {})[it.id];
     if (ex) {
@@ -573,7 +574,7 @@
     if (needle.length < 2) return out;
     for (const lvl of SEE.levels) {
       for (const it of SEE.grammar[lvl] || []) {
-        if ((it.title + " " + it.note).toLowerCase().includes(needle)) out.push({ kind: "گرامر", lvl, text: it.title });
+        if ((SEE_I18N.tx(it, "title") + " " + SEE_I18N.tx(it, "note")).toLowerCase().includes(needle)) out.push({ kind: "گرامر", lvl, text: SEE_I18N.tx(it, "title") });
       }
       for (const v of (window.SEE_PRACTICE.vocab[lvl] || [])) {
         if ((v.es + " " + v.fa).toLowerCase().includes(needle)) out.push({ kind: "واژه", lvl, text: v.es + " · " + v.fa });

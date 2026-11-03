@@ -495,13 +495,19 @@
   var PRON_KEY = "seespanish:pron:v1";
   function fillPron() {
     if (!("speechSynthesis" in window)) { pron.innerHTML = '<option>مرورگر پشتیبانی نمی‌کند</option>'; return; }
+    var LATAM = /^es-(MX|US|419|AR|CO|CL|PE|VE|EC|GT|CR|PA|DO|HN|NI|PR|SV|UY|PY|BO|CU)/i;
     var vs = window.speechSynthesis.getVoices().filter(function (v) { return /^es/i.test(v.lang); });
+    vs.sort(function (a, b) { return (LATAM.test(b.lang) ? 1 : 0) - (LATAM.test(a.lang) ? 1 : 0); });
     var saved = ""; try { saved = localStorage.getItem(PRON_KEY) || ""; } catch (e) {}
-    pron.innerHTML = vs.length ? "" : '<option value="">صدای اسپانیایی روی دستگاه نیست (صدای پیش‌فرض)</option>';
+    if (!saved) { var first = vs.filter(function (v) { return LATAM.test(v.lang); })[0]; if (first) saved = first.name; }
+    pron.innerHTML = vs.length ? "" : '<option value="">' + "صدای اسپانیایی روی دستگاه نیست (صدای پیش‌فرض)" + '</option>';
     vs.forEach(function (v) {
-      var o = document.createElement("option"); o.value = v.name; o.textContent = v.name + " (" + v.lang + ")";
+      var o = document.createElement("option");
+      o.value = v.name;
+      o.textContent = (LATAM.test(v.lang) ? "🌎 آمریکای لاتین · " : "🇪🇸 اسپانیا · ") + v.name + " (" + v.lang + ")";
       if (v.name === saved) o.selected = true; pron.appendChild(o);
     });
+    if (!vs.length) { var o2 = document.createElement("option"); o2.textContent = "هیچ صدای اسپانیایی روی دستگاه نیست"; pron.appendChild(o2); }
   }
   fillPron();
   if ("speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = fillPron;
