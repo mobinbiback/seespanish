@@ -34,11 +34,20 @@
     o.stop(c.currentTime + start + dur + 0.02);
   }
 
+  // بسته‌های رنگ صدا: هر بسته شکل موج و زیر و بمی متفاوتی دارد
+  var PACKS = {
+    soft:   { tap: "triangle", ok: "sine", bad: "triangle", done: "sine", pitch: 1.0 },
+    bright: { tap: "square", ok: "triangle", bad: "sawtooth", done: "triangle", pitch: 1.12 },
+    retro:  { tap: "square", ok: "square", bad: "sawtooth", done: "square", pitch: 0.92 }
+  };
+  function pack() {
+    try { return PACKS[localStorage.getItem("seespanish:sfxpack:v1")] ? localStorage.getItem("seespanish:sfxpack:v1") : "soft"; } catch (e) { return "soft"; }
+  }
   var SOUNDS = {
-    tap:  function () { tone(880, 0, 0.06, "triangle", 0.12); },
-    ok:   function () { tone(660, 0, 0.12, "sine"); tone(990, 0.09, 0.16, "sine"); },
-    bad:  function () { tone(220, 0, 0.22, "sawtooth", 0.08); tone(180, 0.12, 0.22, "sawtooth", 0.08); },
-    done: function () { [523, 659, 784, 1046].forEach(function (f, i) { tone(f, i * 0.09, 0.2, "triangle", 0.16); }); },
+    tap:  function () { var k = PACKS[pack()]; tone(880 * k.pitch, 0, 0.06, k.tap, 0.12); },
+    ok:   function () { var k = PACKS[pack()]; tone(660 * k.pitch, 0, 0.12, k.ok); tone(990 * k.pitch, 0.09, 0.16, k.ok); },
+    bad:  function () { var k = PACKS[pack()]; tone(220 * k.pitch, 0, 0.22, k.bad, 0.08); tone(180 * k.pitch, 0.12, 0.22, k.bad, 0.08); },
+    done: function () { var k = PACKS[pack()]; [523, 659, 784, 1046].forEach(function (f, i) { tone(f * k.pitch, i * 0.09, 0.2, k.done, 0.16); }); },
     streak: function () { [660, 880, 1100].forEach(function (f, i) { tone(f, i * 0.06, 0.12, "square", 0.08); }); }
   };
 

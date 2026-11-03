@@ -7,7 +7,8 @@
 (function () {
   var CHARS = {
     lola: { name: "لولا", skin: "#F2C7A5", hair: "#2B2118", shirt: "#E76F51", bg: "#FBE3D6", pitch: 1.25, rate: 0.95, voiceIndex: 0 },
-    tomas: { name: "توماس", skin: "#E9B88F", hair: "#8D6E4B", shirt: "#2A9D8F", bg: "#D5EFEB", pitch: 0.85, rate: 0.9, voiceIndex: 1 }
+    tomas: { name: "توماس", skin: "#E9B88F", hair: "#8D6E4B", shirt: "#2A9D8F", bg: "#D5EFEB", pitch: 0.85, rate: 0.9, voiceIndex: 1 },
+    rosa: { name: "روزا", skin: "#D9A07A", hair: "#BDBDBD", shirt: "#6200BE", bg: "#EADFF9", pitch: 1.05, rate: 0.88, voiceIndex: 0 }
   };
 
   // چهره بر اساس حالت: normal | happy | sad
@@ -24,7 +25,7 @@
       : '<path d="M30 56 Q30 22 60 22 Q90 22 90 56 Q84 36 60 34 Q36 36 30 56 Z" fill="' + c.hair + '"/>';
     var ponytail = id === "lola"
       ? '<circle cx="90" cy="60" r="10" fill="' + c.hair + '"/>'
-      : '';
+      : (id === "rosa" ? '<circle cx="60" cy="18" r="9" fill="' + c.hair + '"/>' : '');
     var brows = mood === "sad"
       ? '<path d="M42 46 L52 49" stroke="#3B2A20" stroke-width="2.5" stroke-linecap="round"/><path d="M68 49 L78 46" stroke="#3B2A20" stroke-width="2.5" stroke-linecap="round"/>'
       : '<path d="M42 48 H52" stroke="#3B2A20" stroke-width="2.5" stroke-linecap="round"/><path d="M68 48 H78" stroke="#3B2A20" stroke-width="2.5" stroke-linecap="round"/>';
@@ -64,10 +65,14 @@
 
   var API = "https://seespanish-api.sub-ify.site/index.php";
   var audioCache = {};
+  // صدای انتخابی کاربر برای هر شخصیت (از صفحه‌ی من)
+  function voicePref(id) {
+    try { var v = JSON.parse(localStorage.getItem("seespanish:voice:v1")) || {}; return v[id] || ""; } catch (e) { return ""; }
+  }
 
   // صدای ساخته‌شده‌ی سرور (Gemini TTS) با کلید و سهمیه‌ی خود سایت
   function serverSpeak(id, text) {
-    var key = id + "|" + text;
+    var key = id + "|" + text + "|" + voicePref(id);
     if (audioCache[key]) return Promise.resolve(audioCache[key]);
     var t = null;
     try { t = localStorage.getItem("seespanish:token"); } catch (e) {}
@@ -75,7 +80,7 @@
     return fetch(API + "/ai/tts", {
       method: "POST",
       headers: { "Authorization": "Bearer " + t, "Content-Type": "application/json" },
-      body: JSON.stringify({ text: text, voice: id })
+      body: JSON.stringify({ text: text, voice: id, voice_name: voicePref(id) })
     }).then(function (r) {
       if (!r.ok) throw new Error("tts " + r.status);
       return r.blob();
