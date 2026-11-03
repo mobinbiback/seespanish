@@ -16,200 +16,276 @@
     --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   body { margin: 0; font-family: var(--body); line-height: 1.8; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 110px; }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; }
   .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
   .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
-  h2 { font-family: var(--head); font-size: 1.3rem; margin: 22px 0 8px; }
-  .muted { color: var(--graphite-soft); font-size: .92rem; }
+
+  /* ===== صفحه‌ی من: ساختار کارتی با همان رنگ‌های سایت ===== */
+  .me { max-width: 760px; margin: 0 auto; padding: 0 18px 130px; }
+  .me-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0 6px; flex-wrap: wrap; }
+  .me-h { font-family: var(--head); font-size: 1.35rem; margin: 6px 0 2px; color: var(--graphite); }
+  .me-sub { color: var(--graphite-soft); font-size: 12.5px; margin: 0 0 14px; }
+  .sec-title { font-family: var(--head); font-size: 1rem; margin: 26px 0 10px; color: var(--graphite); display: flex; align-items: center; gap: 8px; }
+  .sec-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
-    box-shadow: 0 8px 24px var(--shadow); padding: 16px 18px; margin-bottom: 14px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px;
+    box-shadow: 0 6px 0 var(--edge, #CFC6AE), 0 10px 24px var(--shadow); margin-bottom: 12px;
   }
-  .segment {
-    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--paper-2);
-    border: 1px solid var(--line); list-style: none; margin: 10px 0 0;
+  .muted { color: var(--graphite-soft); font-size: 12.5px; line-height: 1.9; margin: 2px 0 0; }
+
+  /* هدر پروفایل */
+  .hero {
+    position: relative; overflow: hidden; border-radius: 24px; padding: 20px; color: #FFFFFD;
+    background: linear-gradient(135deg, #6200BE 0%, #4F00A0 55%, #2E0A66 100%);
+    box-shadow: 0 8px 0 #2E0A66, 0 16px 30px rgba(98,0,190,.25);
   }
-  .segment li { flex: 1 1 0; min-width: 0; }
-  .segment button {
-    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
-    color: var(--graphite-soft); font: inherit; cursor: pointer; padding: 0 6px;
+  .hero::after { content: ""; position: absolute; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,189,65,.18); left: -50px; bottom: -70px; }
+  .hero-row { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .hero-av { width: 72px; height: 72px; border-radius: 50%; border: 3px solid #FFBD41; overflow: hidden; background: #fff; flex: 0 0 auto; display: grid; place-items: center; }
+  .hero-av svg { width: 100%; height: 100%; }
+  .hero-name { font-family: var(--head); font-size: 1.15rem; font-weight: 700; margin: 0; }
+  .hero-mail { font-size: 12px; opacity: .85; direction: ltr; text-align: right; margin: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; position: relative; z-index: 1; }
+  .stat { background: rgba(255,255,253,.12); border: 1px solid rgba(255,255,253,.2); border-radius: 16px; padding: 10px 6px; text-align: center; }
+  .stat b { display: block; font-size: 19px; font-variant-numeric: tabular-nums; }
+  .stat small { font-size: 11px; opacity: .9; }
+  .hero-goal { position: relative; z-index: 1; margin-top: 12px; }
+  .hero-goal .bar { height: 10px; border-radius: 999px; background: rgba(255,255,253,.2); overflow: hidden; }
+  .hero-goal .bar i { display: block; height: 100%; background: #FFBD41; border-radius: 999px; transition: width .4s; }
+
+  /* کنترل‌های بخش‌بندی‌شده */
+  .seg { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); }
+  .seg button {
+    flex: 1; min-height: 40px; border: 0; border-radius: 999px; background: transparent; color: var(--graphite-soft);
+    font: inherit; font-weight: 700; font-size: 13px; cursor: pointer;
   }
-  .segment button[aria-pressed="true"] { background: var(--surface); color: var(--graphite); font-weight: 800; box-shadow: 0 2px 6px var(--shadow); }
-  .segment button:disabled { opacity: .45; cursor: not-allowed; }
+  .seg button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); box-shadow: 0 3px 0 #B98F12; }
+  .seg button:disabled { opacity: .45; cursor: not-allowed; }
   .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .row + .row { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
   .switch {
-    width: 56px; height: 32px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper-2);
-    position: relative; cursor: pointer; flex: 0 0 auto;
+    appearance: none; -webkit-appearance: none; width: 52px; height: 30px; border-radius: 999px; background: var(--paper-2);
+    border: 1px solid var(--line); position: relative; cursor: pointer; flex: 0 0 auto; margin: 0;
   }
-  .switch::after {
-    content: ""; position: absolute; top: 3px; right: 3px; width: 24px; height: 24px; border-radius: 50%;
-    background: var(--graphite-soft); transition: transform .2s ease;
+  .switch::after { content: ""; position: absolute; top: 3px; right: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .2s; }
+  .switch:checked { background: var(--pencil); border-color: transparent; }
+  .switch:checked::after { transform: translateX(-22px); }
+  .btn {
+    min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+    color: var(--graphite); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE);
   }
-  .switch[aria-checked="true"] { background: var(--pencil); border-color: transparent; }
-  .switch[aria-checked="true"]::after { background: var(--accent-ink); transform: translateX(-24px); }
-  .stat { display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--line); }
-  .stat:last-child { border-bottom: 0; }
-  .stat .lvl { font-family: "Nunito", system-ui, sans-serif; font-weight: 800; font-size: 1.15rem; }
-  .bars { display: grid; gap: 6px; }
-  .bar-row { display: grid; grid-template-columns: 84px 1fr 56px; gap: 8px; align-items: center; font-size: .86rem; color: var(--graphite-soft); }
-  .bar { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
-  .bar i { display: block; height: 100%; background: var(--pencil); }
-  .pass { font-size: .85rem; padding: 2px 10px; border-radius: 999px; background: var(--ok); }
-  .lock { font-size: .85rem; padding: 2px 10px; border-radius: 999px; background: var(--paper-2); color: var(--graphite-soft); }
-  .danger {
-    min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--surface); color: var(--graphite); font: inherit; cursor: pointer;
-  }
-  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px;
-    box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
-  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft);
-    text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .btn.main { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+  .btn.bad { color: #B4431B; }
+  .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--edge, #CFC6AE); }
+  .btn:disabled { opacity: .55; }
+  .btn.sm { min-height: 34px; padding: 0 12px; font-size: 12.5px; }
+
+  /* حساب و ورود */
+  .auth-tabs { margin: 12px 0 10px; }
+  .field { width: 100%; min-height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; box-sizing: border-box; margin-top: 6px; }
+  .field.ltr { direction: ltr; text-align: left; }
+  .lbl { display: block; font-size: 12px; color: var(--graphite-soft); margin-top: 10px; }
+  .prov { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 50px; border-radius: 16px; border: 1px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-weight: 700; text-decoration: none; margin-bottom: 9px; box-sizing: border-box; }
+  .prov svg { width: 20px; height: 20px; flex: none; }
+  .prov.off { opacity: .5; pointer-events: none; }
+  .msg { color: #E5484D; font-size: 12.5px; min-height: 1.4em; margin: 8px 0 0; }
+
+  /* شخصیت‌ها */
+  .chars { display: grid; gap: 10px; }
+  .char { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; padding: 12px; border-radius: 18px; border: 1px solid var(--line); background: var(--paper-2); }
+  .char-av { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; }
+  .char-av svg { width: 100%; height: 100%; }
+  .char b { font-size: 14px; display: block; }
+  .char small { color: var(--graphite-soft); font-size: 11.5px; }
+  .char-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+  .char-row .seg { flex: 1; }
+  .char-row .seg button { min-height: 34px; font-size: 12px; }
+  .play { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 14px; flex: 0 0 auto; box-shadow: 0 3px 0 var(--edge, #CFC6AE); }
+
+  /* پیشرفت سطح‌ها */
+  .lvl { display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+  .lvl:last-child { border-bottom: 0; }
+  .lvl-tag { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; font-weight: 800; background: var(--paper-2); border: 1px solid var(--line); color: var(--graphite); }
+  .lvl.open .lvl-tag { background: var(--pencil); color: var(--accent-ink); border-color: transparent; }
+  .lvl.locked { opacity: .6; }
+  .mini { display: grid; gap: 6px; margin-top: 6px; }
+  .mini .bar-row { display: grid; grid-template-columns: 52px 1fr 52px; gap: 8px; align-items: center; font-size: 11.5px; color: var(--graphite-soft); }
+  .mini .bar { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .mini .bar i { display: block; height: 100%; background: var(--pencil); border-radius: 999px; }
+  .pill { font-size: 11px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--graphite-soft); }
+  .pill.ok { color: #3F6B0A; border-color: #3F6B0A; }
+
+  /* سهمیه‌ی هوش مصنوعی */
+  .use { margin-bottom: 12px; }
+  .use .top { display: flex; justify-content: space-between; font-size: 13px; color: var(--graphite); }
+  .use .top span { color: var(--graphite-soft); }
+  .use .bar { height: 9px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-top: 6px; }
+  .use .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--pencil), #B98F12); border-radius: 999px; transition: width .4s; }
+
+  .foot { text-align: center; color: var(--graphite-soft); font-size: 11.5px; margin: 26px 0 0; }
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft); text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
   .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
   .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
-  @media (max-width: 640px) { .tabbar { display: flex; } }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 80px; } header nav.top-nav { display: none !important; } }
+  @media (max-width: 520px) { .stats { grid-template-columns: repeat(3, 1fr); } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
 <script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/gamify.js"></script>
 <script src="js/sync.js"></script>
-<style id="auth-inline-style">
-/* ===== حساب کاربری: ساختار و فاصله‌های Subify، رنگ‌های See Spanish ===== */
-.acc-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; margin-bottom: 14px; padding: 16px; }
-.acc-head { align-items: center; gap: 12px; display: flex; }
-.acc-ico { color: var(--graphite); background: rgba(242,194,48,.18); border-radius: 50%; flex: none; place-items: center; width: 46px; height: 46px; display: grid; overflow: hidden; font-weight: 800; }
-.acc-ico img { object-fit: cover; width: 100%; height: 100%; }
-.acc-copy { flex-direction: column; gap: 3px; min-width: 0; display: flex; }
-.acc-copy b { text-overflow: ellipsis; white-space: nowrap; font-size: 15px; overflow: hidden; color: var(--graphite); }
-.acc-copy span { color: var(--graphite-soft); text-overflow: ellipsis; font-size: 12px; line-height: 1.8; overflow: hidden; }
-.acc-desc { color: var(--graphite-soft); font-size: 13px; line-height: 1.9; margin: 0; }
-.acc-btns { gap: 9px; margin-top: 14px; display: grid; }
-.acc-prov { color: var(--graphite); background: var(--paper-2); border: 1px solid var(--line); border-radius: 14px; justify-content: center; align-items: center; gap: 11px; height: 48px; font-size: 13.5px; font-weight: 700; text-decoration: none; display: flex; }
-.acc-prov:active { filter: brightness(.96); }
-.acc-prov svg { width: 20px; height: 20px; flex: none; }
-.acc-out { width: 100%; height: 44px; margin-top: 14px; border-radius: 14px; border: 1px solid var(--line); background: transparent; color: var(--graphite); font: inherit; font-weight: 700; cursor: pointer; }
-.acc-error { color: #E5484D; margin: 12px 0 0; font-size: 12px; line-height: 1.9; }
-.acc-sep { display: flex; align-items: center; gap: 10px; color: var(--graphite-soft); font-size: 12px; margin: 16px 0 10px; }
-.acc-sep::before, .acc-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-.acc-seg { display: flex; padding: 4px; border-radius: 14px; background: var(--paper-2); border: 1px solid var(--line); margin-bottom: 12px; }
-.acc-seg button { flex: 1; height: 38px; border: 0; border-radius: 10px; background: transparent; color: var(--graphite-soft); font: inherit; font-weight: 700; cursor: pointer; }
-.acc-seg button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); }
-.acc-in { width: 100%; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; box-sizing: border-box; margin: 6px 0; direction: ltr; text-align: left; }
-.acc-lbl { font-size: 12px; color: var(--graphite-soft); margin-top: 8px; display: block; }
-.acc-submit { width: 100%; height: 48px; margin-top: 10px; border: 0; border-radius: 14px; background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #B98F12; }
-.acc-submit:disabled { opacity: .55; }
-.acc-msg { color: #E5484D; font-size: 12px; min-height: 1.4em; margin: 8px 0 0; }
-</style>
+<script src="js/i18n.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1><nav class="top-nav" aria-label="منوی اصلی"><a class="navlink" href="index.html">خانه</a><a class="navlink" href="plan.html">برنامه</a><a class="navlink" href="practice.html">تمرین</a><a class="navlink" href="notebook.html">دفترچه</a><a class="navlink" href="me.html" aria-current="page">من</a></nav>
+<div class="me">
+  <header class="me-top">
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <nav class="top-nav" aria-label="منوی اصلی">
+      <a class="navlink" href="index.html">خانه</a>
+      <a class="navlink" href="plan.html">برنامه</a>
+      <a class="navlink" href="practice.html">تمرین</a>
+      <a class="navlink" href="notebook.html">دفترچه</a>
+      <a class="navlink" href="me.html" aria-current="page">من</a>
+    </nav>
   </header>
 
-  <h2>حساب کاربری</h2>
-  <section class="acc-card" id="account" aria-live="polite"><p class="acc-desc">در حال بررسی…</p></section>
-
-  <h2>سطح و مربی</h2>
-  <div class="card">
-    <div>سطح من</div>
-    <p class="muted">هر سطح مسیر و پیشرفت جدا دارد.</p>
-    <ul class="segment" id="levelSeg" role="group" aria-label="سطح"></ul>
-  </div>
-  <div class="card" id="aiCard">
-    <div>مربی هوش مصنوعی</div>
-    <p class="muted" id="aiText">در حال بررسی...</p>
-    <div class="bar" style="margin-top:8px"><i id="aiBar" style="width:0%"></i></div>
-    <a href="tutor.html" style="display:inline-block;margin-top:10px;min-height:44px;line-height:44px;padding:0 22px;border-radius:999px;background:var(--pencil);color:var(--accent-ink);font-weight:800;text-decoration:none">باز کردن مربی</a>
-  </div>
-
-  <h2>نمایش</h2>
-  <div class="card">
-    <div>
-      <div>حالت نمایش</div>
-      <p class="muted">خودکار یعنی مطابق تنظیم گوشی یا کامپیوترت.</p>
-    </div>
-    <ul class="segment" id="themeSeg" role="group" aria-label="حالت نمایش"></ul>
-  </div>
-
-  <h2>صدا</h2>
-  <div class="card">
-    <div class="row">
+  <!-- ===== هدر پروفایل ===== -->
+  <section class="hero" aria-label="پروفایل">
+    <div class="hero-row">
+      <div class="hero-av" id="heroAv"></div>
       <div>
-        <div>پخش صدا</div>
-        <p class="muted">تلفظ جمله‌ها در دیکته، شنیداری و مرور واژگان.</p>
+        <p class="hero-name" id="heroName">مهمان</p>
+        <p class="hero-mail" id="heroMail">وارد حساب نشدی</p>
       </div>
-      <button class="switch" id="soundSw" role="switch" aria-label="پخش صدا"></button>
     </div>
-  </div>
+    <div class="stats">
+      <div class="stat"><b id="stStreak">0</b><small>🔥 روز پیاپی</small></div>
+      <div class="stat"><b id="stXp">0</b><small>⭐ امتیاز</small></div>
+      <div class="stat"><b id="stPassed">0</b><small>🏅 آزمون قبول</small></div>
+    </div>
+    <div class="hero-goal">
+      <div class="bar"><i id="goalBar" style="width:0%"></i></div>
+    </div>
+  </section>
 
-  <div class="card">
+  <!-- ===== حساب و ورود ===== -->
+  <div class="sec-title">حساب</div>
+  <section class="card" id="account" aria-live="polite"></section>
+
+  <!-- ===== سطح ===== -->
+  <div class="sec-title">سطح من</div>
+  <section class="card">
+    <div class="seg" id="levelSeg" role="group" aria-label="سطح"></div>
+    <p class="muted">هر سطح مسیر و پیشرفت جدا دارد. سطح‌های بعدی با آزمون سطح قبل باز می‌شن.</p>
+    <div id="levelList" style="margin-top:10px"></div>
+  </section>
+
+  <!-- ===== هوش مصنوعی ===== -->
+  <div class="sec-title">هوش مصنوعی امروز</div>
+  <section class="card" id="aiCard">
+    <div class="use"><div class="top"><b>مربی</b><span id="uTutor">—</span></div><div class="bar"><i id="bTutor" style="width:0%"></i></div></div>
+    <div class="use"><div class="top"><b>واژه‌یاب</b><span id="uLookup">—</span></div><div class="bar"><i id="bLookup" style="width:0%"></i></div></div>
+    <div class="use"><div class="top"><b>صدای شخصیت‌ها</b><span id="uTts">—</span></div><div class="bar"><i id="bTts" style="width:0%"></i></div></div>
+    <p class="muted" id="aiNote">با کلید شخصی خودت (Gemini یا سرویس سفارشی) سقف سایت برداشته میشه.</p>
+    <p style="margin:12px 0 0"><a class="btn main sm" href="tutor.html" style="text-decoration:none;display:inline-flex;align-items:center">باز کردن مربی</a></p>
+  </section>
+
+  <!-- ===== صدا و افکت‌ها ===== -->
+  <div class="sec-title">صدا و افکت‌ها</div>
+  <section class="card">
     <div class="row">
-      <div>
-        <div>تست صداها</div>
-        <p class="muted">نمونه‌ی صدای کلیک، درست، غلط و تکمیل.</p>
-      </div>
-      <button class="btn main no-sfx" id="sfxTest" type="button">تست</button>
+      <div><b>پخش صدا</b><p class="muted">افکت‌ها و صدای شخصیت‌ها</p></div>
+      <input class="switch" type="checkbox" id="soundSw" aria-label="پخش صدا">
     </div>
-  </div>
-  <div class="card">
-    <p class="muted" id="sfxStatus">برای تست صدا و انیمیشن، دکمه‌ی تست رو بزن.</p>
-  </div>
-
-  <h2>زبان رابط</h2>
-  <div class="card">
-    <ul class="segment" role="group" aria-label="زبان رابط">
-      <li><button type="button" aria-pressed="true">فارسی</button></li>
-      <li><button type="button" disabled>English (به‌زودی)</button></li>
-    </ul>
-  </div>
-
-  <h2>آمار مطالعه</h2>
-  <div class="card" id="stats"></div>
-
-  <h2>پیشرفت آزمون سطح‌ها</h2>
-  <div class="card" id="tests"></div>
-
-  <h2>آفلاین و نصب</h2>
-  <div class="card">
+    <div class="row" style="flex-direction:column;align-items:stretch">
+      <div><b>رنگ صداها</b><p class="muted">حس صدای افکت‌ها رو عوض کن</p></div>
+      <div class="seg" id="packSeg" role="group" aria-label="بسته‌ی صدا">
+        <button type="button" data-pack="soft">نرم</button>
+        <button type="button" data-pack="bright">درخشان</button>
+        <button type="button" data-pack="retro">رترو</button>
+      </div>
+    </div>
     <div class="row">
-      <div>
-        <div>ذخیره‌ی همه برای آفلاین</div>
-        <p class="muted">بعد از ذخیره، درس‌ها و تمرین‌ها بدون اینترنت هم باز میشن.</p>
-      </div>
-      <button class="btn main no-sfx" id="offlineBtn" type="button">ذخیره</button>
+      <div><b>تست صداها</b><p class="muted" id="sfxStatus">کلیک، درست، غلط و تشویق</p></div>
+      <button class="btn main sm" type="button" id="sfxTest">تست</button>
     </div>
-  </div>
-  <div class="card">
-    <div class="row">
-      <div>
-        <div>نصب به‌عنوان اپ</div>
-        <p class="muted">روی صفحه‌ی اصلی گوشی یا کامپیوتر.</p>
-      </div>
-      <button class="btn main no-sfx" id="installBtn" type="button" hidden>نصب</button>
-    </div>
-  </div>
+  </section>
 
-  <h2>داده‌ها</h2>
-  <div class="card">
+  <!-- ===== شخصیت‌ها و صدایشان ===== -->
+  <div class="sec-title">شخصیت‌ها</div>
+  <section class="card">
+    <div class="chars" id="chars"></div>
+    <p class="muted">هر شخصیت صدای خودش رو داره. صدای انتخابی رو پیش‌نمایش بشنو.</p>
+  </section>
+
+  <!-- ===== تلفظ ===== -->
+  <div class="sec-title">تلفظ اسپانیایی</div>
+  <section class="card">
     <div class="row">
-      <div>
-        <div>پاک کردن پیشرفت روی این مرورگر</div>
-        <p class="muted">پیشرفت گرامر، مرور، تمرین، آزمون‌ها و برنامه‌ی امروز پاک می‌شود.</p>
-      </div>
-      <button class="danger" id="reset" type="button">پاک کن</button>
+      <div><b>صدای خواندن جمله‌ها</b><p class="muted">صدایی که جمله‌های اسپانیایی رو با مرورگر می‌خونه</p></div>
     </div>
-  </div>
+    <div class="row" style="margin-top:10px">
+      <select class="field ltr" id="pronSel" aria-label="صدای تلفظ" style="margin:0;flex:1"></select>
+      <button class="play" type="button" id="pronPlay" aria-label="پیش‌نمایش">▶</button>
+    </div>
+  </section>
+
+  <!-- ===== ظاهر و زبان ===== -->
+  <div class="sec-title">ظاهر و زبان</div>
+  <section class="card">
+    <div class="row" style="flex-direction:column;align-items:stretch">
+      <div><b>حالت نمایش</b><p class="muted">خودکار یعنی مطابق گوشی یا کامپیوترت</p></div>
+      <div class="seg" id="themeSeg" role="group" aria-label="حالت نمایش">
+        <button type="button" data-theme="auto">خودکار</button>
+        <button type="button" data-theme="light">روشن</button>
+        <button type="button" data-theme="dark">تیره</button>
+      </div>
+    </div>
+    <div class="row" style="flex-direction:column;align-items:stretch">
+      <div><b>زبان رابط</b><p class="muted">فارسی · English · Español</p></div>
+      <div class="seg" id="langSeg" role="group" aria-label="زبان">
+        <button type="button" data-lang="fa">فارسی</button>
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="es">Español</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== آفلاین و نصب ===== -->
+  <div class="sec-title">آفلاین و نصب</div>
+  <section class="card">
+    <div class="row">
+      <div><b>ذخیره برای آفلاین</b><p class="muted">بعد از ذخیره، درس‌ها و تمرین‌ها بدون اینترنت باز میشن</p></div>
+      <button class="btn main sm" type="button" id="offlineBtn">ذخیره</button>
+    </div>
+    <div class="row">
+      <div><b>نصب به‌عنوان اپ</b><p class="muted">روی صفحه‌ی اصلی گوشی یا کامپیوتر</p></div>
+      <button class="btn main sm" type="button" id="installBtn" hidden>نصب</button>
+      <span class="pill" id="installNa">مرورگرت هنوز پشتیبانی نمی‌کنه</span>
+    </div>
+  </section>
+
+  <!-- ===== داده‌ها ===== -->
+  <div class="sec-title">داده‌ها</div>
+  <section class="card">
+    <div class="row">
+      <div><b>پاک کردن پیشرفت این مرورگر</b><p class="muted">گرامر، واژه، تمرین، امتیاز و آزمون‌ها پاک میشن</p></div>
+      <button class="btn bad sm" type="button" id="resetBtn">پاک کن</button>
+    </div>
+  </section>
+
+  <p class="foot">See Spanish · نسخه‌ی ۲</p>
 </div>
 
 <nav class="tabbar" aria-label="منوی پایین">
-  <a href="index.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a>
-  <a href="plan.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a>
-  <a href="practice.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a>
-  <a href="notebook.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a>
-  <a href="me.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a>
+  <a href="index.html"><span>🏠</span><span>خانه</span></a>
+  <a href="plan.html"><span>📅</span><span>برنامه</span></a>
+  <a href="practice.html"><span>🎯</span><span>تمرین</span></a>
+  <a href="notebook.html"><span>📓</span><span>دفترچه</span></a>
+  <a href="me.html" aria-current="page"><span>👤</span><span>من</span></a>
 </nav>
 
 <script src="data/data.js"></script>
@@ -228,321 +304,273 @@
 <script src="data/vocab-c1.js"></script>
 <script src="data/vocab-c2.js"></script>
 <script>
-  const $ = (s) => document.querySelector(s);
-  const SP = window.SEE_PROGRESS;
-  const THEME_KEY = "seespanish:theme";
+(function () {
+  var API = "https://seespanish-api.sub-ify.site/index.php";
+  var KEY = "seespanish:token";
+  var $ = function (id) { return document.getElementById(id); };
+  var token = null;
+  var LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  var GOOGLE = '<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6C12.3 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7-10.1 7-17.5z"/><path fill="#FBBC05" d="M10.4 28.8c-.5-1.5-.8-3-.8-4.8s.3-3.3.8-4.8l-7.8-6C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.8-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.7-4.2-13.6-9.9l-7.8 6C6.5 42.6 14.6 48 24 48z"/></svg>';
+  var GITHUB = '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
+  var LINKEDIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.5 9.2h2.7V18H5.5zM6.85 4.9a1.55 1.55 0 110 3.1 1.55 1.55 0 010-3.1zM10 9.2h2.6v1.2h.04c.36-.68 1.25-1.4 2.57-1.4 2.75 0 3.26 1.81 3.26 4.16V18h-2.7v-4.4c0-1.05-.02-2.4-1.46-2.4-1.46 0-1.69 1.14-1.69 2.32V18H10z"/></svg>';
 
-  // ---- حالت نمایش ----
-  function currentChoice() {
-    try { return localStorage.getItem(THEME_KEY) || "auto"; } catch (e) { return "auto"; }
+  try { token = localStorage.getItem(KEY); } catch (e) {}
+
+  // ---------- حساب ----------
+  var acc = $("account");
+  function signedOut() {
+    acc.innerHTML =
+      '<b>ورود یا ساخت حساب</b><p class="muted">با یکی از روش‌های زیر وارد شو تا پیشرفتت بین دستگاه‌ها هماهنگ بشه.</p>' +
+      '<a class="prov" href="' + API + '/auth/google">' + GOOGLE + ' ادامه با Google</a>' +
+      '<a class="prov" href="' + API + '/auth/github">' + GITHUB + ' ادامه با GitHub</a>' +
+      '<a class="prov" href="' + API + '/auth/linkedin">' + LINKEDIN + ' ادامه با LinkedIn</a>' +
+      '<div class="seg auth-tabs" role="group"><button type="button" id="tLogin" aria-pressed="true">ورود</button><button type="button" id="tReg" aria-pressed="false">ساخت حساب</button></div>' +
+      '<form id="aForm" novalidate>' +
+        '<div id="fName" style="display:none"><label class="lbl" for="aName">نام کاربری</label><input class="field" id="aName" type="text" maxlength="40" autocomplete="username"></div>' +
+        '<label class="lbl" id="lLogin" for="aLogin">نام کاربری یا ایمیل</label>' +
+        '<div id="fMail" style="display:none"><label class="lbl" for="aMail">ایمیل</label><input class="field ltr" id="aMail" type="email" autocomplete="email"></div>' +
+        '<input class="field ltr" id="aLogin" type="text" autocomplete="username">' +
+        '<label class="lbl" for="aPass">رمز عبور</label><input class="field ltr" id="aPass" type="password" autocomplete="current-password">' +
+        '<button class="btn main" type="submit" id="aSubmit" style="width:100%;margin-top:14px">ورود</button>' +
+      '</form><p class="msg" id="aMsg" role="alert"></p>';
+    var mode = "login";
+    function setMode(m) {
+      mode = m;
+      $("tLogin").setAttribute("aria-pressed", String(m === "login"));
+      $("tReg").setAttribute("aria-pressed", String(m === "register"));
+      $("fName").style.display = m === "register" ? "block" : "none";
+      $("fMail").style.display = m === "register" ? "block" : "none";
+      $("aLogin").style.display = m === "register" ? "none" : "block";
+      $("lLogin").style.display = m === "register" ? "none" : "block";
+      $("aSubmit").textContent = m === "register" ? "ساخت حساب" : "ورود";
+    }
+    $("tLogin").onclick = function () { setMode("login"); };
+    $("tReg").onclick = function () { setMode("register"); };
+    var map = { bad_email: "ایمیل معتبر نیست.", bad_password: "رمز باید حداقل ۸ کاراکتر باشه.", bad_name: "نام کاربری ۲ تا ۴۰ کاراکتر باشه.",
+      email_taken: "با این ایمیل حساب هست؛ وارد شو.", name_taken: "این نام کاربری گرفته شده.", bad_credentials: "اطلاعات ورود اشتباهه.",
+      registration_closed: "ثبت‌نام جدید الان بسته‌ست.", network: "اتصال با سرور برقرار نشد." };
+    $("aForm").onsubmit = function (e) {
+      e.preventDefault();
+      var pass = $("aPass").value, path, body;
+      if (mode === "register") { path = "/auth/register"; body = { name: $("aName").value.trim(), email: $("aMail").value.trim(), password: pass }; }
+      else { path = "/auth/login"; body = { login: $("aLogin").value.trim(), password: pass }; }
+      $("aSubmit").disabled = true; $("aMsg").textContent = "در حال بررسی…";
+      fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j && j.ok && j.token) { try { localStorage.setItem(KEY, j.token); } catch (x) {} location.reload(); return; }
+          $("aMsg").textContent = map[(j && j.error) || "network"] || "خطایی پیش آمد."; $("aSubmit").disabled = false;
+        })
+        .catch(function () { $("aMsg").textContent = map.network; $("aSubmit").disabled = false; });
+    };
   }
-  function setTheme(choice) {
-    try {
-      if (choice === "auto") localStorage.removeItem(THEME_KEY);
-      else localStorage.setItem(THEME_KEY, choice);
-    } catch (e) { /* ignore */ }
-    const effective = choice === "auto"
-      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-      : choice;
-    document.documentElement.setAttribute("data-theme", effective);
-    renderTheme();
+  function signedIn(u) {
+    var label = u.name || u.email || "کاربر";
+    $("heroName").textContent = label;
+    $("heroMail").textContent = u.email || "";
+    tr();
+    acc.innerHTML = '<div class="row"><div><b>' + escapeHtml(label) + '</b><p class="muted">' + escapeHtml(u.email || "") + '</p></div>' +
+      '<button class="btn bad sm" type="button" id="outBtn">خروج</button></div>';
+    $("outBtn").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); };
   }
-  function renderTheme() {
-    const ul = $("#themeSeg"); ul.innerHTML = "";
-    const choice = currentChoice();
-    [["auto", "خودکار"], ["light", "روشن"], ["dark", "تیره"]].forEach(([v, label]) => {
-      const li = document.createElement("li"); const b = document.createElement("button");
-      b.type = "button"; b.textContent = label;
-      b.setAttribute("aria-pressed", String(v === choice));
-      b.addEventListener("click", () => setTheme(v));
-      li.appendChild(b); ul.appendChild(li);
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  function tr() { if (window.SEE_I18N) SEE_I18N.apply(); }
+  if (!token) signedOut();
+  else fetch(API + "/auth/me", { headers: { "Authorization": "Bearer " + token } })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j && j.ok) { signedIn(j.user); return; }
+      try { localStorage.removeItem(KEY); } catch (e) {} signedOut();
+    }).catch(function () { acc.innerHTML = '<p class="muted">اتصال با سرور برقرار نشد.</p>'; });
+
+  // ---------- آواتار و شخصیت‌ها ----------
+  var heroAv = $("heroAv");
+  heroAv.innerHTML = window.SEE_CHARS.svg("rosa", "happy");
+
+  var VOICES = ["Kore", "Puck", "Aoede", "Charon"];
+  var VOICE_LABEL = { Kore: "صدای ۱", Puck: "صدای ۲", Aoede: "صدای ۳", Charon: "صدای ۴" };
+  function voicePrefs() { try { return JSON.parse(localStorage.getItem("seespanish:voice:v1")) || {}; } catch (e) { return {}; } }
+  function setVoice(id, v) { var p = voicePrefs(); p[id] = v; try { localStorage.setItem("seespanish:voice:v1", JSON.stringify(p)); } catch (e) {} }
+  var charsBox = $("chars");
+  ["lola", "tomas", "rosa"].forEach(function (id) {
+    var c = window.SEE_CHARS.list[id];
+    var cur = voicePrefs()[id] || VOICES[0];
+    var box = document.createElement("div"); box.className = "char";
+    box.innerHTML = '<div class="char-av">' + window.SEE_CHARS.svg(id, "normal") + '</div>' +
+      '<div><b>' + c.name + '</b><small>' + (id === "lola" ? "مربی اصلی" : id === "tomas" ? "کمک واژه‌یاب" : "همراه تمرین") + '</small>' +
+      '<div class="char-row"><div class="seg" role="group" aria-label="صدای ' + c.name + '"></div><button class="play" type="button" aria-label="پیش‌نمایش">▶</button></div></div>';
+    var seg = box.querySelector(".seg");
+    VOICES.forEach(function (v) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = VOICE_LABEL[v];
+      b.setAttribute("aria-pressed", String(v === cur));
+      b.onclick = function () {
+        setVoice(id, v);
+        Array.prototype.forEach.call(seg.children, function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      };
+      seg.appendChild(b);
     });
-  }
-
-  // ---- صدا ----
-  function renderSound() {
-    const sw = $("#soundSw");
-    const on = SEE_PREFS.soundOn();
-    sw.setAttribute("aria-checked", String(on));
-    sw.onclick = () => { SEE_PREFS.setSound(!SEE_PREFS.soundOn()); renderSound(); };
-  }
-
-  // ---- آمار ----
-  function renderStats() {
-    const box = $("#stats");
-    const W = window.SEE;
-    const rows = W.levels.map((lvl) => {
-      const pr = SP.levelProgress(lvl);
-      const pct = (d) => d.total ? Math.round((d.done / d.total) * 100) : 0;
-      return `<div class="stat">
-        <span class="lvl">${lvl}</span>
-        <div class="bars">
-          <div class="bar-row"><span>گرامر</span><div class="bar"><i style="width:${pct(pr.grammar)}%"></i></div><span>${pr.grammar.done}/${pr.grammar.total}</span></div>
-          <div class="bar-row"><span>واژه</span><div class="bar"><i style="width:${pct(pr.vocab)}%"></i></div><span>${pr.vocab.done}/${pr.vocab.total}</span></div>
-          <div class="bar-row"><span>تمرین</span><div class="bar"><i style="width:${pct(pr.exercises)}%"></i></div><span>${pr.exercises.done}/${pr.exercises.total}</span></div>
-        </div>
-      </div>`;
-    }).join("");
-    const weak = SP.weakIds().length;
-    box.innerHTML = rows + `<p class="muted" style="margin-top:10px">نقاط ضعف فعلی: ${weak} تمرین</p>`;
-  }
-
-  // ---- آزمون سطح‌ها ----
-  function renderTests() {
-    const passed = SP.passedLevels();
-    const box = $("#tests");
-    box.innerHTML = SP.LEVEL_ORDER.map((lvl) => {
-      const status = passed[lvl] ? `<span class="pass">پاس شده</span>` :
-        (SP.levelOpen(lvl) ? `<span class="lock">آزمون باز است</span>` : `<span class="lock">قفل</span>`);
-      return `<div class="stat"><span class="lvl">${lvl}</span><div class="row" style="justify-content:space-between">${status}<a href="test.html?level=${lvl}" style="color:var(--graphite);font-size:.92rem">${passed[lvl] ? "مرور" : "آزمون"}</a></div></div>`;
-    }).join("");
-  }
-
-  // ---- پاک کردن داده‌ها ----
-  $("#reset").addEventListener("click", () => {
-    if (!confirm("پیشرفت این مرورگر پاک شود؟ این کار برگشت ندارد.")) return;
-    [SP.PROGRESS_KEY, SP.MEMORY_KEY, SP.STATS_KEY, SP.PASS_KEY, "seespanish:today:v1", "seespanish:plan:pref"]
-      .forEach((k) => { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } });
-    renderAll();
+    box.querySelector(".play").onclick = function () {
+      window.SEE_CHARS.speakAs(id, "Hola, soy " + c.name + ". ¡Vamos a practicar!");
+    };
+    charsBox.appendChild(box);
   });
 
-  function renderAll() { renderTheme(); renderSound(); renderStats(); renderTests(); }
-  renderAll();
+  // ---------- سطح ----------
+  var levelSeg = $("levelSeg"), levelList = $("levelList");
+  var curLevel = "A1"; try { curLevel = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
+  function renderLevels() {
+    levelSeg.innerHTML = "";
+    LEVELS.forEach(function (l) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = l;
+      b.setAttribute("aria-pressed", String(l === curLevel));
+      b.onclick = function () { curLevel = l; try { localStorage.setItem("seespanish:level", l); } catch (e) {} renderLevels(); };
+      levelSeg.appendChild(b);
+    });
+    var passed = window.SEE_PROGRESS.passedLevels();
+    levelList.innerHTML = LEVELS.map(function (l) {
+      var pr = window.SEE_PROGRESS.levelProgress(l);
+      var open = window.SEE_PROGRESS.levelOpen(l);
+      var pct = function (d) { return d.total ? Math.round(d.done / d.total * 100) : 0; };
+      var status = passed[l] ? '<span class="pill ok">قبول شدی</span>' : (open ? '<span class="pill">باز</span>' : '<span class="pill">قفل</span>');
+      return '<div class="lvl ' + (open ? "open" : "locked") + '"><div class="lvl-tag">' + l + '</div><div>' +
+        '<div class="row" style="padding:0;border:0"><b>سطح ' + l + '</b>' + status + '</div>' +
+        '<div class="mini">' +
+          '<div class="bar-row"><span>گرامر</span><div class="bar"><i style="width:' + pct(pr.grammar) + '%"></i></div><span>' + pr.grammar.done + '/' + pr.grammar.total + '</span></div>' +
+          '<div class="bar-row"><span>واژه</span><div class="bar"><i style="width:' + pct(pr.vocab) + '%"></i></div><span>' + pr.vocab.done + '/' + pr.vocab.total + '</span></div>' +
+          '<div class="bar-row"><span>تمرین</span><div class="bar"><i style="width:' + pct(pr.exercises) + '%"></i></div><span>' + pr.exercises.done + '/' + pr.exercises.total + '</span></div>' +
+        '</div></div></div>';
+    }).join("");
+  }
+  renderLevels();
+  tr();
+  $("stPassed").textContent = Object.keys(window.SEE_PROGRESS.passedLevels()).length;
+
+  // ---------- امتیاز، روز پیاپی، هدف ----------
+  var g = window.SEE_GAME ? window.SEE_GAME.state() : { xp: 0, streak: 0, todayXp: 0, goal: 30 };
+  $("stStreak").textContent = g.streak; $("stXp").textContent = g.xp;
+  $("goalBar").style.width = Math.min(100, Math.round(g.todayXp / g.goal * 100)) + "%";
+
+  // ---------- سهمیه‌ی هوش مصنوعی ----------
+  function setUse(id, bar, used, limit) {
+    if (!limit) { $(id).textContent = "نامحدود"; $(bar).style.width = "0%"; return; }
+    $(id).textContent = used + " از " + limit;
+    $(bar).style.width = Math.min(100, Math.round(used / limit * 100)) + "%";
+  }
+  if (token) {
+    fetch(API + "/ai/usage", { headers: { "Authorization": "Bearer " + token } })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) { $("aiNote").textContent = "برای دیدن سهمیه، دوباره وارد شو."; return; }
+        var u = j.unlimited;
+        setUse("uTutor", "bTutor", j.tutor.used, u ? 0 : j.tutor.limit);
+        setUse("uLookup", "bLookup", j.lookup.used, u ? 0 : j.lookup.limit);
+        setUse("uTts", "bTts", j.tts ? j.tts.used : 0, u ? 0 : (j.tts ? j.tts.limit : 0));
+        if (u) $("aiNote").textContent = "حساب مدیر: بدون محدودیت.";
+      }).catch(function () {});
+  } else {
+    ["uTutor", "uLookup", "uTts"].forEach(function (id) { $(id).textContent = "برای دیدن، وارد شو"; });
+  }
+
+  // ---------- صدا ----------
+  var sw = $("soundSw");
+  sw.checked = window.SEE_PREFS ? SEE_PREFS.soundOn() : true;
+  sw.onchange = function () { if (window.SEE_PREFS) SEE_PREFS.setSound(sw.checked); };
+  var PACK_KEY = "seespanish:sfxpack:v1";
+  var packSeg = $("packSeg");
+  var curPack = "soft"; try { curPack = localStorage.getItem(PACK_KEY) || "soft"; } catch (e) {}
+  function paintPack() { Array.prototype.forEach.call(packSeg.children, function (b) { b.setAttribute("aria-pressed", String(b.dataset.pack === curPack)); }); }
+  Array.prototype.forEach.call(packSeg.children, function (b) {
+    b.onclick = function () { curPack = b.dataset.pack; try { localStorage.setItem(PACK_KEY, curPack); } catch (e) {} paintPack(); if (window.SEE_SFX) SEE_SFX.play("ok"); };
+  });
+  paintPack();
+  $("sfxTest").onclick = function () {
+    if (window.SEE_SFX) SEE_SFX.test();
+    if (window.SEE_FX) SEE_FX.result(true, $("sfxTest"));
+    $("sfxStatus").textContent = "صدا " + (sw.checked ? "روشنه" : "خاموشه") + " · وضعیت: " + (window.SEE_SFX && SEE_SFX.state ? SEE_SFX.state() : "—");
+  };
+
+  // ---------- تلفظ: فهرست صداهای اسپانیایی مرورگر ----------
+  var pron = $("pronSel");
+  var PRON_KEY = "seespanish:pron:v1";
+  function fillPron() {
+    if (!("speechSynthesis" in window)) { pron.innerHTML = '<option>مرورگر پشتیبانی نمی‌کند</option>'; return; }
+    var vs = window.speechSynthesis.getVoices().filter(function (v) { return /^es/i.test(v.lang); });
+    var saved = ""; try { saved = localStorage.getItem(PRON_KEY) || ""; } catch (e) {}
+    pron.innerHTML = vs.length ? "" : '<option value="">صدای اسپانیایی روی دستگاه نیست (صدای پیش‌فرض)</option>';
+    vs.forEach(function (v) {
+      var o = document.createElement("option"); o.value = v.name; o.textContent = v.name + " (" + v.lang + ")";
+      if (v.name === saved) o.selected = true; pron.appendChild(o);
+    });
+  }
+  fillPron();
+  if ("speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = fillPron;
+  pron.onchange = function () { try { localStorage.setItem(PRON_KEY, pron.value); } catch (e) {} };
+  $("pronPlay").onclick = function () {
+    if (!("speechSynthesis" in window)) return;
+    var u = new SpeechSynthesisUtterance("Buenos días, ¿cómo estás?"); u.lang = "es-ES";
+    var v = window.speechSynthesis.getVoices().filter(function (x) { return x.name === pron.value; })[0];
+    if (v) u.voice = v;
+    window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+  };
+
+  // ---------- زبان رابط ----------
+  var langSeg = $("langSeg");
+  function paintLang() {
+    var cur = window.SEE_I18N ? SEE_I18N.lang() : "fa";
+    Array.prototype.forEach.call(langSeg.children, function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === cur)); });
+  }
+  Array.prototype.forEach.call(langSeg.children, function (b) {
+    b.onclick = function () { if (window.SEE_I18N) { SEE_I18N.setLang(b.dataset.lang); location.reload(); } };
+  });
+  paintLang();
+
+  // ---------- حالت نمایش ----------
+  var themeSeg = document.getElementById("themeSeg");
+  function curTheme() { try { return localStorage.getItem("seespanish:theme") || "auto"; } catch (e) { return "auto"; } }
+  function paintTheme() { Array.prototype.forEach.call(themeSeg.children, function (b) { b.setAttribute("aria-pressed", String(b.dataset.theme === curTheme())); }); }
+  Array.prototype.forEach.call(themeSeg.children, function (b) {
+    b.onclick = function () {
+      var t = b.dataset.theme;
+      try { if (t === "auto") localStorage.removeItem("seespanish:theme"); else localStorage.setItem("seespanish:theme", t); } catch (e) {}
+      var dark = t === "auto" ? (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) : t === "dark";
+      document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+      paintTheme();
+    };
+  });
+  paintTheme();
+
+  // ---------- آفلاین و نصب ----------
+  var off = $("offlineBtn");
+  off.onclick = function () {
+    if (!("serviceWorker" in navigator)) { off.textContent = "پشتیبانی نمی‌شود"; return; }
+    navigator.serviceWorker.ready.then(function (reg) {
+      if (reg.active) reg.active.postMessage({ type: "PRECACHE" });
+      off.textContent = "در حال ذخیره…";
+    });
+  };
+  if ("serviceWorker" in navigator) navigator.serviceWorker.addEventListener("message", function (ev) {
+    if (ev.data && ev.data.type === "PRECACHE_DONE") off.textContent = "ذخیره شد ✓";
+  });
+  var deferred = null;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault(); deferred = e;
+    $("installBtn").hidden = false; $("installNa").hidden = true;
+  });
+  $("installBtn").onclick = function () { if (!deferred) return; deferred.prompt(); deferred = null; $("installBtn").hidden = true; };
+
+  // ---------- پاک کردن داده‌ها ----------
+  $("resetBtn").onclick = function () {
+    if (!confirm("پیشرفت این مرورگر پاک بشه؟ این کار برگشت نداره.")) return;
+    ["seespanish:progress:v2", "seespanish:memory:v1", "seespanish:stats:v1", "seespanish:passed:v1", "seespanish:today:v1", "seespanish:plan:pref", "seespanish:xp:v1"]
+      .forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+    location.reload();
+  };
+})();
 </script>
 <script>
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
-</script>
-<script>
-  // ---- حساب کاربری: ورود با Google و نمایش نام ----
-  (function () {
-    var API = "https://seespanish-api.sub-ify.site/index.php";
-    var GOOGLE_SVG = "<svg viewBox=\"0 0 48 48\" width=\"22\" height=\"22\" aria-hidden=\"true\"><path fill=\"#EA4335\" d=\"M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6C12.3 13.5 17.7 9.5 24 9.5z\"/><path fill=\"#4285F4\" d=\"M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7-10.1 7-17.5z\"/><path fill=\"#FBBC05\" d=\"M10.4 28.8c-.5-1.5-.8-3-.8-4.8s.3-3.3.8-4.8l-7.8-6C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.8-6z\"/><path fill=\"#34A853\" d=\"M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.7-4.2-13.6-9.9l-7.8 6C6.5 42.6 14.6 48 24 48z\"/></svg>";
-    var GITHUB_SVG = "<svg viewBox=\"0 0 16 16\" width=\"22\" height=\"22\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"/></svg>";
-    var LINKEDIN_SVG = "<svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" aria-hidden=\"true\"><rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#0A66C2\"/><path fill=\"#fff\" d=\"M5.5 9.2h2.7V18H5.5zM6.85 4.9a1.55 1.55 0 110 3.1 1.55 1.55 0 010-3.1zM10 9.2h2.6v1.2h.04c.36-.68 1.25-1.4 2.57-1.4 2.75 0 3.26 1.81 3.26 4.16V18h-2.7v-4.4c0-1.05-.02-2.4-1.46-2.4-1.46 0-1.69 1.14-1.69 2.32V18H10z\"/></svg>";
-
-    var KEY = "seespanish:token";
-
-    // بعد از برگشت از Google، توکن در آدرس (#token=...) می‌آید؛ آن را ذخیره و از آدرس پاک می‌کنیم
-    var m = location.hash.match(/token=([a-f0-9]{64})/);
-    if (m) {
-      try { localStorage.setItem(KEY, m[1]); } catch (e) {}
-      history.replaceState(null, "", location.pathname + location.search);
-    }
-
-    function render(html) { document.getElementById("account").innerHTML = html; }
-
-    function loginButton() {
-      render(
-        '<div class="acc-head"><div class="acc-ico">U</div><div class="acc-copy"><b>حساب کاربری</b>' +
-          '<span>با Google یا GitHub وارد شو؛ اگر حساب نداشته باشی همان لحظه ساخته می‌شود.</span></div></div>' +
-        '<div class="acc-btns">' +
-          '<a class="acc-prov" href="' + API + '/auth/google">' + GOOGLE_SVG + ' ادامه با Google</a>' +
-          '<a class="acc-prov" href="' + API + '/auth/github">' + GITHUB_SVG + ' ادامه با GitHub</a>' +
-          '<a class="acc-prov" href="' + API + '/auth/linkedin">' + LINKEDIN_SVG + ' ادامه با LinkedIn</a>' +
-        '</div>' +
-        '<div class="acc-sep">یا با ایمیل</div>' +
-        '<div class="acc-seg" role="group" aria-label="نوع ورود">' +
-          '<button type="button" id="tabLogin" aria-pressed="true">ورود</button>' +
-          '<button type="button" id="tabRegister" aria-pressed="false">ساخت حساب</button>' +
-        '</div>' +
-        '<form id="authForm" novalidate>' +
-          '<div id="fieldName" style="display:none"><label class="acc-lbl" for="authName">نام کاربری</label>' +
-            '<input class="acc-in" id="authName" type="text" maxlength="40" autocomplete="username" dir="rtl"></div>' +
-          '<label class="acc-lbl" id="labelLogin" for="authLogin">نام کاربری یا ایمیل</label>' +
-          '<div id="fieldEmail" style="display:none"><label class="acc-lbl" for="authEmail">ایمیل</label>' +
-            '<input class="acc-in" id="authEmail" type="email" autocomplete="email"></div>' +
-          '<input class="acc-in" id="authLogin" type="text" autocomplete="username">' +
-          '<label class="acc-lbl" for="authPass">رمز عبور</label>' +
-          '<input class="acc-in" id="authPass" type="password" autocomplete="current-password">' +
-          '<button class="acc-submit" type="submit" id="authSubmit">ورود</button>' +
-        '</form>' +
-        '<p class="acc-msg" id="authMsg" role="alert"></p>'
-      );
-      var mode = "login";
-      var tabLogin = document.getElementById("tabLogin");
-      var tabRegister = document.getElementById("tabRegister");
-      var fieldName = document.getElementById("fieldName");
-      var fieldEmail = document.getElementById("fieldEmail");
-      var labelLogin = document.getElementById("labelLogin");
-      var loginInput = document.getElementById("authLogin");
-      var submit = document.getElementById("authSubmit");
-      var msg = document.getElementById("authMsg");
-      var form = document.getElementById("authForm");
-
-      function setMode(m) {
-        mode = m;
-        tabLogin.setAttribute("aria-pressed", String(m === "login"));
-        tabRegister.setAttribute("aria-pressed", String(m === "register"));
-        fieldName.style.display = m === "register" ? "block" : "none";
-        fieldEmail.style.display = m === "register" ? "block" : "none";
-        loginInput.style.display = m === "register" ? "none" : "block";
-        labelLogin.style.display = m === "register" ? "none" : "block";
-        submit.textContent = m === "register" ? "ساخت حساب" : "ورود";
-        document.getElementById("authPass").autocomplete = m === "register" ? "new-password" : "current-password";
-        msg.textContent = "";
-      }
-      tabLogin.onclick = function () { setMode("login"); };
-      tabRegister.onclick = function () { setMode("register"); };
-
-      var messages = {
-        bad_email: "ایمیل معتبر نیست.",
-        bad_password: "رمز عبور باید حداقل ۸ کاراکتر باشه.",
-        bad_name: "نام کاربری باید بین ۲ تا ۴۰ کاراکتر باشه.",
-        email_taken: "با این ایمیل قبلاً حساب ساخته شده؛ وارد شو.",
-        name_taken: "این نام کاربری قبلاً گرفته شده.",
-        bad_credentials: "اطلاعات ورود اشتباهه.",
-        network: "اتصال با سرور برقرار نشد."
-      };
-
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        var pass = document.getElementById("authPass").value;
-        var body, path;
-        if (mode === "register") {
-          body = {
-            name: document.getElementById("authName").value.trim(),
-            email: document.getElementById("authEmail").value.trim(),
-            password: pass
-          };
-          path = "/auth/register";
-        } else {
-          body = { login: loginInput.value.trim(), password: pass };
-          path = "/auth/login";
-        }
-        submit.disabled = true;
-        msg.textContent = "در حال بررسی...";
-        fetch(API + path, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body)
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (j) {
-            if (j && j.ok && j.token) {
-              try { localStorage.setItem(KEY, j.token); } catch (err) {}
-              location.reload();
-              return;
-            }
-            msg.textContent = messages[(j && j.error) || "network"] || "خطایی پیش آمد، دوباره امتحان کن.";
-            submit.disabled = false;
-          })
-          .catch(function () { msg.textContent = messages.network; submit.disabled = false; });
-      };
-    }
-
-    function show(user) {
-      var label = user.name || user.email || "کاربر";
-      render(
-        '<div class="acc-head"><div class="acc-ico"></div><div class="acc-copy"><b></b><span dir="ltr"></span></div></div>' +
-        '<button type="button" class="acc-out" id="acc-logout">خروج از حساب</button>'
-      );
-      document.querySelector("#account .acc-ico").textContent = String(label).trim().charAt(0).toUpperCase() || "U";
-      document.querySelector("#account .acc-copy b").textContent = label;
-      document.querySelector("#account .acc-copy span").textContent = user.email || "";
-      document.getElementById("acc-logout").onclick = function () {
-        try { localStorage.removeItem(KEY); } catch (e) {}
-        loginButton();
-      };
-    }
-
-    var token = null;
-    try { token = localStorage.getItem(KEY); } catch (e) {}
-    if (!token) { loginButton(); return; }
-
-    fetch(API + "/auth/me", { headers: { Authorization: "Bearer " + token } })
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (j && j.ok) { show(j.user); }
-        else { try { localStorage.removeItem(KEY); } catch (e) {} loginButton(); }
-      })
-      .catch(function () { render('<p class="muted">اتصال با سرور برقرار نشد.</p>'); });
-  })();
-</script>
-<script>
-  (function () {
-    var LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
-    var cur = "A1";
-    try { cur = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
-
-    var seg = document.getElementById("levelSeg");
-    function renderLevel() {
-      seg.innerHTML = "";
-      LEVELS.forEach(function (l) {
-        var li = document.createElement("li");
-        var b = document.createElement("button");
-        b.type = "button";
-        b.textContent = l;
-        b.setAttribute("aria-pressed", String(l === cur));
-        b.onclick = function () {
-          cur = l;
-          try { localStorage.setItem("seespanish:level", l); } catch (e) {}
-          renderLevel();
-        };
-        li.appendChild(b);
-        seg.appendChild(li);
-      });
-    }
-    renderLevel();
-
-    var sfxBtn = document.getElementById("sfxTest");
-    var sfxStatus = document.getElementById("sfxStatus");
-    sfxBtn.onclick = function () {
-      var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true;
-      var hasSfx = !!window.SEE_SFX;
-      var audioOk = !!window.AudioContext || !!window.webkitAudioContext;
-      if (hasSfx) SEE_SFX.test();
-      if (window.SEE_FX) SEE_FX.result(true, sfxBtn);
-      sfxStatus.textContent = "صدا روشن: " + (on ? "بله" : "خیر") +
-        " | سیستم صدا: " + (audioOk ? "پشتیبانی می‌شود" : "پشتیبانی نمی‌شود") +
-        " | وضعیت: " + (hasSfx && window.SEE_SFX.state ? SEE_SFX.state() : "بارگذاری نشده");
-    };
-
-    var off = document.getElementById("offlineBtn");
-    off.onclick = function () {
-      if (!("serviceWorker" in navigator)) { off.textContent = "پشتیبانی نمی‌شود"; return; }
-      navigator.serviceWorker.ready.then(function (reg) {
-        if (reg.active) reg.active.postMessage({ type: "PRECACHE" });
-        off.textContent = "در حال ذخیره...";
-      });
-    };
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.addEventListener("message", function (ev) {
-        if (ev.data && ev.data.type === "PRECACHE_DONE") off.textContent = "ذخیره شد ✓";
-      });
-    }
-
-    var deferred = null;
-    var installBtn = document.getElementById("installBtn");
-    window.addEventListener("beforeinstallprompt", function (e) {
-      e.preventDefault();
-      deferred = e;
-      installBtn.hidden = false;
-    });
-    installBtn.onclick = function () {
-      if (!deferred) return;
-      deferred.prompt();
-      deferred = null;
-      installBtn.hidden = true;
-    };
-  })();
-</script>
-<script>
-  (function () {
-    var API = "https://seespanish-api.sub-ify.site/index.php";
-    var t = null;
-    try { t = localStorage.getItem("seespanish:token"); } catch (e) {}
-    var txt = document.getElementById("aiText");
-    if (!t) { txt.textContent = "برای استفاده از مربی، اول وارد حسابت شو."; return; }
-    fetch(API + "/ai/usage", { headers: { "Authorization": "Bearer " + t } })
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (!j.ok) { txt.textContent = "برای استفاده از مربی، دوباره وارد شو."; return; }
-        if (j.unlimited) { txt.textContent = "حساب مدیر: بدون محدودیت"; return; }
-        txt.textContent = "امروز " + j.tutor.used + " از " + j.tutor.limit + " پرسش";
-        document.getElementById("aiBar").style.width = Math.min(100, Math.round(j.tutor.used / j.tutor.limit * 100)) + "%";
-      })
-      .catch(function () { txt.textContent = "اتصال با سرور برقرار نشد."; });
-  })();
+  if (window.SEE_I18N) { SEE_I18N.apply(); setTimeout(SEE_I18N.apply, 600); setTimeout(SEE_I18N.apply, 1800); }
 </script>
 </body>
 </html>
