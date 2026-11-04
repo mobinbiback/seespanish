@@ -151,7 +151,64 @@
     return (t && t[l] && t[l][field]) || src;
   }
 
-  window.SEE_I18N = { lang: lang, setLang: setLang, apply: apply, LANGS: LANGS, tx: tx };
+
+  // ترجمه‌ی پیام‌های پویا (ساخته‌شده با جاوااسکریپت). کلید = متن فارسی؛ {n} و مانند آن جایگزین می‌شود.
+  var MSG = {
+    en: {
+      "سؤالت رو درباره‌ی اسپانیایی بپرس.": "Ask me anything about Spanish.",
+      "یک کلمه‌ی اسپانیایی یا فارسی بنویس تا معنیش رو بگم.": "Type a Spanish or Persian word and I'll explain it.",
+      "سؤالت رو بنویس…": "Type your question…",
+      "مثلاً: madrugada یا صبح زود": "e.g. madrugada or early morning",
+      "سهمیه‌ی امروزت تموم شد ({n}). فردا دوباره می‌تونی.": "Today's quota is used up ({n}). You can try again tomorrow.",
+      "ورودت منقضی شده. دوباره با Google وارد شو.": "Your session expired. Sign in again.",
+      "الان جواب نداد. کمی بعد دوباره امتحان کن.": "No answer right now. Try again shortly.",
+      "این هم معنیش.": "Here's the meaning.",
+      "آفرین! ادامه بده.": "Well done! Keep going.",
+      "امروز دیگه نمی‌تونیم ادامه بدیم.": "We can't continue today.",
+      "با کلید شخصی خودت (بدون محدودیت سایت)": "With your own key (no site limit)",
+      "پرسش‌های امروز: ": "Questions today: ",
+      "واژه‌های امروز: ": "Words today: ",
+      "ارسال": "Send", "برگشت": "Back",
+"یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: ": "Help me with this exercise, but don't give the answer directly, just guide me: ", "بررسی جواب": "Check answer", "درست است": "Correct", "پاسخ درست: ": "Correct answer: ", "جواب را بنویس": "Write the answer", "ارزیابی متن": "Text check", "متن کامل است": "Text is complete", "هنوز کامل نیست": "Not complete yet", "طول متن مناسب است.": "Good text length.", "همه‌ی موارد چک‌لیست را بررسی کن.": "Check every item on the list.", "ثبت آزمون": "Submit test", "قبول شدی!": "You passed!", "هنوز نه، دوباره تلاش کن": "Not yet, try again", "درست بود": "Correct", "این جمله بود:": "This was the sentence:", "پخش متن": "Play text", "پخش آهسته": "Slow play", "بررسی جواب‌ها": "Check answers", "متن بعدی": "Next text", "حال ساده": "Present", "گذشته‌ی کامل": "Preterite", "گذشته‌ی استمراری": "Imperfect", "آینده": "Future", "پخش کل جدول": "Play whole table", "فرم درست": "Correct form", "درست بود ✓": "Correct ✓", "ادامه": "Continue", "مرور واژگان": "Vocabulary review", "امروز کارتی برای مرور نداری.": "You have no cards to review today.", "یک گرامر تازه": "A new grammar point", "تمرین نقاط ضعف": "Weak-spot practice", "یک تمرین": "One exercise", "یک سؤال را حل کن و توضیحش را بخوان.": "Solve one question and read its explanation.", "درک شنیداری": "Listening comprehension", "یک متن را گوش کن و به سؤال‌هایش جواب بده.": "Listen to a text and answer its questions.", "شروع": "Start", "برگرداندن": "Undo", "انجام شد": "Done", "هر مرحله که انجام شد، تیک بزن. فردا برنامه‌ی تازه‌ای برات ساخته می‌شود.": "Tick each step when done. Tomorrow you get a new plan.", "برای ۶۰ دقیقه، بعد از انجام مراحل بالا، تمرین بیشتری از همین سطح حل کن.": "For 60 minutes, after the steps above, do more practice from this level.", "ایمیل معتبر نیست.": "Invalid email.", "رمز باید حداقل ۸ کاراکتر باشه.": "Password must be at least 8 characters.", "نام کاربری ۲ تا ۴۰ کاراکتر باشه.": "Username must be 2 to 40 characters.", "با این ایمیل حساب هست؛ وارد شو.": "An account with this email exists; sign in.", "این نام کاربری گرفته شده.": "This username is taken.", "اطلاعات ورود اشتباهه.": "Wrong sign-in details.", "ثبت‌نام جدید الان بسته‌ست.": "Sign-up is closed right now.", "خطایی پیش آمد.": "Something went wrong.", "کاربر": "User", "پیشرفت این مرورگر پاک بشه؟ این کار برگشت نداره.": "Clear progress on this browser? This can't be undone."
+    },
+    es: {
+      "سؤالت رو درباره‌ی اسپانیایی بپرس.": "Pregúntame lo que quieras sobre español.",
+      "یک کلمه‌ی اسپانیایی یا فارسی بنویس تا معنیش رو بگم.": "Escribe una palabra en español o en persa y te la explico.",
+      "سؤالت رو بنویس…": "Escribe tu pregunta…",
+      "مثلاً: madrugada یا صبح زود": "p. ej. madrugada o madrugada temprana",
+      "سهمیه‌ی امروزت تموم شد ({n}). فردا دوباره می‌تونی.": "Se acabó tu cuota de hoy ({n}). Puedes volver mañana.",
+      "ورودت منقضی شده. دوباره با Google وارد شو.": "Tu sesión caducó. Vuelve a entrar.",
+      "الان جواب نداد. کمی بعد دوباره امتحان کن.": "No responde ahora. Inténtalo de nuevo en un momento.",
+      "این هم معنیش.": "Aquí tienes el significado.",
+      "آفرین! ادامه بده.": "¡Muy bien! Sigue así.",
+      "امروز دیگه نمی‌تونیم ادامه بدیم.": "Hoy no podemos seguir.",
+      "با کلید شخصی خودت (بدون محدودیت سایت)": "Con tu propia clave (sin límite del sitio)",
+      "پرسش‌های امروز: ": "Preguntas de hoy: ",
+      "واژه‌های امروز: ": "Palabras de hoy: ",
+      "ارسال": "Enviar", "برگشت": "Volver",
+"یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: ": "Ayúdame con este ejercicio, pero no me des la respuesta directamente, solo guíame: ", "بررسی جواب": "Revisar respuesta", "درست است": "Correcto", "پاسخ درست: ": "Respuesta correcta: ", "جواب را بنویس": "Escribe la respuesta", "ارزیابی متن": "Revisión del texto", "متن کامل است": "El texto está completo", "هنوز کامل نیست": "Aún no está completo", "طول متن مناسب است.": "Buena longitud del texto.", "همه‌ی موارد چک‌لیست را بررسی کن.": "Revisa todos los puntos de la lista.", "ثبت آزمون": "Enviar prueba", "قبول شدی!": "¡Aprobaste!", "هنوز نه، دوباره تلاش کن": "Todavía no, inténtalo otra vez", "درست بود": "Correcto", "این جمله بود:": "Esta era la frase:", "پخش متن": "Reproducir texto", "پخش آهسته": "Reproducción lenta", "بررسی جواب‌ها": "Revisar respuestas", "متن بعدی": "Siguiente texto", "حال ساده": "Presente", "گذشته‌ی کامل": "Indefinido", "گذشته‌ی استمراری": "Imperfecto", "آینده": "Futuro", "پخش کل جدول": "Reproducir toda la tabla", "فرم درست": "Forma correcta", "درست بود ✓": "Correcto ✓", "ادامه": "Continuar", "مرور واژگان": "Repaso de vocabulario", "امروز کارتی برای مرور نداری.": "Hoy no tienes tarjetas para repasar.", "یک گرامر تازه": "Un punto de gramática nuevo", "تمرین نقاط ضعف": "Práctica de puntos débiles", "یک تمرین": "Un ejercicio", "یک سؤال را حل کن و توضیحش را بخوان.": "Resuelve una pregunta y lee su explicación.", "درک شنیداری": "Comprensión auditiva", "یک متن را گوش کن و به سؤال‌هایش جواب بده.": "Escucha un texto y responde sus preguntas.", "شروع": "Empezar", "برگرداندن": "Deshacer", "انجام شد": "Hecho", "هر مرحله که انجام شد، تیک بزن. فردا برنامه‌ی تازه‌ای برات ساخته می‌شود.": "Marca cada paso al terminarlo. Mañana tendrás un plan nuevo.", "برای ۶۰ دقیقه، بعد از انجام مراحل بالا، تمرین بیشتری از همین سطح حل کن.": "Para 60 minutos, después de los pasos anteriores, haz más práctica de este nivel.", "ایمیل معتبر نیست.": "Correo no válido.", "رمز باید حداقل ۸ کاراکتر باشه.": "La contraseña debe tener al menos 8 caracteres.", "نام کاربری ۲ تا ۴۰ کاراکتر باشه.": "El usuario debe tener entre 2 y 40 caracteres.", "با این ایمیل حساب هست؛ وارد شو.": "Ya existe una cuenta con este correo; inicia sesión.", "این نام کاربری گرفته شده.": "Ese usuario ya está en uso.", "اطلاعات ورود اشتباهه.": "Datos de acceso incorrectos.", "ثبت‌نام جدید الان بسته‌ست.": "El registro está cerrado ahora.", "خطایی پیش آمد.": "Algo salió mal.", "کاربر": "Usuario", "پیشرفت این مرورگر پاک بشه؟ این کار برگشت نداره.": "¿Borrar el progreso de este navegador? No se puede deshacer."
+    }
+  };
+
+  // ترجمه‌ی یک پیام پویا؛ با vars مثل {n} جایگزین می‌شود
+  function t(key, vars) {
+    var l = lang();
+    var s = (l !== "fa" && MSG[l] && MSG[l][key]) || key;
+    if (vars) Object.keys(vars).forEach(function (k) { s = s.split("{" + k + "}").join(String(vars[k])); });
+    return s;
+  }
+
+  // معنی و مثال واژه‌ها: فارسی یا ترجمه‌ی انگلیسی/اسپانیایی
+  function vtx(item, field) {
+    var l = lang();
+    if (l === "fa") return field === "ex" ? item.ex : item.fa;
+    var v = window.SEE_VOCAB && window.SEE_VOCAB[item.es];
+    var got = v && v[l] && v[l][field];
+    if (got) return got;
+    return field === "ex" ? item.ex : (l === "en" ? item.es : item.fa);
+  }
+
+  window.SEE_I18N = { lang: lang, setLang: setLang, apply: apply, LANGS: LANGS, tx: tx, t: t, vtx: vtx };
   applyDirection(lang());
   document.addEventListener("DOMContentLoaded", apply);
 })();
