@@ -133,10 +133,10 @@
     }
 
     const play = document.createElement("button");
-    play.className = "btn main"; play.type = "button"; play.textContent = "پخش متن";
+    play.className = "btn main"; play.type = "button"; play.textContent = SEE_I18N.t("پخش متن");
     play.addEventListener("click", () => speak(item.text, 0.9));
     const slow = document.createElement("button");
-    slow.className = "btn"; slow.type = "button"; slow.textContent = "پخش آهسته";
+    slow.className = "btn"; slow.type = "button"; slow.textContent = SEE_I18N.t("پخش آهسته");
     slow.addEventListener("click", () => speak(item.text, 0.6));
     card.append(play, slow);
 
@@ -158,7 +158,7 @@
     card.appendChild(form);
 
     const check = document.createElement("button");
-    check.className = "btn main"; check.type = "button"; check.textContent = "بررسی جواب‌ها";
+    check.className = "btn main"; check.type = "button"; check.textContent = SEE_I18N.t("بررسی جواب‌ها");
     const out = document.createElement("div");
     check.addEventListener("click", () => {
       const answers = item.questions.map((_, qi) => {
@@ -192,7 +192,7 @@
       check.disabled = true;
     });
     const nxt = document.createElement("button");
-    nxt.className = "btn"; nxt.type = "button"; nxt.textContent = "متن بعدی";
+    nxt.className = "btn"; nxt.type = "button"; nxt.textContent = SEE_I18N.t("متن بعدی");
     nxt.addEventListener("click", () => { current = null; render(); });
     card.append(check, nxt, out);
   }

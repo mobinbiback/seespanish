@@ -346,9 +346,9 @@
     }
     $("tLogin").onclick = function () { setMode("login"); };
     $("tReg").onclick = function () { setMode("register"); };
-    var map = { bad_email: "ایمیل معتبر نیست.", bad_password: "رمز باید حداقل ۸ کاراکتر باشه.", bad_name: "نام کاربری ۲ تا ۴۰ کاراکتر باشه.",
-      email_taken: "با این ایمیل حساب هست؛ وارد شو.", name_taken: "این نام کاربری گرفته شده.", bad_credentials: "اطلاعات ورود اشتباهه.",
-      registration_closed: "ثبت‌نام جدید الان بسته‌ست.", network: "اتصال با سرور برقرار نشد." };
+    var map = { bad_email: SEE_I18N.t("ایمیل معتبر نیست."), bad_password: SEE_I18N.t("رمز باید حداقل ۸ کاراکتر باشه."), bad_name: SEE_I18N.t("نام کاربری ۲ تا ۴۰ کاراکتر باشه."),
+      email_taken: SEE_I18N.t("با این ایمیل حساب هست؛ وارد شو."), name_taken: SEE_I18N.t("این نام کاربری گرفته شده."), bad_credentials: SEE_I18N.t("اطلاعات ورود اشتباهه."),
+      registration_closed: SEE_I18N.t("ثبت‌نام جدید الان بسته‌ست."), network: "اتصال با سرور برقرار نشد." };
     $("aForm").onsubmit = function (e) {
       e.preventDefault();
       var pass = $("aPass").value, path, body;
@@ -359,13 +359,13 @@
         .then(function (r) { return r.json(); })
         .then(function (j) {
           if (j && j.ok && j.token) { try { localStorage.setItem(KEY, j.token); } catch (x) {} location.reload(); return; }
-          $("aMsg").textContent = map[(j && j.error) || "network"] || "خطایی پیش آمد."; $("aSubmit").disabled = false;
+          $("aMsg").textContent = map[(j && j.error) || "network"] || SEE_I18N.t("خطایی پیش آمد."); $("aSubmit").disabled = false;
         })
         .catch(function () { $("aMsg").textContent = map.network; $("aSubmit").disabled = false; });
     };
   }
   function signedIn(u) {
-    var label = u.name || u.email || "کاربر";
+    var label = u.name || u.email || SEE_I18N.t("کاربر");
     $("heroName").textContent = label;
     $("heroMail").textContent = u.email || "";
     tr();
@@ -567,7 +567,7 @@
 
   // ---------- پاک کردن داده‌ها ----------
   $("resetBtn").onclick = function () {
-    if (!confirm("پیشرفت این مرورگر پاک بشه؟ این کار برگشت نداره.")) return;
+    if (!confirm(SEE_I18N.t("پیشرفت این مرورگر پاک بشه؟ این کار برگشت نداره."))) return;
     ["seespanish:progress:v2", "seespanish:memory:v1", "seespanish:stats:v1", "seespanish:passed:v1", "seespanish:today:v1", "seespanish:plan:pref", "seespanish:xp:v1"]
       .forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
     location.reload();

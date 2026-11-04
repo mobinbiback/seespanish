@@ -79,6 +79,7 @@
 <script src="js/sfx.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/i18n.js"></script>
+<script src="data/i18n-vocab-a1.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -177,9 +178,9 @@
     current = queue[0];
     $("#topic").textContent = current.topic;
     $("#word").textContent = current.es;
-    $("#meaning").textContent = current.fa;
+    $("#meaning").textContent = SEE_I18N.vtx(current, "meaning");
     $("#meaning").hidden = true;
-    $("#example").textContent = current.ex;
+    $("#example").textContent = SEE_I18N.vtx(current, "ex");
     $("#example").hidden = true;
     $("#grades").classList.remove("show");
     $("#show").hidden = false;

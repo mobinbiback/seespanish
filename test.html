@@ -143,14 +143,14 @@
         box.appendChild(ul);
       } else {
         const inp = document.createElement("input");
-        inp.type = "text"; inp.name = "q" + it.id; inp.placeholder = "جواب را بنویس";
+        inp.type = "text"; inp.name = "q" + it.id; inp.placeholder = SEE_I18N.t("جواب را بنویس");
         box.appendChild(inp);
       }
       form.appendChild(box);
     });
 
     const sub = document.createElement("button");
-    sub.type = "submit"; sub.className = "btn"; sub.textContent = "ثبت آزمون";
+    sub.type = "submit"; sub.className = "btn"; sub.textContent = SEE_I18N.t("ثبت آزمون");
     form.appendChild(sub);
 
     form.addEventListener("submit", (e) => {
@@ -183,7 +183,7 @@
     const fixHtml = fixes.map((f) => `<p class="fix">• ${f.q} — جواب درست: <b>${f.a}</b></p>`).join("");
     out.innerHTML = `
       <div class="result ${pass ? "pass" : "fail"}">
-        <h3>${pass ? "قبول شدی!" : "هنوز نه، دوباره تلاش کن"}</h3>
+        <h3>${pass ? SEE_I18N.t("قبول شدی!") : SEE_I18N.t("هنوز نه، دوباره تلاش کن")}</h3>
         <p>${right} از ${total} درست</p>
         ${pass && nxt ? `<p>سطح ${nxt} الان باز شد.</p><a class="btn" href="index.html">برو به سطح ${nxt}</a>` : ""}
         ${pass && !nxt ? `<p>این آخرین سطح است. تبریک!</p>` : ""}

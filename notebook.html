@@ -149,7 +149,7 @@
 <script>
   const $ = (s) => document.querySelector(s);
   const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
-  const TENSES = [["presente", "حال ساده"], ["indefinido", "گذشته‌ی کامل"], ["imperfecto", "گذشته‌ی استمراری"], ["futuro", "آینده"]];
+  const TENSES = [["presente", SEE_I18N.t("حال ساده")], ["indefinido", SEE_I18N.t("گذشته‌ی کامل")], ["imperfecto", SEE_I18N.t("گذشته‌ی استمراری")], ["futuro", SEE_I18N.t("آینده")]];
   const PRONOUNS = ["yo", "tú", "él / ella", "nosotros", "vosotros", "ellos / ellas"];
   const WEAK_KEY = "seespanish:verbs:weak:v1";
   let tab = "rules";
@@ -216,7 +216,7 @@
       left.querySelector(".m").textContent = v.meaning;
       const all = document.createElement("button");
       all.type = "button"; all.className = "speak"; all.textContent = "🔊";
-      all.setAttribute("aria-label", "پخش کل جدول");
+      all.setAttribute("aria-label", SEE_I18N.t("پخش کل جدول"));
       all.addEventListener("click", () => speakText(v.tenses[tense].join(", ")));
       head.append(left, all);
       box.appendChild(head);
@@ -322,7 +322,7 @@
     card.innerHTML = `
       <div class="muted">سؤال ${drill.i + 1} از ${drill.items.length} · ${cur.verb} (${cur.meaning}) · ${tenseLabel}</div>
       <div class="drill-q">${cur.pron}<small>${cur.meaning}</small></div>
-      <input class="drill-input" id="dIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="فرم درست">
+      <input class="drill-input" id="dIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label=SEE_I18N.t("فرم درست")>
       <div>
         <button class="btn" type="button" id="dCheck">بررسی</button>
         <button class="btn ghost" type="button" id="dListen">🔊 گوش بده</button>
@@ -342,10 +342,10 @@
       if (window.SEE_SFX) SEE_SFX.play(ok ? "ok" : "bad");
       const fb = card.querySelector("#dFb");
       fb.className = "feedback " + (ok ? "ok" : "bad");
-      fb.innerHTML = ok ? "درست بود ✓" : `جواب درست: <b dir="ltr"></b>`;
+      fb.innerHTML = ok ? SEE_I18N.t("درست بود ✓") : `جواب درست: <b dir="ltr"></b>`;
       if (!ok) fb.querySelector("b").textContent = cur.ans;
       const btn = card.querySelector("#dCheck");
-      btn.textContent = "ادامه";
+      btn.textContent = SEE_I18N.t("ادامه");
       btn.onclick = () => { drill.i += 1; renderDrill(); };
     };
     card.querySelector("#dCheck").addEventListener("click", check);

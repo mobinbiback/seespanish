@@ -171,7 +171,7 @@
     box.className = "result " + (ok ? "ok" : "bad");
     box.innerHTML = "";
     const h = document.createElement("p");
-    h.textContent = ok ? "درست بود" : "این جمله بود:";
+    h.textContent = ok ? SEE_I18N.t("درست بود") : SEE_I18N.t("این جمله بود:");
     const s = document.createElement("p");
     s.className = "sentence";
     s.textContent = current;

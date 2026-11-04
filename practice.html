@@ -203,7 +203,7 @@
     list.forEach((it) => {
       const card = document.createElement("div");
       card.className = "card";
-      const askText = "یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: " +
+      const askText = SEE_I18N.t("یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: ") +
         it.prompt + " " + (it.question || "");
       card.innerHTML = `<span class="badge">${it.level} · ${it.skill}</span>
         <div class="prompt" dir="ltr">${it.prompt}</div>
@@ -226,7 +226,7 @@
         });
         body.appendChild(ul);
         const btn = document.createElement("button");
-        btn.className = "act"; btn.type = "button"; btn.textContent = "بررسی جواب";
+        btn.className = "act"; btn.type = "button"; btn.textContent = SEE_I18N.t("بررسی جواب");
         btn.addEventListener("click", () => {
           const sel = card.querySelector(`input[name="${it.id}"]:checked`);
           if (!sel) { fb.innerHTML = `<p class="muted">اول یک گزینه را انتخاب کن.</p>`; return; }
@@ -234,22 +234,22 @@
           window.SEE_PROGRESS.recordAnswer(it.id, ok);
           if (window.SEE_FX) SEE_FX.result(ok, card);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
-            <h4>${ok ? "درست است" : "پاسخ درست: " + it.options[it.answer]}</h4>
+            <h4>${ok ? SEE_I18N.t("درست است") : SEE_I18N.t("پاسخ درست: ") + it.options[it.answer]}</h4>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
         });
         body.appendChild(btn);
       } else if (it.type === "fill") {
         const input = document.createElement("input");
-        input.type = "text"; input.placeholder = "جواب را بنویس"; input.dir = "ltr";
+        input.type = "text"; input.placeholder = SEE_I18N.t("جواب را بنویس"); input.dir = "ltr";
         body.appendChild(input);
         const btn = document.createElement("button");
-        btn.className = "act"; btn.type = "button"; btn.textContent = "بررسی جواب";
+        btn.className = "act"; btn.type = "button"; btn.textContent = SEE_I18N.t("بررسی جواب");
         btn.addEventListener("click", () => {
           const ok = it.accept.map(norm).includes(norm(input.value));
           window.SEE_PROGRESS.recordAnswer(it.id, ok);
           if (window.SEE_FX) SEE_FX.result(ok, card);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
-            <h4>${ok ? "درست است" : "پاسخ درست: " + it.answer}</h4>
+            <h4>${ok ? SEE_I18N.t("درست است") : SEE_I18N.t("پاسخ درست: ") + it.answer}</h4>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
         });
         body.appendChild(btn);
@@ -273,7 +273,7 @@
         body.appendChild(list);
 
         const btn = document.createElement("button");
-        btn.className = "act"; btn.type = "button"; btn.textContent = "ارزیابی متن";
+        btn.className = "act"; btn.type = "button"; btn.textContent = SEE_I18N.t("ارزیابی متن");
         btn.addEventListener("click", () => {
           const n = words();
           const checked = body.querySelectorAll("input[type=checkbox]:checked").length;
@@ -282,9 +282,9 @@
           window.SEE_PROGRESS.recordAnswer(it.id, ok);
           if (window.SEE_FX) SEE_FX.result(ok, card);
           fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
-            <h4>${ok ? "متن کامل است" : "هنوز کامل نیست"}</h4>
-            <p>${inRange ? "طول متن مناسب است." : "طول متن باید بین " + it.minWords + " و " + it.maxWords + " کلمه باشد. الان " + n + " کلمه داری."}
-            ${checked === it.checklist.length ? "" : "همه‌ی موارد چک‌لیست را بررسی کن."}</p>
+            <h4>${ok ? SEE_I18N.t("متن کامل است") : SEE_I18N.t("هنوز کامل نیست")}</h4>
+            <p>${inRange ? SEE_I18N.t("طول متن مناسب است.") : "طول متن باید بین " + it.minWords + " و " + it.maxWords + " کلمه باشد. الان " + n + " کلمه داری."}
+            ${checked === it.checklist.length ? "" : SEE_I18N.t("همه‌ی موارد چک‌لیست را بررسی کن.")}</p>
             <p>${it.analysis}</p>${studyBlock(it)}</div>`;
         });
         body.appendChild(btn);

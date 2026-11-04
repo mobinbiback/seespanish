@@ -139,28 +139,28 @@
     const plan = window.SEE_PROGRESS.dailyPlan(pref.level);
     const steps = [];
     steps.push({
-      id: "cards", title: "مرور واژگان", min: 5,
-      text: plan.words.length ? `${plan.words.length} واژه برای مرور: ${plan.words.join("، ")}` : "امروز کارتی برای مرور نداری.",
+      id: "cards", title: SEE_I18N.t("مرور واژگان"), min: 5,
+      text: plan.words.length ? `${plan.words.length} واژه برای مرور: ${plan.words.join("، ")}` : SEE_I18N.t("امروز کارتی برای مرور نداری."),
       href: "memory.html"
     });
     if (plan.grammar) {
       steps.push({
-        id: "grammar", title: "یک گرامر تازه", min: 5,
+        id: "grammar", title: SEE_I18N.t("یک گرامر تازه"), min: 5,
         text: plan.grammar.title, href: "index.html"
       });
     }
     if (plan.exercise) {
       const weak = window.SEE_PROGRESS.weakIds().length > 0;
       steps.push({
-        id: "exercise", title: weak ? "تمرین نقاط ضعف" : "یک تمرین", min: 5,
-        text: "یک سؤال را حل کن و توضیحش را بخوان.",
+        id: "exercise", title: weak ? SEE_I18N.t("تمرین نقاط ضعف") : SEE_I18N.t("یک تمرین"), min: 5,
+        text: SEE_I18N.t("یک سؤال را حل کن و توضیحش را بخوان."),
         href: "practice.html" + (weak ? "?weak=1" : "")
       });
     }
     if (pref.minutes >= 30) {
       steps.push({
-        id: "listen", title: "درک شنیداری", min: 5,
-        text: "یک متن را گوش کن و به سؤال‌هایش جواب بده.", href: "listening.html"
+        id: "listen", title: SEE_I18N.t("درک شنیداری"), min: 5,
+        text: SEE_I18N.t("یک متن را گوش کن و به سؤال‌هایش جواب بده."), href: "listening.html"
       });
     }
     // بر اساس مدت انتخابی، مراحل زیاد را کنار می‌گذاریم
@@ -220,12 +220,12 @@
       const body = document.createElement("div");
       const h = document.createElement("h3"); h.textContent = `${s.title} · ${s.min} دقیقه`;
       const p = document.createElement("p"); p.dir = "auto"; p.textContent = s.text;
-      const a = document.createElement("a"); a.className = "go"; a.href = s.href; a.textContent = "شروع";
+      const a = document.createElement("a"); a.className = "go"; a.href = s.href; a.textContent = SEE_I18N.t("شروع");
       body.append(h, p, a);
 
       const tick = document.createElement("button");
       tick.type = "button"; tick.className = "tick";
-      tick.setAttribute("aria-label", done ? "برگرداندن" : "انجام شد");
+      tick.setAttribute("aria-label", done ? SEE_I18N.t("برگرداندن") : SEE_I18N.t("انجام شد"));
       tick.textContent = done ? "✓" : "";
       tick.addEventListener("click", () => {
         const cur = todayState();
@@ -242,8 +242,8 @@
     $("#count").textContent = `${doneCount} از ${steps.length}`;
     $("#barFill").style.width = pct + "%";
     $("#note").textContent = pref.minutes >= 60
-      ? "برای ۶۰ دقیقه، بعد از انجام مراحل بالا، تمرین بیشتری از همین سطح حل کن."
-      : "هر مرحله که انجام شد، تیک بزن. فردا برنامه‌ی تازه‌ای برات ساخته می‌شود.";
+      ? SEE_I18N.t("برای ۶۰ دقیقه، بعد از انجام مراحل بالا، تمرین بیشتری از همین سطح حل کن.")
+      : SEE_I18N.t("هر مرحله که انجام شد، تیک بزن. فردا برنامه‌ی تازه‌ای برات ساخته می‌شود.");
   }
 
   render();
