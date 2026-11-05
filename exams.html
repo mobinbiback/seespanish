@@ -3,164 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>seespanish · امتحان‌ها و مصاحبه</title>
+<meta name="theme-color" content="#1E1E26">
+<link rel="manifest" href="manifest.json">
+<title>seespanish · آزمون آزمایشی</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
-  :root {
-    --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
-    --pencil: #F2C230; --line: #D6CEB4; --shadow: rgba(46, 46, 51, .18);
-    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; font-family: var(--body); color: var(--graphite); background: var(--paper);
-    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
-    background-size: 100% 32px; background-attachment: fixed; line-height: 1.9; min-height: 100vh;
-  }
-  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
-  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 80px; }
-  header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
-    border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 24px; }
-  .logo { font-family: "Caveat", cursive; font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
-  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
-  .back { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; }
-  h2 { font-family: var(--head); font-size: 2rem; margin: 32px 0 10px; }
-  .card { background: #fff; border: 2px solid var(--graphite); border-radius: 12px 5px 14px 7px;
-    padding: 20px 22px; box-shadow: 5px 6px 0 var(--shadow); margin-bottom: 20px; }
-  .card h3 { font-family: var(--head); font-size: 1.8rem; margin: 0 0 6px; }
-  .card p { margin: 6px 0; }
-  .muted { color: var(--graphite-soft); font-size: .93rem; }
-  .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 18px; }
-  .levels button {
-    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
-    background: #fff; border: 2px solid var(--graphite);
-    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
-    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
-  }
-  .levels button[aria-pressed="true"] { background: var(--pencil); }
-  ul.q { padding-right: 20px; margin: 8px 0 0; }
-  ul.q li { margin: 6px 0; }
-  a.btn {
-    display: inline-block; margin: 6px 6px 0 0; padding: 4px 14px;
-    font-family: var(--head); font-size: 1.25rem; color: var(--graphite);
-    background: var(--paper-2); border: 2px solid var(--graphite); border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px;
-    text-decoration: none;
-  }
-  a.btn:hover { background: var(--pencil); }
-  .warn { border: 2px dashed var(--graphite); border-radius: 10px 4px 12px 6px; padding: 12px 16px; background: #fff; }
-  footer { margin-top: 36px; font-size: .9rem; color: var(--graphite-soft); text-align: center; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  :root { --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; }
+  [hidden] { display: none !important; }
+  body { margin: 0; font-family: var(--body); line-height: 1.8; }
+  .logo { font-family: "Caveat", cursive; font-size: 2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 1.8rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+  .ex { max-width: 720px; margin: 0 auto; padding: 0 18px 140px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0 6px; flex-wrap: wrap; }
+  .top-tools { display: flex; gap: 8px; align-items: center; }
+  .ico-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 18px; box-shadow: 0 4px 0 var(--edge, #CFC6AE); display: grid; place-items: center; text-decoration: none; }
+  .ico-btn.on { background: var(--pencil); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+  .title { font-family: var(--head); font-size: 1.45rem; margin: 10px 0 2px; color: var(--graphite); }
+  .sub { color: var(--graphite-soft); font-size: 13px; margin: 0 0 14px; line-height: 1.9; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px; box-shadow: 0 7px 0 var(--edge, #CFC6AE), 0 14px 26px var(--shadow); margin-bottom: 14px; }
+  .hero { position: relative; overflow: hidden; border-radius: 24px; padding: 20px; color: #FFFFFD; background: linear-gradient(135deg, #6200BE 0%, #4F00A0 60%, #2E0A66 100%); box-shadow: 0 8px 0 #2E0A66, 0 16px 30px rgba(98,0,190,.25); margin-bottom: 16px; }
+  .hero::after { content: ""; position: absolute; width: 170px; height: 170px; border-radius: 50%; background: rgba(255,189,65,.2); left: -56px; bottom: -74px; }
+  .hero h2 { font-family: var(--head); font-size: 1.3rem; margin: 6px 0 4px; position: relative; z-index: 1; }
+  .hero p { margin: 0 0 12px; opacity: .92; font-size: 13px; position: relative; z-index: 1; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; position: relative; z-index: 1; margin: 12px 0 14px; }
+  .stat { background: rgba(255,255,253,.12); border: 1px solid rgba(255,255,253,.2); border-radius: 16px; padding: 10px 6px; text-align: center; }
+  .stat b { display: block; font-size: 18px; font-variant-numeric: tabular-nums; }
+  .stat small { font-size: 11px; opacity: .9; }
+  .go { position: relative; z-index: 1; min-height: 48px; padding: 0 22px; border: 0; border-radius: 999px; background: #FFBD41; color: #2E0A66; font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 #B98F12; }
+  .go:disabled { opacity: .5; cursor: not-allowed; }
+
+  .seg { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); margin-bottom: 12px; }
+  .seg button { flex: 1; min-height: 40px; border: 0; border-radius: 999px; background: transparent; color: var(--graphite-soft); font: inherit; font-weight: 800; font-size: 13px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); }
+  .seg button[aria-disabled="true"] { opacity: .45; }
+
+  /* مرحله‌ی آزمون */
+  .exbar { position: sticky; top: 0; z-index: 20; background: var(--bg); padding: 10px 0 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .timer { font-family: "Nunito", system-ui, sans-serif; font-weight: 800; font-size: 18px; padding: 6px 14px; border-radius: 999px; border: 2px solid #6200BE; color: var(--graphite); font-variant-numeric: tabular-nums; }
+  .timer.hot { border-color: #B4431B; color: #B4431B; }
+  .progress { flex: 1; height: 9px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .progress i { display: block; height: 100%; background: linear-gradient(90deg, #6200BE, #FFBD41); border-radius: 999px; transition: width .3s; }
+  .map { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 6px; margin: 8px 0 14px; }
+  .map button { height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
+  .map button.done { background: rgba(98,0,190,.14); border-color: #6200BE; }
+  .map button.cur { background: var(--pencil); color: var(--accent-ink); border-color: transparent; }
+  .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; color: var(--graphite-soft); }
+  .badge { font-size: 11.5px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: rgba(98,0,190,.14); color: #6200BE; }
+  .prompt { font-family: "Nunito", system-ui, sans-serif; direction: ltr; text-align: left; font-size: 15px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; color: var(--graphite); line-height: 1.7; white-space: pre-wrap; }
+  .question { font-weight: 800; font-size: 16px; color: var(--graphite); margin: 12px 0 10px; font-family: "Nunito", system-ui, sans-serif; direction: ltr; text-align: left; line-height: 1.7; }
+  .opts { display: grid; gap: 10px; }
+  .opt { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; min-height: 54px; padding: 10px 12px; border-radius: 16px; border: 2px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-family: "Nunito", system-ui, sans-serif; font-size: 15px; font-weight: 700; text-align: left; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE); }
+  .opt .k { width: 32px; height: 32px; border-radius: 11px; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); font-size: 13px; font-weight: 800; }
+  .opt[aria-pressed="true"] { border-color: #6200BE; background: rgba(98,0,190,.08); }
+  .opt[aria-pressed="true"] .k { background: #6200BE; color: #FFFFFD; border-color: transparent; }
+  .field { width: 100%; min-height: 58px; padding: 0 16px; border-radius: 18px; border: 2px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-size: 19px; font-family: "Nunito", system-ui, sans-serif; box-sizing: border-box; direction: ltr; text-align: left; }
+  .field:focus { outline: none; border-color: #6200BE; }
+  .area { width: 100%; min-height: 150px; padding: 14px; border-radius: 18px; border: 2px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-size: 16px; font-family: "Nunito", system-ui, sans-serif; box-sizing: border-box; direction: ltr; text-align: left; resize: vertical; line-height: 1.8; }
+  .area:focus { outline: none; border-color: #6200BE; }
+  .wc { font-size: 12px; color: var(--graphite-soft); margin: 6px 2px 0; }
+  .nav { display: flex; gap: 10px; margin-top: 16px; }
+  .btn { flex: 1; min-height: 50px; padding: 0 16px; border-radius: 18px; border: 0; background: #FD7F52; color: #FFFFFD; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 5px 0 #B4431B; }
+  .btn.alt { background: var(--surface); color: var(--graphite); border: 1px solid var(--line); box-shadow: 0 5px 0 var(--edge, #CFC6AE); }
+  .btn.good { background: #B3D93B; color: #1B1530; box-shadow: 0 5px 0 #6F9A12; }
+  .btn:disabled { opacity: .5; }
+  .btn:active { transform: translateY(3px); }
+
+  /* نتیجه و مرور */
+  .result { text-align: center; padding: 14px 6px; }
+  .score { font-family: var(--head); font-size: 3rem; font-weight: 800; color: var(--graphite); font-variant-numeric: tabular-nums; margin: 4px 0; }
+  .verdict { display: inline-block; padding: 6px 16px; border-radius: 999px; font-weight: 800; font-size: 14px; }
+  .verdict.pass { background: #B3D93B; color: #1B1530; }
+  .verdict.fail { background: #FD7F52; color: #1B1530; }
+  .rev { margin-top: 10px; border-radius: 18px; border: 2px solid var(--line); padding: 12px; background: var(--paper-2); }
+  .rev.ok { border-color: #3F6B0A; }
+  .rev.bad { border-color: #B4431B; }
+  .rev b { font-size: 13.5px; color: var(--graphite); display: block; margin-bottom: 4px; }
+  .rev p { margin: 4px 0; font-size: 13px; color: var(--graphite); line-height: 1.9; }
+  .ans { font-family: "Nunito", system-ui, sans-serif; direction: ltr; text-align: left; font-weight: 800; }
+  .hist { display: grid; gap: 8px; }
+  .hrow { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--paper-2); font-size: 13px; color: var(--graphite); }
+  .hrow b { font-variant-numeric: tabular-nums; }
+  .empty { text-align: center; color: var(--graphite-soft); padding: 18px 0; font-size: 13.5px; }
+
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft); text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
+  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 60px; } header nav.top-nav { display: none !important; } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
+<script src="js/prefs.js"></script>
+<script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/gamify.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/i18n.js"></script>
+<script src="data/i18n-content.js"></script>
+<script src="data/i18n-content-grammar.js"></script>
+<script src="data/i18n-vocab-a1.js"></script>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1><nav class="top-nav" aria-label="منوی اصلی"><a class="navlink" href="index.html">خانه</a><a class="navlink" href="plan.html">برنامه</a><a class="navlink" href="practice.html">تمرین</a><a class="navlink" href="notebook.html">دفترچه</a><a class="navlink" href="me.html">من</a></nav>
-    
+<div class="ex">
+  <header class="top">
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <div class="top-tools">
+      <button class="ico-btn" id="soundBtn" type="button" aria-label="صدا">🔊</button>
+      <a class="ico-btn" href="me.html" aria-label="من">👤</a>
+    </div>
   </header>
 
-  <h2>امتحان‌های رسمی به تفکیک سطح</h2>
-  <p class="muted">برای هر سطح، صفحه‌ی رسمی Instituto Cervantes و SIELE را ببینید. نمونه‌سوال‌ها و پاسخ‌نامه‌ها در همان صفحه‌ها هستند.</p>
+  <!-- ===== شروع آزمون ===== -->
+  <section id="startView">
+    <h2 class="title">آزمون آزمایشی</h2>
+    <p class="sub">یک آزمون با سؤال‌های همین سایت، با زمان مشخص. بعد از پایان، همه‌ی جواب‌ها با توضیح مرور می‌شوند.</p>
 
-  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
-  <div id="levelBody"></div>
+    <div class="seg" id="levelSeg" role="group" aria-label="سطح"></div>
 
-  <h2>امتحان‌های دانشگاهی اسپانیا (PAU)</h2>
-  <div class="card">
-    <h3>پذیرش دانشگاه در اسپانیا</h3>
-    <p>PAU (Prueba de Acceso a la Universidad) امتحان ورود به دانشگاه برای دانش‌آموزان دبیرستانی در اسپانیاست و هر منطقه‌ی خودمختار آن را برگزار می‌کند. نمونه‌سوال‌های سال‌های قبل را دانشگاه‌ها و مسئولان هر منطقه منتشر می‌کنند.</p>
-    <a class="btn" href="https://saap.ugr.es/acceso/prueba-acceso/estudiantes/orientaciones-examenes" target="_blank" rel="noopener">راهنما و نمونه‌سوال‌های دانشگاه گرانادا</a>
-    <a class="btn" href="https://uniscopio.com/acceso/examenes-anteriores-selectividad/" target="_blank" rel="noopener">فهرست نمونه‌سوال‌ها به تفکیک منطقه</a>
-    <p class="muted">توجه: PAU برای دانش‌آموزان بومی طراحی شده است. اگر قصد تحصیل در اسپانیا را داری، شرط زبان هر دانشگاه را جداگانه بررسی کن. معمولاً DELE یا SIELE را می‌خواهند.</p>
-  </div>
+    <div class="hero">
+      <h2 id="heroTitle">آزمون سطح A1</h2>
+      <p id="heroText"></p>
+      <div class="stats">
+        <div class="stat"><b id="stQ">۳۰</b><small>سؤال</small></div>
+        <div class="stat"><b id="stT">۴۵</b><small>دقیقه</small></div>
+        <div class="stat"><b id="stP">۷۰٪</b><small>حد قبولی</small></div>
+      </div>
+      <button class="go" id="startBtn" type="button">شروع آزمون</button>
+    </div>
 
-  <h2>درباره‌ی نمونه‌سوال‌های قدیمی</h2>
-  <div class="card warn">
-    <p>نمونه‌سوال‌های رسمی و مدل‌های امتحان از سایت Instituto Cervantes در دسترس‌اند. نمونه‌سوال‌های کامل سال‌های قبل همه‌ی سطح‌ها به‌صورت عمومی منتشر نمی‌شوند. این سایت PDFهایی را که از کانال‌ها یا سایت‌های غیررسمی گرفته شده میزبانی نمی‌کند، چون مالکیت آن‌ها روشن نیست.</p>
-    <p>اگر نمونه‌سوالی را که خودت به‌صورت قانونی داری بفرستی، می‌توانم آن را تحلیل کنم و موضوع، ساختار و گرامر آن را به واحدهای همین سایت وصل کنم.</p>
-  </div>
+    <div class="card">
+      <b>تاریخچه‌ی آزمون‌ها</b>
+      <div class="hist" id="hist" style="margin-top:10px"></div>
+    </div>
+  </section>
 
-  <h2>نمونه پرسش‌های مصاحبه</h2>
-  <p class="muted">این پرسش‌ها برای تمرین شفاهی نوشته شده‌اند و از هیچ کتاب یا امتحان رسمی کپی نشده‌اند.</p>
-  <div id="interview"></div>
+  <!-- ===== در حال آزمون ===== -->
+  <section id="takeView" hidden>
+    <div class="exbar">
+      <div class="progress"><i id="prog" style="width:0%"></i></div>
+      <div class="timer" id="timer">۴۵:۰۰</div>
+    </div>
+    <div class="map" id="map"></div>
+    <div class="card" id="qCard"></div>
+    <div class="nav">
+      <button class="btn alt" id="prevBtn" type="button">قبلی</button>
+      <button class="btn" id="nextBtn" type="button">بعدی</button>
+    </div>
+    <button class="btn good" id="finishBtn" type="button" style="width:100%;margin-top:10px">پایان و تصحیح</button>
+  </section>
 
-  <footer>
-    اطلاعات امتحان‌ها از سایت‌های رسمی و منابع تأیید شده گرفته شده است. قبل از ثبت‌نام، شرایط جدید را در سایت رسمی بررسی کن.
-  </footer>
+  <!-- ===== نتیجه و مرور ===== -->
+  <section id="resultView" hidden>
+    <div class="card result">
+      <div class="score" id="rScore">۰٪</div>
+      <span class="verdict" id="rVerdict"></span>
+      <p class="sub" id="rMsg" style="margin:10px 0 0"></p>
+      <div class="nav" style="justify-content:center">
+        <button class="btn good" id="againBtn" type="button">آزمون تازه</button>
+        <button class="btn alt" id="backBtn" type="button">برگشت</button>
+      </div>
+    </div>
+    <h3 style="font-family:var(--head);font-size:1.05rem;margin:18px 0 6px">مرور جواب‌ها</h3>
+    <div id="review"></div>
+  </section>
 </div>
 
+<nav class="tabbar" aria-label="منوی پایین">
+  <a href="index.html"><span>🏠</span><span>خانه</span></a>
+  <a href="plan.html"><span>📅</span><span>برنامه</span></a>
+  <a href="practice.html"><span>🎯</span><span>تمرین</span></a>
+  <a href="exams.html" aria-current="page"><span>🏅</span><span>آزمون</span></a>
+  <a href="me.html"><span>👤</span><span>من</span></a>
+</nav>
+
+<script src="data/data.js"></script>
+<script src="data/explain.js"></script>
+<script src="data/explain-b1.js"></script>
+<script src="data/explain-b2.js"></script>
+<script src="data/explain-c1.js"></script>
+<script src="data/explain-c2.js"></script>
+<script src="data/progress.js"></script>
+<script src="data/practice.js"></script>
+<script src="data/practice-extra.js"></script>
+<script src="data/practice-b1.js"></script>
+<script src="data/practice-b2.js"></script>
+<script src="data/practice-more.js"></script>
+<script src="data/practice-expand.js"></script>
+<script src="data/practice-expand2.js"></script>
+<script src="data/practice-expand3.js"></script>
 <script>
-  const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var G = window.SEE, P = window.SEE_PRACTICE;
+  var LEVELS = G.levels || ["A1", "A2", "B1", "B2", "C1", "C2"];
+  var HIST_KEY = "seespanish:exams:v1";
+  var PASS = 70, MINUTES = 45, COUNT = 30;
+  var level = "A1", attempt = null, timerId = null;
+  try { level = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
 
-  const EXAMS = {
-    A1: { dele: "DELE A1 (و نسخه‌ی کودکان)", siele: "SIELE در سطح A1 نتیجه‌ی مستقل می‌دهد" },
-    A2: { dele: "DELE A2", siele: "SIELE در سطح A2" },
-    B1: { dele: "DELE B1 (با نسخه‌ی تعاملی modelo 0)", siele: "SIELE در سطح B1" },
-    B2: { dele: "DELE B2 (با نسخه‌ی تعاملی modelo 0)", siele: "SIELE در سطح B2" },
-    C1: { dele: "DELE C1", siele: "SIELE در سطح C1" },
-    C2: { dele: "DELE C2", siele: "SIELE در سطح C2" }
-  };
+  function tt(k, v) { return window.SEE_I18N ? SEE_I18N.t(k, v) : k; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function norm(t) { return String(t).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " "); }
+  function shuffle(a) { return a.slice().sort(function () { return Math.random() - 0.5; }); }
+  function history() { try { return JSON.parse(localStorage.getItem(HIST_KEY)) || []; } catch (e) { return []; } }
+  function saveHistory(h) { try { localStorage.setItem(HIST_KEY, JSON.stringify(h.slice(0, 30))); } catch (e) {} }
+  function grammarById(id) { for (var i = 0; i < LEVELS.length; i++) { var a = G.grammar[LEVELS[i]] || []; for (var j = 0; j < a.length; j++) if (a[j].id === id) return a[j]; } return null; }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function lvlOpen(l) { return window.SEE_PROGRESS && SEE_PROGRESS.levelOpen ? SEE_PROGRESS.levelOpen(l) : true; }
 
-  const INTERVIEW = {
-    A1: ["¿Cómo te llamas y de dónde eres?", "¿A qué te dedicas?", "¿Qué haces en tu tiempo libre?"],
-    A2: ["¿Qué hiciste el fin de semana pasado?", "¿Cómo es tu casa o tu barrio?", "¿Qué te gusta de viajar?"],
-    B1: ["Háblame de una experiencia que te haya marcado.", "¿Qué ventajas y desventajas tiene estudiar en línea?", "¿Qué cambiarías de tu ciudad y por qué?"],
-    B2: ["¿Crees que las redes sociales han cambiado la forma de relacionarnos? Justifica tu respuesta.", "¿Qué opinas del teletrabajo?", "Si pudieras empezar de nuevo en un aspecto de tu vida, ¿cuál sería y por qué?"],
-    C1: ["¿Hasta qué punto la tecnología puede sustituir la educación presencial?", "Argumenta tu postura sobre la inmigración como oportunidad para una sociedad."],
-    C2: ["¿Qué papel juega la cultura en la identidad de un pueblo? Desarróllalo con ejemplos.", "Comenta una crítica que hayas leído recientemente y explica si estás de acuerdo."]
-  };
-
-  let current = "A1";
-
+  // ---------- انتخاب سطح و شروع ----------
   function renderLevels() {
-    const ul = document.getElementById("levels");
-    ul.innerHTML = "";
-    LEVELS.forEach((lvl) => {
-      const li = document.createElement("li");
-      const b = document.createElement("button");
-      b.type = "button";
-      b.textContent = lvl;
-      b.setAttribute("aria-pressed", String(lvl === current));
-      b.addEventListener("click", () => { current = lvl; renderLevels(); renderLevel(); renderInterview(); });
-      li.appendChild(b);
-      ul.appendChild(li);
+    var seg = $("levelSeg"); seg.innerHTML = "";
+    LEVELS.forEach(function (l) {
+      var open = lvlOpen(l);
+      var b = document.createElement("button"); b.type = "button"; b.textContent = l;
+      b.setAttribute("aria-pressed", String(l === level));
+      b.setAttribute("aria-disabled", String(!open));
+      b.onclick = function () {
+        if (!open) { alert(window.SEE_PROGRESS && SEE_PROGRESS.lockMessage ? SEE_PROGRESS.lockMessage(l) : ""); return; }
+        level = l; try { localStorage.setItem("seespanish:level", l); } catch (e) {} renderStart();
+      };
+      seg.appendChild(b);
     });
   }
-
-  function renderLevel() {
-    const box = document.getElementById("levelBody");
-    const e = EXAMS[current];
-    box.innerHTML = `
-      <div class="card">
-        <h3>${current}</h3>
-        <p>${e.dele}</p>
-        <p class="muted">${e.siele}</p>
-        <a class="btn" href="https://examenes.cervantes.es/es/dele/preparar-prueba" target="_blank" rel="noopener">نمونه‌سوال و پاسخ‌نامه‌ی رسمی DELE</a>
-        <a class="btn" href="https://examenes.cervantes.es/es/siele/que-es" target="_blank" rel="noopener">اطلاعات رسمی SIELE</a>
-        <a class="btn" href="https://siele.org" target="_blank" rel="noopener">سایت SIELE (نسخه‌ی آزمایشی)</a>
-      </div>`;
+  function renderStart() {
+    renderLevels();
+    var pool = (P.items || []).filter(function (it) { return it.level === level; });
+    $("heroTitle").textContent = tt("آزمون سطح") + " " + level;
+    $("heroText").textContent = pool.length < COUNT ? tt("برای این سطح سؤال کافی نیست.") : tt("سؤال‌ها به‌صورت تصادفی انتخاب می‌شوند.");
+    $("stQ").textContent = Math.min(COUNT, pool.length);
+    $("stT").textContent = MINUTES;
+    $("stP").textContent = PASS + "٪";
+    $("startBtn").disabled = pool.length < 5;
+    renderHist();
+    show("start");
+    if (window.SEE_I18N) SEE_I18N.apply();
+  }
+  function renderHist() {
+    var h = history().filter(function (x) { return x.level === level; });
+    $("hist").innerHTML = h.length ? h.slice(0, 6).map(function (x) {
+      return '<div class="hrow"><span>' + esc(new Date(x.at).toLocaleDateString("fa-IR")) + ' · ' + esc(x.level) + '</span><b>' + x.score + '٪ · ' + (x.score >= PASS ? "قبول" : "مردود") + '</b></div>';
+    }).join("") : '<div class="empty">' + esc(tt("هنوز آزمونی ثبت نشده.")) + '</div>';
+  }
+  function show(which) {
+    $("startView").hidden = which !== "start";
+    $("takeView").hidden = which !== "take";
+    $("resultView").hidden = which !== "result";
   }
 
-  function renderInterview() {
-    const box = document.getElementById("interview");
-    const qs = INTERVIEW[current] || [];
-    box.innerHTML = `
-      <div class="card">
-        <h3>سطح ${current}</h3>
-        <ul class="q">${qs.map((q) => `<li>${q}</li>`).join("")}</ul>
-        <p class="muted">جواب را با صدای بلند بگو و بعد ضبط کن تا بهتر خودت را بشنوی.</p>
-      </div>`;
+  // ---------- شروع آزمون ----------
+  function startExam() {
+    var pool = (P.items || []).filter(function (it) { return it.level === level; });
+    var items = shuffle(pool).slice(0, COUNT);
+    attempt = { items: items, answers: items.map(function () { return null; }), i: 0, left: MINUTES * 60, startedAt: Date.now() };
+    show("take");
+    renderQuestion();
+    clearInterval(timerId);
+    timerId = setInterval(tick, 1000);
+    tick();
+  }
+  function tick() {
+    if (!attempt) return;
+    attempt.left--;
+    var m = Math.floor(attempt.left / 60), s = attempt.left % 60;
+    $("timer").textContent = pad(m) + ":" + pad(s);
+    $("timer").classList.toggle("hot", attempt.left <= 300);
+    if (attempt.left <= 0) finish();
   }
 
-  renderLevels();
-  renderLevel();
-  renderInterview();
+  function setAnswer(idx, val) { attempt.answers[idx] = val; renderMap(); }
+  function renderMap() {
+    $("map").innerHTML = attempt.items.map(function (it, idx) {
+      var cls = idx === attempt.i ? "cur" : (attempt.answers[idx] !== null ? "done" : "");
+      return '<button type="button" class="' + cls + '" data-go="' + idx + '">' + (idx + 1) + '</button>';
+    }).join("");
+    $("prog").style.width = Math.round(attempt.answers.filter(function (a) { return a !== null; }).length / attempt.items.length * 100) + "%";
+  }
+
+  function renderQuestion() {
+    var it = attempt.items[attempt.i], idx = attempt.i, val = attempt.answers[idx];
+    var n = attempt.items.length;
+    var body = "";
+    if (it.type === "mcq") {
+      body = '<div class="opts">' + it.options.map(function (o, k) {
+        return '<button class="opt" type="button" data-opt="' + k + '" aria-pressed="' + (val === k) + '"><span class="k">' + String.fromCharCode(65 + k) + '</span><span>' + esc(o) + '</span></button>';
+      }).join("") + '</div>';
+    } else if (it.type === "fill") {
+      body = '<input class="field" id="fillIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="' + esc(val || "") + '" aria-label="جواب">';
+    } else {
+      body = '<textarea class="area" id="writeIn" aria-label="متن">' + esc(val || "") + '</textarea>' +
+        '<div class="wc" id="wc"></div>';
+    }
+    $("qCard").innerHTML =
+      '<div class="q-meta"><span class="badge">' + esc(it.level) + ' · ' + esc(it.skill || "") + '</span><span>' + (idx + 1) + ' / ' + n + '</span></div>' +
+      '<div class="prompt">' + esc(it.prompt) + '</div>' +
+      (it.question ? '<div class="question">' + esc(it.question) + '</div>' : '<div style="height:10px"></div>') + body;
+    renderMap();
+    $("prevBtn").disabled = idx === 0;
+    $("nextBtn").textContent = idx === n - 1 ? tt("آخرین سؤال") : tt("بعدی");
+    $("nextBtn").disabled = idx === n - 1;
+
+    if (it.type === "mcq") {
+      document.querySelectorAll("#qCard .opt").forEach(function (b) {
+        b.addEventListener("click", function () { setAnswer(idx, Number(b.dataset.opt)); renderQuestion(); });
+      });
+    } else if (it.type === "fill") {
+      $("fillIn").addEventListener("input", function () { setAnswer(idx, this.value); });
+    } else {
+      var ta = $("writeIn");
+      var upd = function () {
+        var words = (ta.value.trim().match(/\S+/g) || []).length;
+        $("wc").textContent = words + " " + tt("کلمه") + " (" + it.minWords + "–" + it.maxWords + ")";
+      };
+      upd();
+      ta.addEventListener("input", function () { setAnswer(idx, ta.value); upd(); });
+    }
+    if (window.SEE_I18N) SEE_I18N.apply();
+  }
+
+  // ---------- تصحیح ----------
+  function isRight(it, ans) {
+    if (ans === null || ans === undefined || ans === "") return false;
+    if (it.type === "mcq") return Number(ans) === it.answer;
+    if (it.type === "fill") return it.accept.map(norm).indexOf(norm(ans)) >= 0;
+    var words = (String(ans).trim().match(/\S+/g) || []).length;
+    return words >= it.minWords && words <= it.maxWords;
+  }
+  function finish() {
+    if (!attempt) return;
+    clearInterval(timerId);
+    var a = attempt, right = 0;
+    a.items.forEach(function (it, idx) { if (isRight(it, a.answers[idx])) right++; });
+    var score = Math.round(right / a.items.length * 100);
+    var h = history();
+    h.unshift({ at: Date.now(), level: level, score: score, right: right, total: a.items.length });
+    saveHistory(h);
+    if (window.SEE_GAME) SEE_GAME.record(Math.round(score / 5));
+    $("rScore").textContent = score + "٪";
+    $("rVerdict").textContent = score >= PASS ? tt("قبول شدی") : tt("هنوز نه، دوباره تمرین کن");
+    $("rVerdict").className = "verdict " + (score >= PASS ? "pass" : "fail");
+    $("rMsg").textContent = right + " " + tt("از") + " " + a.items.length + " " + tt("درست");
+    $("review").innerHTML = a.items.map(function (it, idx) {
+      var ok = isRight(it, a.answers[idx]);
+      var given = it.type === "mcq" ? (a.answers[idx] === null ? "—" : it.options[a.answers[idx]]) : (a.answers[idx] || "—");
+      var correct = it.type === "mcq" ? it.options[it.answer] : it.type === "fill" ? it.answer : tt("متن در بازه‌ی کلمه‌ها باشد");
+      var gram = (it.grammar || []).map(grammarById).filter(Boolean).map(function (g) { return esc(g.title); }).join(" · ");
+      return '<div class="rev ' + (ok ? "ok" : "bad") + '"><b>' + (idx + 1) + '. ' + (ok ? "✓" : "✗") + ' ' + esc(it.skill || "") + '</b>' +
+        '<p dir="ltr" style="text-align:left">' + esc(it.question || it.prompt) + '</p>' +
+        '<p>' + esc(tt("جواب تو")) + ': <span class="ans" dir="ltr">' + esc(given) + '</span></p>' +
+        (ok ? '' : '<p>' + esc(tt("جواب درست")) + ': <span class="ans" dir="ltr">' + esc(correct) + '</span></p>') +
+        (it.analysis ? '<p>' + esc(it.analysis) + '</p>' : '') +
+        (gram ? '<p>' + esc(tt("گرامر")) + ': ' + gram + '</p>' : '') + '</div>';
+    }).join("");
+    attempt = null;
+    if (score >= PASS && window.SEE_FX) SEE_FX.celebrate();
+    show("result");
+    renderHist();
+    if (window.SEE_I18N) SEE_I18N.apply();
+  }
+
+  // ---------- رویدادها ----------
+  $("startBtn").addEventListener("click", startExam);
+  $("prevBtn").addEventListener("click", function () { if (attempt.i > 0) { attempt.i--; renderQuestion(); } });
+  $("nextBtn").addEventListener("click", function () { if (attempt.i < attempt.items.length - 1) { attempt.i++; renderQuestion(); } });
+  $("finishBtn").addEventListener("click", function () {
+    var empty = attempt.answers.filter(function (a) { return a === null || a === ""; }).length;
+    if (empty && !confirm(tt("بعضی سؤال‌ها بی‌جواب مانده. پایان بدم؟"))) return;
+    finish();
+  });
+  $("map").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-go]"); if (!b) return;
+    attempt.i = Number(b.getAttribute("data-go")); renderQuestion();
+  });
+  $("againBtn").addEventListener("click", startExam);
+  $("backBtn").addEventListener("click", renderStart);
+
+  var sb = $("soundBtn");
+  function paintSound() { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; sb.classList.toggle("on", on); sb.textContent = on ? "🔊" : "🔇"; }
+  sb.addEventListener("click", function () { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; if (window.SEE_PREFS) SEE_PREFS.setSound(!on); paintSound(); });
+  paintSound();
+
+  renderStart();
+  document.addEventListener("DOMContentLoaded", renderStart);
+  if (window.SEE_I18N) setTimeout(SEE_I18N.apply, 600);
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
 </script>
 </body>
 </html>
