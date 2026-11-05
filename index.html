@@ -3,237 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#2E2E33">
+<meta name="theme-color" content="#1E1E26">
 <link rel="manifest" href="manifest.json">
-<title>seespanish · اسپانیایی از کتاب‌های واقعی</title>
+<title>seespanish · خانه</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root {
-    --paper: #F7F3E8;
-    --paper-2: #EFE9D6;
-    --graphite: #2E2E33;
-    --graphite-soft: #6B6B73;
-    --pencil: #F2C230;
-    --eraser: #E9A3A3;
-    --sky: #9CC3E0;
-    --line: #D6CEB4;
-    --shadow: rgba(46, 46, 51, .18);
     --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
     --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    font-family: var(--body);
-    color: var(--graphite);
-    background-color: var(--paper);
-    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
-    background-size: 100% 32px;
-    background-attachment: fixed;
-    line-height: 1.9;
-    min-height: 100vh;
-  }
-  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+  body { margin: 0; font-family: var(--body); line-height: 1.8; }
+  .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
 
-  header {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
-    padding-bottom: 12px; border-bottom: 2px solid var(--graphite); margin-bottom: 26px;
-  }
-  .logo { font-family: "Caveat", cursive; font-size: 3.2rem; font-weight: 700; line-height: 1; margin: 0; }
-  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
-  .tagline { font-size: .95rem; color: var(--graphite-soft); margin: 0; }
+  .home { max-width: 760px; margin: 0 auto; padding: 0 18px 130px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0 6px; flex-wrap: wrap; }
+  .top-tools { display: flex; gap: 8px; align-items: center; }
+  .ico-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 18px; box-shadow: 0 4px 0 var(--edge, #CFC6AE); display: grid; place-items: center; text-decoration: none; }
+  .ico-btn.on { background: var(--pencil); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
 
-  .levels { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; padding: 0; list-style: none; }
-  .levels button {
-    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
-    background: #fff; border: 2px solid var(--graphite);
-    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
-    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-  }
-  .levels button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--graphite); }
-  .levels button[aria-pressed="true"] { background: var(--pencil); }
-  .levels button.pending::after { content: " ·"; color: var(--graphite-soft); }
+  /* سطح‌ها */
+  .levels { display: flex; align-items: center; gap: 8px; margin: 12px 0 16px; overflow-x: auto; padding-bottom: 4px; }
+  .levels .lbl { font-size: 11px; font-weight: 800; letter-spacing: 1px; color: var(--graphite-soft); margin-left: 4px; white-space: nowrap; }
+  .lvl-pill { min-width: 52px; height: 46px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE); white-space: nowrap; }
+  .lvl-pill[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+  .lvl-pill[aria-disabled="true"] { opacity: .5; }
 
-  .notice {
-    font-size: .92rem; background: #fff; border: 2px dashed var(--graphite);
-    border-radius: 10px 4px 12px 6px; padding: 10px 14px; margin: 0 0 22px;
+  /* کارت شروع */
+  .hero {
+    position: relative; overflow: hidden; border-radius: 24px; padding: 20px 20px 18px; color: #FFFFFD;
+    background: linear-gradient(135deg, #6200BE 0%, #4F00A0 60%, #2E0A66 100%);
+    box-shadow: 0 8px 0 #2E0A66, 0 16px 30px rgba(98,0,190,.25); margin-bottom: 16px;
   }
+  .hero::after { content: ""; position: absolute; width: 170px; height: 170px; border-radius: 50%; background: rgba(255,189,65,.2); left: -56px; bottom: -74px; }
+  .hero-tag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .6px; padding: 3px 10px; border-radius: 999px; background: #FFBD41; color: #2E0A66; }
+  .hero h2 { font-family: var(--head); font-size: 1.3rem; margin: 10px 0 4px; position: relative; z-index: 1; }
+  .hero p { margin: 0 0 14px; opacity: .92; font-size: 13px; position: relative; z-index: 1; }
+  .hero .go { position: relative; z-index: 1; min-height: 46px; padding: 0 22px; border: 0; border-radius: 999px; background: #FFBD41; color: #2E0A66; font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 #B98F12; }
 
-  .books {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 22px; margin: 0 0 34px; padding: 0; list-style: none;
-  }
-  .book {
-    position: relative; background: #fff; border: 2px solid var(--graphite);
-    border-radius: 6px 14px 8px 12px; padding: 18px 18px 14px; text-align: right;
-    cursor: pointer; box-shadow: 4px 5px 0 var(--shadow); color: var(--graphite);
-    font: inherit; width: 100%; transition: transform .2s ease;
-  }
-  .book:nth-child(odd) { transform: rotate(-.8deg); }
-  .book:nth-child(even) { transform: rotate(.7deg); }
-  .book:hover { transform: rotate(0deg) translateY(-3px); }
-  .book::before {
-    content: ""; position: absolute; top: -10px; left: 50%; width: 64px; height: 20px;
-    margin-left: -32px; background: var(--sky); opacity: .75; transform: rotate(-3deg); border-radius: 2px;
-  }
-  .section-title { font-family: var(--head); font-size: 1.5rem; margin: 22px 0 10px; }
-  .book-title { font-family: var(--head); font-size: 1.8rem; font-weight: 700; line-height: 1.1; margin: 6px 0 4px; }
-  .book-meta { font-size: .85rem; color: var(--graphite-soft); margin: 0; }
-  .book-progress { height: 8px; margin-top: 12px; border: 1.5px solid var(--graphite); border-radius: 999px; background: var(--paper-2); overflow: hidden; }
-  .book-progress i { display: block; height: 100%; background: repeating-linear-gradient(45deg, var(--pencil) 0 6px, #f7d766 6px 12px); width: 0; transition: width .4s ease; }
+  /* کارت‌ها */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; box-shadow: 0 6px 0 var(--edge, #CFC6AE), 0 10px 24px var(--shadow); margin-bottom: 14px; }
+  .card-title { font-family: var(--head); font-size: 1.02rem; margin: 0 0 6px; color: var(--graphite); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .card-title a { font-size: 12px; color: var(--graphite-soft); text-decoration: none; font-weight: 700; }
+  .muted { color: var(--graphite-soft); font-size: 12.5px; line-height: 1.9; margin: 0; }
+  .bar-row { display: grid; grid-template-columns: 52px 1fr 60px; gap: 8px; align-items: center; font-size: 11.5px; color: var(--graphite-soft); margin-top: 7px; }
+  .bar { height: 9px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--pencil); border-radius: 999px; transition: width .4s; }
 
-  .panel {
-    background: #fff; border: 2px solid var(--graphite); border-radius: 14px 6px 16px 8px;
-    padding: 26px 26px 20px; box-shadow: 6px 7px 0 var(--shadow);
-  }
-  .panel[hidden] { display: none; }
-  .panel h2 { font-family: var(--head); font-size: 2.4rem; font-weight: 700; margin: 0 0 4px; line-height: 1.1; }
-  .panel .sub { color: var(--graphite-soft); margin: 0 0 18px; font-size: .95rem; }
-  .back {
-    font: inherit; font-size: .9rem; background: none; border: 0;
-    border-bottom: 2px dashed var(--graphite); color: var(--graphite);
-    padding: 0 0 2px; cursor: pointer; margin-bottom: 14px;
-  }
+  /* کتاب‌ها */
+  .sec-title { font-family: var(--head); font-size: 1.05rem; margin: 22px 0 10px; color: var(--graphite); display: flex; align-items: center; gap: 8px; }
+  .sec-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .books { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .book { text-align: right; cursor: pointer; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 12px; box-shadow: 0 5px 0 var(--edge, #CFC6AE); font: inherit; color: var(--graphite); display: grid; grid-template-columns: 58px 1fr; gap: 12px; align-items: center; }
+  .book[aria-pressed="true"] { border-color: var(--pencil); box-shadow: 0 5px 0 #B98F12; }
+  .book-cover { width: 58px; height: 70px; border-radius: 12px; display: grid; place-items: center; color: #FFFFFD; font-weight: 800; font-size: 13px; letter-spacing: .3px; box-shadow: inset 0 -6px 0 rgba(0,0,0,.18); }
+  .book b { display: block; font-size: 14px; line-height: 1.5; }
+  .book small { color: var(--graphite-soft); font-size: 11.5px; }
+  .book .bar { margin-top: 8px; }
+  .empty { color: var(--graphite-soft); font-size: 13px; padding: 14px; border: 1px dashed var(--line); border-radius: 16px; text-align: center; }
 
-  .topics { list-style: none; padding: 0; margin: 0; }
-  .topics li {
-    display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: start;
-    padding: 12px 0; border-bottom: 1px dashed var(--line);
+  /* مسیر یادگیری */
+  .path-wrap { margin-top: 16px; }
+  .path-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .path-head b { font-family: var(--head); font-size: 1.02rem; }
+  .path { display: grid; justify-items: center; gap: 14px; padding: 8px 0 4px; }
+  .node {
+    position: relative; width: 66px; height: 66px; border-radius: 50%; border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 15px;
+    background: var(--surface); color: var(--graphite); border: 2px solid var(--line); box-shadow: 0 6px 0 var(--edge, #CFC6AE);
+    display: grid; place-items: center;
   }
-  .topics li:last-child { border-bottom: 0; }
-  .topics input[type="checkbox"] {
-    appearance: none; width: 22px; height: 22px; margin-top: 4px;
-    border: 2px solid var(--graphite); border-radius: 4px 2px 5px 3px;
-    background: #fff; cursor: pointer; position: relative;
-  }
-  .topics input[type="checkbox"]:checked { background: var(--pencil); }
-  .topics input[type="checkbox"]:checked::after {
-    content: ""; position: absolute; left: 6px; top: 0; width: 6px; height: 12px;
-    border: solid var(--graphite); border-width: 0 3px 3px 0; transform: rotate(45deg);
-  }
-  .topic-title { font-weight: 800; margin: 0; }
-  .topic-note { margin: 2px 0 0; color: var(--graphite-soft); font-size: .92rem; }
-  .topic-ref {
-    display: inline-block; margin-top: 6px; font-family: var(--head); font-size: 1.1rem;
-    background: var(--paper-2); border: 1.5px solid var(--graphite); padding: 0 10px;
-    border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px;
-  }
-  .stars { font-family: var(--head); font-size: 1.3rem; letter-spacing: 1px; white-space: nowrap; }
-  .empty { color: var(--graphite-soft); margin: 10px 0; }
-  .path-wrap h2 { font-family: var(--head); font-size: 1.8rem; margin: 0 0 4px; }
-  .path { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 12px 0 18px; }
-  .node { position: relative; width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--graphite);
-    background: #fff; color: var(--graphite); font: inherit; font-weight: 800; font-size: 1.2rem; cursor: pointer;
-    box-shadow: 3px 4px 0 var(--shadow); transition: transform .2s ease; }
-  .node:nth-child(odd) { margin-left: -70px; }
-  .node:nth-child(even) { margin-left: 70px; }
-  .node:not(:first-child)::before { content: ""; position: absolute; top: -22px; left: 50%; width: 3px; height: 22px;
-    background: var(--graphite); transform: translateX(-50%); }
-  .node.done { background: var(--ok); }
-  .node.current { background: var(--pencil); transform: scale(1.12); }
-  .node.locked { background: var(--paper-2); color: var(--graphite-soft); border-style: dashed; }
-  .node:hover { transform: translateY(-2px); }
-  .pathdetail { background: #fff; border: 2px solid var(--graphite); border-radius: 12px; padding: 14px 16px;
-    box-shadow: 4px 5px 0 var(--shadow); margin-bottom: 20px; }
-  .pathdetail h3 { font-family: var(--head); font-size: 1.5rem; margin: 0 0 4px; }
-  .pathdetail .explain-text { white-space: pre-line; background: var(--paper-2); border-radius: 8px; padding: 10px 12px; font-size: .95rem; }
-  .pathdetail button { font-family: var(--head); font-size: 1.2rem; color: var(--graphite); background: var(--pencil); border: 2px solid var(--graphite);
-    min-height: 44px; padding: 2px 16px; margin-top: 10px; cursor: pointer; border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; }
-  .search { margin: 0 0 20px; }
-  .search input { font: inherit; width: 100%; padding: 10px 14px; min-height: 44px; border: 2px solid var(--graphite); border-radius: 10px; background: #fff; }
-  .results { list-style: none; padding: 0; margin: 8px 0 0; }
-  .results li { margin: 4px 0; }
-  .results button { font: inherit; width: 100%; text-align: right; background: #fff; border: 1.5px solid var(--graphite); border-radius: 8px; padding: 8px 12px; min-height: 44px; cursor: pointer; }
-  .results .lvl-tag { font-family: var(--head); font-size: 1.1rem; background: var(--paper-2); border: 1.5px solid var(--graphite); padding: 0 8px; border-radius: 999px; margin-left: 8px; }
-  .today { background: #fff; border: 2px solid var(--graphite); border-radius: 12px 5px 14px 7px; padding: 14px 18px; box-shadow: 5px 6px 0 var(--shadow); margin: 0 0 24px; }
-  .today h2 { font-family: var(--head); font-size: 1.8rem; margin: 0 0 4px; }
-  .today ul { padding-right: 18px; margin: 4px 0; }
-  .today .bars { display: grid; gap: 8px; margin-top: 10px; }
-  .today .bar-row { display: grid; grid-template-columns: 100px 1fr 70px; gap: 10px; align-items: center; font-size: .92rem; }
-  .today .bar { height: 12px; border: 2px solid var(--graphite); border-radius: 999px; background: var(--paper-2); overflow: hidden; }
-  .today .bar i { display: block; height: 100%; background: repeating-linear-gradient(45deg, var(--pencil) 0 6px, #f7d766 6px 12px); }
-  .today a.go { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-left: 12px; }
-  details.explain { margin-top: 8px; }
-  details.explain summary { cursor: pointer; font-family: var(--head); font-size: 1.25rem; border-bottom: 1.5px dashed var(--graphite); display: inline-block; }
-  .explain-body { white-space: pre-line; margin-top: 8px; padding: 10px 12px; background: var(--paper-2); border-radius: 8px; font-size: .95rem; }
-  .navlink { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; }
+  .node.done { background: #B3D93B; color: #1B1530; border-color: transparent; box-shadow: 0 6px 0 #6F9A12; }
+  .node.next { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 6px 0 #B98F12; }
+  .node.locked { opacity: .45; }
+  .node:active { transform: translateY(3px); }
+  .node-label { font-size: 12px; color: var(--graphite-soft); text-align: center; max-width: 220px; line-height: 1.6; }
+  .path .zig { margin-right: 60px; }
+  .path .zig-l { margin-left: 60px; }
 
-  footer {
-    margin-top: 40px; font-size: .9rem; color: var(--graphite-soft); text-align: center;
-  }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  @media (max-width: 520px) {
-    .logo { font-size: 2.6rem; }
-    .panel h2 { font-size: 2rem; }
-    .book:nth-child(n) { transform: none; }
-  }
-  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 6px;
-    background: #fff; border-top: 2px solid var(--graphite); padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); z-index: 50; }
-  .tabbar a { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); text-decoration: none; padding: 6px 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
-  .tabbar a[aria-current="page"] { background: var(--pencil); border: 2px solid var(--graphite); }
-  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 84px; } }
+  .detail { margin-top: 14px; }
+  .detail h3 { font-family: var(--head); font-size: 1.02rem; margin: 0 0 6px; }
+  .detail pre { white-space: pre-wrap; font-family: var(--body); font-size: 13px; line-height: 1.9; background: var(--paper-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin: 8px 0; color: var(--graphite); }
+  .btn { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE); }
+  .btn.main { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+  .btn:active { transform: translateY(2px); }
+
+  .search { width: 100%; min-height: 46px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; box-sizing: border-box; margin-top: 8px; }
+  .results { margin-top: 10px; }
+  .result { display: block; padding: 10px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); margin-bottom: 8px; color: var(--graphite); text-decoration: none; font-size: 13.5px; }
+
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft); text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
+  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 60px; } header nav.top-nav { display: none !important; } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
-<script src="js/sync.js"></script>
+<script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/fx.js"></script>
 <script src="js/gamify.js"></script>
+<script src="js/sync.js"></script>
 <script src="js/i18n.js"></script>
 <script src="data/i18n-content.js"></script>
 <script src="data/i18n-content-grammar.js"></script>
+<script src="data/i18n-vocab-a1.js"></script>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <div>
-      <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1><nav class="top-nav" aria-label="منوی اصلی"><a class="navlink" href="index.html" aria-current="page">خانه</a><a class="navlink" href="plan.html">برنامه</a><a class="navlink" href="practice.html">تمرین</a><a class="navlink" href="notebook.html">دفترچه</a><a class="navlink" href="me.html">من</a></nav>
-      <p class="tagline">اسپانیایی را از کتاب‌های واقعی، قدم‌به‌قدم و با اولویت بخوان.</p>
+<div class="home">
+  <header class="top">
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <div class="top-tools">
+      <button class="ico-btn" id="soundBtn" type="button" aria-label="صدا">🔊</button>
+      <a class="ico-btn" href="me.html" aria-label="من">👤</a>
     </div>
-    
   </header>
 
-  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
+  <div id="gameBar" aria-label="پیشرفت امروز"></div>
 
-  <div class="notice" id="notice"></div>
+  <div class="levels" id="levels" role="group" aria-label="سطح"></div>
 
-  <div class="search">
-    <input id="q" type="search" dir="auto" placeholder="جستجوی گرامر یا واژه در همه‌ی سطح‌ها" aria-label="جستجو">
-    <ul class="results" id="results"></ul>
+  <section class="hero" id="hero">
+    <span class="hero-tag" id="heroTag">شروع از اینجا</span>
+    <h2 id="heroTitle">اولین درست را شروع کن</h2>
+    <p id="heroText">یک درس کوتاه و بعد یک تمرین. همین.</p>
+    <button class="go" id="heroGo" type="button">شروع</button>
+  </section>
+
+  <section class="card" id="planCard">
+    <div class="card-title"><span>برنامه‌ی امروز</span><a href="plan.html">باز کردن</a></div>
+    <p class="muted" id="planText"></p>
+    <div id="planBars"></div>
+  </section>
+
+  <div class="sec-title">کتاب‌های این سطح</div>
+  <div class="books" id="books"></div>
+
+  <div class="path-wrap" id="pathWrap" hidden>
+    <div class="path-head">
+      <b id="pathTitle">مسیر</b>
+      <button class="btn" id="pathToggle" type="button">پنهان کن</button>
+    </div>
+    <div class="path" id="path"></div>
+    <div class="detail" id="detail" hidden></div>
   </div>
 
-  <div id="gameBar" aria-label="پیشرفت امروز"></div>
-  <h2 class="section-title">کتاب‌های این سطح</h2>
-  <ul class="books" id="books"></ul>
-
-  <section class="today" id="today" aria-label="برنامه‌ی امروز"></section>
-
-  <section class="path-wrap" aria-label="مسیر درس">
-    <h2>مسیر درس</h2>
-    <p class="muted">هر مرحله که خوانده شد، مرحله‌ی بعد باز می‌شود.</p>
-    <div class="path" id="path"></div>
-    <div class="pathdetail" id="pathDetail" hidden></div>
-  </section>
-
-
-  <section class="panel" id="panel" hidden aria-live="polite">
-    <button class="back" id="back" type="button">← برگشت به کتاب‌ها</button>
-    <h2 id="panelTitle"></h2>
-    <p class="sub" id="panelSub"></p>
-    <ol class="topics" id="topics"></ol>
-  </section>
-
-  <footer>
-    اولویت‌های ستاره‌ای، اولویت آموزشی است. اولویت امتحانی بعد از بررسی نمونه‌سوال‌های رسمی اضافه می‌شود.
-    پیشرفت شما فقط در همین مرورگر ذخیره می‌شود.
-  </footer>
+  <div class="sec-title">جستجو</div>
+  <input class="search" id="q" type="search" placeholder="جستجوی گرامر یا واژه در همه‌ی سطح‌ها" aria-label="جستجو">
+  <div class="results" id="results"></div>
 </div>
+
+<nav class="tabbar" aria-label="منوی پایین">
+  <a href="index.html" aria-current="page"><span>🏠</span><span>خانه</span></a>
+  <a href="plan.html"><span>📅</span><span>برنامه</span></a>
+  <a href="practice.html"><span>🎯</span><span>تمرین</span></a>
+  <a href="notebook.html"><span>📓</span><span>دفترچه</span></a>
+  <a href="me.html"><span>👤</span><span>من</span></a>
+</nav>
 
 <script src="data/data.js"></script>
 <script src="data/explain.js"></script>
@@ -246,373 +175,259 @@
 <script src="data/practice-extra.js"></script>
 <script src="data/practice-b1.js"></script>
 <script src="data/practice-b2.js"></script>
+<script src="data/practice-more.js"></script>
+<script src="data/practice-expand.js"></script>
+<script src="data/practice-expand2.js"></script>
+<script src="data/practice-expand3.js"></script>
 <script src="data/vocab-more.js"></script>
 <script src="data/vocab-b1.js"></script>
 <script src="data/vocab-b2.js"></script>
 <script src="data/vocab-c1.js"></script>
 <script src="data/vocab-c2.js"></script>
-<script src="data/practice-more.js"></script>
-<script src="data/practice-expand.js"></script>
-<script src="data/practice-expand2.js"></script>
-<script src="data/practice-expand3.js"></script>
 <script src="data/books.js"></script>
 <script>
-  const SEE = window.SEE;
-  const PROGRESS_KEY = "seespanish:progress:v2";
-  let currentLevel = "A1";
-  try {
-    const savedLevel = localStorage.getItem("seespanish:level");
-    if (savedLevel && lvlOpen(savedLevel)) currentLevel = savedLevel;
-  } catch (e) { /* ignore */ }
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  var PK = "seespanish:progress:v2";
+  var level = "A1";
+  try { level = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
+  var openBookId = null;
+  var pathOpen = true;
 
-  const $ = (sel) => document.querySelector(sel);
+  function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch (e) { return {}; } }
+  function saveP(p) { try { localStorage.setItem(PK, JSON.stringify(p)); } catch (e) {} }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function tr(obj, f) { return window.SEE_I18N ? SEE_I18N.tx(obj, f) : obj[f]; }
+  function tt(key, vars) { return window.SEE_I18N ? SEE_I18N.t(key, vars) : key; }
+  function lvlOpen(l) { return window.SEE_PROGRESS && SEE_PROGRESS.levelOpen ? SEE_PROGRESS.levelOpen(l) : true; }
 
-  function loadProgress() {
-    try { return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {}; }
-    catch { return {}; }
-  }
-  function saveProgress(p) {
-    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); }
-    catch { /* حافظه‌ی مرورگر در دسترس نیست؛ پیشرفت ذخیره نمی‌شود */ }
-  }
-
-  function lvlOpen(l) {
-    if (!(window.SEE_PROGRESS && typeof window.SEE_PROGRESS.levelOpen === "function")) return true;
-    return window.SEE_PROGRESS.levelOpen(l);
-  }
-  function lvlLockMsg(l) {
-    if (window.SEE_PROGRESS && typeof window.SEE_PROGRESS.lockMessage === "function") return window.SEE_PROGRESS.lockMessage(l);
-    return "";
-  }
+  // ---------- سطح ----------
   function renderLevels() {
-    const ul = $("#levels");
-    ul.innerHTML = "";
-    SEE.levels.forEach((lvl) => {
-      const li = document.createElement("li");
-      const b = document.createElement("button");
-      b.type = "button";
-      b.textContent = lvlOpen(lvl) ? lvl : lvl + " 🔒";
-      if (SEE.status[lvl] !== "ready") b.classList.add("pending");
-      b.setAttribute("aria-pressed", String(lvl === currentLevel));
-      b.addEventListener("click", () => {
-        if (!lvlOpen(lvl)) {
-          const n = document.getElementById("notice");
-          if (n) n.textContent = lvlLockMsg(lvl);
-          return;
-        }
-        currentLevel = lvl;
-        try { localStorage.setItem("seespanish:level", lvl); } catch (e) { /* ignore */ }
-        closePanel();
-        renderLevels();
-        renderBooks();
-      });
-      li.appendChild(b);
-      ul.appendChild(li);
-    });
-  }
-
-  function renderNotice() {
-    const n = $("#notice");
-    const st = SEE.status[currentLevel];
-    if (st === "ready") {
-      n.textContent = `سطح ${currentLevel} کامل است. کتاب را انتخاب کنید تا فهرست گرامرها را ببینید.`;
-    } else if (st === "partial") {
-      n.textContent = `سطح ${currentLevel} بخشی از مطالب را دارد. منبع کتاب این سطح هنوز اضافه نشده است.`;
-    } else {
-      n.textContent = `سطح ${currentLevel} هنوز در حال آماده‌سازی است. به‌زودی اضافه می‌شود.`;
-    }
-  }
-
-  function itemsForBook(bookId, level) {
-    const all = (SEE.grammar[level] || []);
-    return all.filter((it) => it.refs && it.refs[bookId]);
-  }
-
-  function progressFor(bookId, level) {
-    const items = itemsForBook(bookId, level);
-    if (!items.length) return 0;
-    const p = loadProgress();
-    const done = items.filter((it) => p[it.id + "|" + bookId]).length;
-    return Math.round((done / items.length) * 100);
-  }
-
-  function renderBooks() {
-    if (typeof renderToday === "function") renderToday();
-    if (typeof renderPath === "function") renderPath();
-    renderNotice();
-    const ul = $("#books");
-    ul.innerHTML = "";
-    SEE.books
-      .filter((b) => b.levels.includes(currentLevel))
-      .forEach((book) => {
-        const li = document.createElement("li");
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "book";
-        const pct = progressFor(book.id, currentLevel);
-        btn.innerHTML = `
-          <img class="cover" src="covers/${book.id}.svg" alt="" width="84" height="118" loading="lazy">
-          <span class="book-text">
-          <span class="book-title" dir="ltr" style="display:block"></span>
-          <span class="book-meta" style="display:block"></span>
-          <span class="book-progress" role="img" aria-label="پیشرفت ${pct}٪" style="display:block"><i style="width:${pct}%"></i></span>
-          </span>`;
-        btn.querySelector(".book-title").textContent = book.title;
-        btn.querySelector(".book-meta").textContent = book.note || `سطح ${currentLevel}`;
-        btn.addEventListener("click", () => openBook(book));
-        li.appendChild(btn);
-        ul.appendChild(li);
-      });
-  }
-
-  function openBook(book) {
-    $("#panelTitle").textContent = `${book.title}`;
-    const items = itemsForBook(book.id, currentLevel);
-    $("#panelSub").textContent = items.length
-      ? `گرامرهای این کتاب در سطح ${currentLevel}، همراه با شماره‌ی درس یا واحد.`
-      : `برای این کتاب در سطح ${currentLevel} هنوز مطلبی ثبت نشده است.`;
-
-    const ol = $("#topics");
-    ol.innerHTML = "";
-    const p = loadProgress();
-
-    // واحدهای کتاب (اگر ساختارش ثبت شده باشد)
-    const bookUnits = (window.SEE_BOOK_UNITS || {})[book.id];
-    if (bookUnits) {
-      const pu = loadProgress();
-      bookUnits.units.forEach((u) => {
-        const ukey = "unit|" + book.id + "|" + u.n;
-        const li = document.createElement("li");
-        const cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.checked = !!pu[ukey];
-        cb.setAttribute("aria-label", `خواندن واحد ${u.n}`);
-        cb.addEventListener("change", () => {
-          const d = loadProgress();
-          d[ukey] = cb.checked;
-          saveProgress(d);
-        });
-        const body = document.createElement("div");
-        const t = document.createElement("p");
-        t.className = "topic-title";
-        t.dir = "auto";
-        t.textContent = `واحد ${u.n} · ${u.title}`;
-        const n = document.createElement("p");
-        n.className = "topic-note";
-        n.dir = "auto";
-        n.textContent = u.topics.join(" · ");
-        body.append(t, n);
-        li.append(cb, body);
-        ol.appendChild(li);
-      });
-    }
-
-    items.forEach((it) => {
-      const key = it.id + "|" + book.id;
-      const li = document.createElement("li");
-
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = !!p[key];
-      cb.setAttribute("aria-label", `علامت‌گذاری ${SEE_I18N.tx(it, "title")}`);
-      cb.addEventListener("change", () => {
-        const data = loadProgress();
-        data[key] = cb.checked;
-        saveProgress(data);
-        renderBooks();
-      });
-
-      const body = document.createElement("div");
-      const t = document.createElement("p");
-      t.className = "topic-title";
-      t.dir = "auto";
-      t.textContent = SEE_I18N.tx(it, "title");
-      const n = document.createElement("p");
-      n.className = "topic-note";
-      n.dir = "auto";
-      n.textContent = SEE_I18N.tx(it, "note");
-      const ref = document.createElement("span");
-      ref.className = "topic-ref";
-      ref.dir = "auto";
-      ref.textContent = `${book.title} · ${it.refs[book.id]}`;
-      body.append(t, n, ref);
-      const ex = (window.SEE_EXPLAIN || {})[it.id];
-      if (ex) {
-        const d = document.createElement("details");
-        d.className = "explain";
-        const sm = document.createElement("summary");
-        sm.textContent = "توضیح کامل";
-        const pre = document.createElement("div");
-        pre.className = "explain-body";
-        pre.dir = "auto";
-        pre.textContent = ex;
-        d.append(sm, pre);
-        body.appendChild(d);
-      }
-
-      const st = document.createElement("span");
-      st.className = "stars";
-      st.setAttribute("aria-label", `اولویت ${it.stars} از ۳`);
-      st.textContent = "★".repeat(it.stars) + "☆".repeat(3 - it.stars);
-
-      li.append(cb, body, st);
-      ol.appendChild(li);
-    });
-
-    $("#panel").hidden = false;
-    $("#panel").scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function closePanel() { $("#panel").hidden = true; }
-
-  $("#back").addEventListener("click", () => {
-    closePanel();
-    renderBooks();
-    $("#books").scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-
-  function renderToday() {
-    const box = document.getElementById("today");
-    const plan = window.SEE_PROGRESS.dailyPlan(currentLevel);
-    const pr = window.SEE_PROGRESS.levelProgress(currentLevel);
-    const row = (label, d) => {
-      const pct = d.total ? Math.round((d.done / d.total) * 100) : 0;
-      return `<div class="bar-row"><span>${label}</span><div class="bar" role="img" aria-label="${label} ${pct}٪"><i style="width:${pct}%"></i></div><span>${d.done} از ${d.total}</span></div>`;
-    };
-    const words = plan.words.length
-      ? `<span dir="ltr">${plan.words.map((w) => w).join("، ")}</span>`
-      : "امروز کلمه‌ای برای مرور نداری.";
-    const grammar = plan.grammar ? plan.grammar.title : "همه‌ی گرامرهای این سطح خونده شده‌اند.";
-    const weak = window.SEE_PROGRESS.weakIds().length;
-    box.innerHTML = `
-      <h2>برنامه‌ی امروز (حدود ۱۵ دقیقه)</h2>
-      <ul>
-        <li>۵ واژه برای مرور: ${words} <a class="go" href="memory.html">شروع مرور</a></li>
-        <li>یک گرامر: <span dir="auto">${grammar}</span></li>
-        <li>یک تمرین: <a class="go" href="practice.html${weak ? "?weak=1" : ""}">${weak ? "تمرین نقاط ضعف (" + weak + ")" : "شروع تمرین"}</a></li>
-      </ul>
-      <div class="bars">
-        ${row("گرامر خونده‌شده", pr.grammar)}
-        ${row("واژه‌های بلد", pr.vocab)}
-        ${row("تمرین درست", pr.exercises)}
-      </div>`;
-  }
-
-  // مسیر درس: هر گرامر یک گره است؛ گره بعدی وقتی باز می‌شود که گره قبلی خوانده شده باشد
-  function doneOf(it) {
-    const p = loadProgress();
-    return Object.keys(it.refs || {}).some((b) => p[it.id + "|" + b]);
-  }
-
-  function renderPath() {
-    const box = document.getElementById("path");
-    if (!box) return;
-    const items = SEE.grammar[currentLevel] || [];
-    const open = items.findIndex((it) => !doneOf(it));
-    box.innerHTML = "";
-    items.forEach((it, i) => {
-      const state = doneOf(it) ? "done" : (i === open ? "current" : "locked");
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "node " + state;
-      b.textContent = String(i + 1);
-      b.setAttribute("aria-label", `${i + 1}. ${SEE_I18N.tx(it, "title")} (${state === "done" ? "خوانده شده" : state === "current" ? "مرحله‌ی فعلی" : "قفل"})`);
-      b.addEventListener("click", () => showPathDetail(it, i, state));
+    var box = $("levels");
+    box.innerHTML = '<span class="lbl">' + esc(tt("سطح")) + '</span>';
+    LEVELS.forEach(function (l) {
+      var open = lvlOpen(l);
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "lvl-pill"; b.textContent = l;
+      b.setAttribute("aria-pressed", String(l === level));
+      b.setAttribute("aria-disabled", String(!open));
+      b.onclick = function () {
+        if (!open) { alert(window.SEE_PROGRESS && SEE_PROGRESS.lockMessage ? SEE_PROGRESS.lockMessage(l) : ""); return; }
+        level = l; openBookId = null;
+        try { localStorage.setItem("seespanish:level", l); } catch (e) {}
+        renderAll();
+      };
       box.appendChild(b);
     });
-    if (!items.length) box.innerHTML = '<p class="muted">برای این سطح هنوز مسیری ثبت نشده است.</p>';
   }
 
-  function showPathDetail(it, i, state) {
-    const d = document.getElementById("pathDetail");
-    d.hidden = false;
-    d.innerHTML = "";
-    const h = document.createElement("h3");
-    h.dir = "auto";
-    h.textContent = `${i + 1}. ${SEE_I18N.tx(it, "title")}`;
-    const note = document.createElement("p");
-    note.dir = "auto";
-    note.textContent = SEE_I18N.tx(it, "note");
-    d.append(h, note);
-    const ex = (window.SEE_EXPLAIN || {})[it.id];
-    if (ex) {
-      const e = document.createElement("div");
-      e.className = "explain-text";
-      e.dir = "auto";
-      e.textContent = ex;
-      d.appendChild(e);
-    }
-    const btn = document.createElement("button");
-    btn.type = "button";
-    if (state === "locked") {
-      const m = document.createElement("p");
-      m.className = "muted";
-      m.textContent = "این مرحله هنوز قفل است. اول مرحله‌ی قبلی را خوانده علامت بزن.";
-      d.appendChild(m);
+  // ---------- کارت شروع ----------
+  function renderHero() {
+    var items = SEE.grammar[level] || [];
+    var p = loadP();
+    var next = items.filter(function (it) { return !p[it.id + "|path"]; })[0];
+    $("heroTag").textContent = tt("شروع از اینجا");
+    if (next) {
+      $("heroTitle").textContent = tr(next, "title");
+      $("heroText").textContent = level + " · " + (items.length - items.filter(function (it) { return !p[it.id + "|path"]; }).length) + " از " + items.length;
+      $("heroGo").onclick = function () { showPath(); showDetail(next); };
     } else {
-      btn.textContent = state === "done" ? "برگرداندن علامت" : "این مرحله را خواندم";
-      btn.addEventListener("click", () => {
-        const firstBook = Object.keys(it.refs || {})[0];
-        if (!firstBook) return;
-        const key = it.id + "|" + firstBook;
-        const data = loadProgress();
-        if (state === "done") delete data[key]; else data[key] = true;
-        saveProgress(data);
-        renderPath();
-        renderBooks();
-        renderToday();
-        const again = SEE.grammar[currentLevel].find((x) => x.id === it.id);
-        showPathDetail(again, i, doneOf(again) ? "done" : "current");
-      });
-      d.appendChild(btn);
+      $("heroTitle").textContent = level + " کامل شد!";
+      $("heroText").textContent = tt("یک سطح بالاتر یا تمرین نقاط ضعف.");
+      $("heroGo").onclick = function () { location.href = "practice.html"; };
     }
+    $("heroGo").textContent = tt("شروع");
+  }
+
+  // ---------- برنامه‌ی امروز ----------
+  function renderPlan() {
+    if (!(window.SEE_PROGRESS && SEE_PROGRESS.dailyPlan && SEE_PROGRESS.levelProgress)) return;
+    var pr = SEE_PROGRESS.levelProgress(level);
+    $("planText").textContent = level + " · گرامر، واژه و تمرین";
+    var rows = [["گرامر", pr.grammar], ["واژه", pr.vocab], ["تمرین", pr.exercises]];
+    $("planBars").innerHTML = rows.map(function (r) {
+      var d = r[1]; var pct = d.total ? Math.round(d.done / d.total * 100) : 0;
+      return '<div class="bar-row"><span>' + esc(tt(r[0])) + '</span><div class="bar"><i style="width:' + pct + '%"></i></div><span>' + d.done + '/' + d.total + '</span></div>';
+    }).join("");
+  }
+
+  // ---------- کتاب‌ها ----------
+  var COLORS = ["#6200BE", "#FD7F52", "#B3D93B", "#FFBD41", "#4F00A0", "#2E7D6B", "#B4431B", "#3F6B0A"];
+  function colorOf(id) { var n = 0; for (var i = 0; i < id.length; i++) n += id.charCodeAt(i); return COLORS[n % COLORS.length]; }
+  function bookProgress(book) {
+    var u = window.SEE_BOOK_UNITS && SEE_BOOK_UNITS[book.id];
+    var p = loadP();
+    if (u && u.units) {
+      var done = u.units.filter(function (x) { return p["unit|" + book.id + "|" + x.n]; }).length;
+      return { done: done, total: u.units.length, src: "unit" };
+    }
+    var items = (SEE.grammar[level] || []).filter(function (it) { return it.refs && it.refs[book.id]; });
+    var d2 = items.filter(function (it) { return p[it.id + "|" + book.id]; }).length;
+    return { done: d2, total: items.length, src: "grammar" };
+  }
+  function renderBooks() {
+    var box = $("books");
+    var list = (SEE.books || []).filter(function (b) { return b.levels.indexOf(level) >= 0; });
+    if (!list.length) { box.innerHTML = '<div class="empty">' + esc(tt("کتابی برای این سطح ثبت نشده.")) + '</div>'; return; }
+    box.innerHTML = list.map(function (b) {
+      var pr = bookProgress(b); var pct = pr.total ? Math.round(pr.done / pr.total * 100) : 0;
+      var abbr = b.title.split(" ").slice(0, 2).map(function (w) { return w.charAt(0); }).join("").toUpperCase();
+      return '<button type="button" class="book" data-book="' + esc(b.id) + '" aria-pressed="' + (openBookId === b.id) + '">' +
+        '<span class="book-cover" style="background:' + colorOf(b.id) + '">' + esc(abbr) + '</span>' +
+        '<span><b>' + esc(b.title) + '</b><small>' + pr.done + ' از ' + pr.total + (pr.src === "unit" ? ' ' + esc(tt("واحد")) : '') + '</small>' +
+        '<span class="bar"><i style="width:' + pct + '%"></i></span></span></button>';
+    }).join("");
+  }
+  $("books").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-book]");
+    if (!b) return;
+    openBookId = b.getAttribute("data-book");
+    pathOpen = true;
+    renderBooks(); showPath();
+  });
+
+  // ---------- مسیر (کتاب یا سطح) ----------
+  function showPath() { $("pathWrap").hidden = false; pathOpen = true; renderPath(); }
+  function renderPath() {
+    var wrap = $("pathWrap");
+    if (!pathOpen) { $("path").innerHTML = ""; $("detail").hidden = true; $("pathToggle").textContent = tt("نشون بده"); return; }
+    $("pathToggle").textContent = tt("پنهان کن");
+    var p = loadP();
+    var box = $("path");
+    if (openBookId) {
+      var book = (SEE.books || []).filter(function (b) { return b.id === openBookId; })[0];
+      $("pathTitle").textContent = book ? book.title : "";
+      var u = window.SEE_BOOK_UNITS && SEE_BOOK_UNITS[openBookId];
+      if (u && u.units) {
+        var firstOpen = u.units.filter(function (x) { return !p["unit|" + openBookId + "|" + x.n]; })[0];
+        box.innerHTML = u.units.map(function (x, i) {
+          var done = !!p["unit|" + openBookId + "|" + x.n];
+          var cls = done ? "done" : (firstOpen && firstOpen.n === x.n ? "next" : "");
+          return '<button class="node ' + cls + ' ' + (i % 2 ? "zig-l" : "zig") + '" type="button" data-unit="' + x.n + '" aria-label="' + esc(tt("واحد")) + ' ' + x.n + '">' + x.n + '</button>' +
+            '<div class="node-label">' + esc(x.title) + '</div>';
+        }).join("");
+        box.onclick = function (e) {
+          var b = e.target.closest("[data-unit]");
+          if (!b) return;
+          var n = Number(b.getAttribute("data-unit"));
+          var key = "unit|" + openBookId + "|" + n; var q = loadP();
+          q[key] = !q[key]; saveP(q);
+          renderBooks(); renderPath(); showUnit(n);
+        };
+      } else {
+        var items = (SEE.grammar[level] || []).filter(function (it) { return it.refs && it.refs[openBookId]; });
+        box.innerHTML = items.map(function (it, i) {
+          var done = !!p[it.id + "|" + openBookId];
+          var cls = done ? "done" : (!items.slice(0, i).every(function (x) { return p[x.id + "|" + openBookId]; }) ? "locked" : "next");
+          return '<button class="node ' + cls + ' ' + (i % 2 ? "zig-l" : "zig") + '" type="button" data-item="' + esc(it.id) + '">' + (i + 1) + '</button>' +
+            '<div class="node-label">' + esc(tr(it, "title")) + '</div>';
+        }).join("") || '<div class="empty">' + esc(tt("این کتاب هنوز مسیر ندارد.")) + '</div>';
+        box.onclick = function (e) {
+          var b = e.target.closest("[data-item]");
+          if (!b) return;
+          var it = items.filter(function (x) { return x.id === b.getAttribute("data-item"); })[0];
+          if (it) showDetail(it, openBookId);
+        };
+      }
+    } else {
+      $("pathTitle").textContent = tt("مسیر") + " " + level;
+      var all = SEE.grammar[level] || [];
+      box.innerHTML = all.map(function (it, i) {
+        var done = !!p[it.id + "|path"];
+        var cls = done ? "done" : (!all.slice(0, i).every(function (x) { return p[x.id + "|path"]; }) ? "locked" : "next");
+        return '<button class="node ' + cls + ' ' + (i % 2 ? "zig-l" : "zig") + '" type="button" data-item="' + esc(it.id) + '">' + (i + 1) + '</button>' +
+          '<div class="node-label">' + esc(tr(it, "title")) + '</div>';
+      }).join("");
+      box.onclick = function (e) {
+        var b = e.target.closest("[data-item]");
+        if (!b) return;
+        var it = all.filter(function (x) { return x.id === b.getAttribute("data-item"); })[0];
+        if (it) showDetail(it, null);
+      };
+    }
+    wrap.hidden = false;
+  }
+
+  // ---------- توضیح یک درس ----------
+  function showDetail(it, bookId) {
+    var d = $("detail");
+    var key = it.id + "|" + (bookId || "path");
+    var p = loadP();
+    var done = !!p[key];
+    var text = (window.SEE_EXPLAIN && SEE_EXPLAIN[it.id]) || tr(it, "note") || "";
+    d.innerHTML = '<h3>' + esc(tr(it, "title")) + '</h3>' +
+      '<pre>' + esc(text) + '</pre>' +
+      '<button class="btn main" type="button" id="markBtn">' + esc(done ? tt("برگرداندن") : tt("انجام شد")) + '</button> ' +
+      '<a class="btn" href="practice.html">' + esc(tt("تمرین")) + '</a>';
+    d.hidden = false;
+    $("markBtn").onclick = function () {
+      var q = loadP(); q[key] = !q[key]; saveP(q);
+      if (window.SEE_FX && !done) SEE_FX.celebrate && SEE_FX.celebrate();
+      renderAll(); showDetail(it, bookId);
+    };
+    if (window.SEE_GAME && !done) SEE_GAME.record(0);
     d.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
-  function searchAll(q) {
-    const needle = q.trim().toLowerCase();
-    const out = [];
-    if (needle.length < 2) return out;
-    for (const lvl of SEE.levels) {
-      for (const it of SEE.grammar[lvl] || []) {
-        if ((SEE_I18N.tx(it, "title") + " " + SEE_I18N.tx(it, "note")).toLowerCase().includes(needle)) out.push({ kind: "گرامر", lvl, text: SEE_I18N.tx(it, "title") });
-      }
-      for (const v of (window.SEE_PRACTICE.vocab[lvl] || [])) {
-        if ((v.es + " " + v.fa).toLowerCase().includes(needle)) out.push({ kind: "واژه", lvl, text: v.es + " · " + v.fa });
-      }
-    }
-    return out.slice(0, 30);
+  function showUnit(n) {
+    var u = window.SEE_BOOK_UNITS && SEE_BOOK_UNITS[openBookId];
+    var unit = u && u.units.filter(function (x) { return x.n === n; })[0];
+    if (!unit) return;
+    var d = $("detail");
+    d.innerHTML = '<h3>' + esc(tt("واحد")) + ' ' + n + ' · ' + esc(unit.title) + '</h3>' +
+      '<pre>' + esc(unit.topics.join(" · ")) + '</pre>';
+    d.hidden = false;
   }
 
-  document.getElementById("q").addEventListener("input", (e) => {
-    const ul = document.getElementById("results");
-    ul.innerHTML = "";
-    for (const r of searchAll(e.target.value)) {
-      const li = document.createElement("li");
-      const b = document.createElement("button");
-      b.type = "button";
-      b.innerHTML = `<span class="lvl-tag">${r.lvl}</span>${r.kind}: `;
-      const t = document.createElement("span");
-      t.dir = "auto";
-      t.textContent = r.text;
-      b.appendChild(t);
-      b.addEventListener("click", () => {
-        currentLevel = r.lvl;
-        renderLevels();
-        renderBooks();
-        document.getElementById("books").scrollIntoView({ behavior: "smooth", block: "start" });
+  $("pathToggle").addEventListener("click", function () { pathOpen = !pathOpen; renderPath(); });
+
+  // ---------- جستجو ----------
+  $("q").addEventListener("input", function () {
+    var q = this.value.trim().toLowerCase();
+    var box = $("results");
+    if (!q) { box.innerHTML = ""; return; }
+    var hits = [];
+    LEVELS.forEach(function (l) {
+      (SEE.grammar[l] || []).forEach(function (it) {
+        var hay = (it.title + " " + (it.note || "") + " " + (window.SEE_CONTENT && SEE_CONTENT[it.id] ? JSON.stringify(SEE_CONTENT[it.id]) : "")).toLowerCase();
+        if (hay.indexOf(q) >= 0) hits.push({ it: it, l: l });
       });
-      li.appendChild(b);
-      ul.appendChild(li);
-    }
+    });
+    box.innerHTML = hits.slice(0, 20).map(function (h) {
+      return '<a class="result" href="notebook.html">' + esc(h.l) + ' · ' + esc(tr(h.it, "title")) + '</a>';
+    }).join("") || '<div class="empty">' + esc(tt("موردی پیدا نشد.")) + '</div>';
   });
 
-  renderLevels();
-  renderBooks();
-  renderToday();
-</script>
-<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
+  // ---------- صدا ----------
+  var sb = $("soundBtn");
+  function paintSound() {
+    var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true;
+    sb.classList.toggle("on", on); sb.textContent = on ? "🔊" : "🔇";
+  }
+  sb.onclick = function () {
+    var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true;
+    if (window.SEE_PREFS) SEE_PREFS.setSound(!on);
+    paintSound();
+  };
+  paintSound();
 
-<nav class="tabbar" aria-label="منوی پایین"><a href="index.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a><a href="plan.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a><a href="practice.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a><a href="notebook.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a><a href="me.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a></nav>
+  function renderAll() {
+    renderLevels(); renderHero(); renderPlan(); renderBooks();
+    if (openBookId || pathOpen) { $("pathWrap").hidden = false; renderPath(); } else { $("pathWrap").hidden = true; }
+    if (window.SEE_I18N) SEE_I18N.apply();
+  }
+
+  renderAll();
+  renderPath();
+  $("pathWrap").hidden = false;
+  if (window.SEE_I18N) { setTimeout(SEE_I18N.apply, 500); }
+  document.addEventListener("see:answer", function () { renderAll(); });
+  document.addEventListener("DOMContentLoaded", renderAll);
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
 </body>
 </html>
