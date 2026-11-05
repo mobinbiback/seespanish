@@ -16,81 +16,139 @@
     --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   body { margin: 0; font-family: var(--body); line-height: 1.8; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 110px; }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; }
-  .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
-  .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
-  h2 { font-family: var(--head); font-size: 1.5rem; margin: 22px 0 8px; }
-  .muted { color: var(--graphite-soft); font-size: .95rem; }
-  .segment {
-    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface);
-    border: 1px solid var(--line); box-shadow: 0 6px 18px var(--shadow); list-style: none; margin: 0 0 14px;
+  .logo { font-family: "Caveat", cursive; font-size: 2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 1.8rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+
+  .plan { max-width: 720px; margin: 0 auto; padding: 0 18px 130px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0 6px; flex-wrap: wrap; }
+  .top-tools { display: flex; gap: 8px; align-items: center; }
+  .ico-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 18px; box-shadow: 0 4px 0 var(--edge, #CFC6AE); display: grid; place-items: center; text-decoration: none; }
+  .ico-btn.on { background: var(--pencil); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+
+  .sum-title { font-family: var(--head); font-size: 1.5rem; margin: 12px 0 2px; color: var(--graphite); }
+  .sum-sub { color: var(--graphite-soft); font-size: 13px; margin: 0 0 10px; }
+  .meter { height: 14px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; }
+  .meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--pencil), #B98F12); border-radius: 999px; transition: width .4s; }
+
+  /* کارت بعدی */
+  .next {
+    margin: 16px 0; border-radius: 24px; padding: 18px; background: var(--surface); border: 2px solid #B98F12;
+    box-shadow: 0 7px 0 #B98F12, 0 14px 26px var(--shadow);
   }
-  .segment li { flex: 1 1 0; }
-  .segment button {
-    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
-    color: var(--graphite-soft); font: inherit; font-size: 1rem; cursor: pointer;
+  .next-head { display: flex; align-items: center; gap: 12px; }
+  .next-ico { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 24px; background: rgba(242,194,48,.18); flex: 0 0 auto; }
+  .next-tag { font-size: 12px; color: var(--graphite-soft); font-weight: 800; }
+  .next-title { font-family: var(--head); font-size: 1.1rem; color: var(--graphite); margin: 2px 0 0; line-height: 1.6; }
+  .go { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 54px; margin-top: 14px; border: 0; border-radius: 18px; background: #FD7F52; color: #FFFFFD; font: inherit; font-weight: 800; font-size: 16px; cursor: pointer; box-shadow: 0 5px 0 #B4431B; text-decoration: none; }
+  .go:active { transform: translateY(3px); box-shadow: 0 2px 0 #B4431B; }
+  .skip { display: block; text-align: center; margin-top: 12px; color: var(--graphite-soft); font-size: 13px; background: none; border: 0; font: inherit; cursor: pointer; width: 100%; }
+
+  /* فهرست کارهای امروز */
+  .sec-title { font-family: var(--head); font-size: 1.02rem; margin: 22px 0 10px; color: var(--graphite); display: flex; align-items: center; gap: 8px; }
+  .sec-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .tasks { display: grid; gap: 10px; }
+  .task {
+    display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: center; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 18px; padding: 12px 14px; box-shadow: 0 4px 0 var(--edge, #CFC6AE); cursor: pointer; text-align: right; font: inherit; color: var(--graphite); width: 100%;
   }
-  .segment button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; }
-  .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
-    box-shadow: 0 8px 24px var(--shadow); padding: 16px 18px; margin-bottom: 12px;
-    display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: start;
+  .task-ico { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 20px; background: var(--paper-2); border: 1px solid var(--line); }
+  .task b { display: block; font-size: 14px; line-height: 1.6; }
+  .task small { color: var(--graphite-soft); font-size: 11.5px; }
+  .task-check { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 14px; color: transparent; }
+  .task.done { border-color: #3F6B0A; }
+  .task.done .task-check { background: #B3D93B; border-color: transparent; color: #1B1530; }
+  .task.done b { text-decoration: line-through; color: var(--graphite-soft); }
+
+  /* مدت روزانه */
+  .pref { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .pref span { color: var(--graphite-soft); font-size: 13px; }
+  .seg { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); }
+  .seg button { min-height: 36px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: var(--graphite-soft); font: inherit; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); }
+
+  /* تمرین بیشتر */
+  .more { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tile {
+    display: grid; gap: 8px; padding: 14px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line);
+    box-shadow: 0 5px 0 var(--edge, #CFC6AE); text-decoration: none; color: var(--graphite); min-height: 110px; align-content: start;
   }
-  .card h3 { font-family: var(--head); font-size: 1.15rem; margin: 0 0 2px; }
-  .card p { margin: 0; color: var(--graphite-soft); font-size: .92rem; }
-  .step-no {
-    width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
-    background: var(--paper-2); font-weight: 800; color: var(--graphite);
-  }
-  .card.done .step-no { background: var(--ok); }
-  .go {
-    display: inline-block; margin-top: 8px; padding: 6px 14px; border-radius: 999px;
-    background: var(--pencil); color: var(--accent-ink); font-weight: 800; text-decoration: none; font-size: .95rem;
-  }
-  .tick {
-    width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line);
-    background: var(--surface); cursor: pointer; font-size: 1rem; color: var(--graphite);
-  }
-  .card.done .tick { background: var(--pencil); border-color: transparent; color: var(--accent-ink); }
-  .total { display: flex; justify-content: space-between; align-items: center; margin: 6px 0 10px; font-size: .95rem; }
-  .bar { height: 10px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-bottom: 14px; }
-  .bar i { display: block; height: 100%; background: var(--pencil); transition: width .3s ease; }
-  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 4px;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px;
-    box-shadow: 0 10px 30px var(--shadow); z-index: 50; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
-  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft);
-    text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .tile .ti { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; background: var(--paper-2); border: 1px solid var(--line); }
+  .tile b { font-size: 14px; }
+  .tile small { color: var(--graphite-soft); font-size: 11.5px; line-height: 1.7; }
+
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft); text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
   .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
   .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
-  @media (max-width: 640px) { .tabbar { display: flex; } }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 60px; } header nav.top-nav { display: none !important; } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
-<script src="js/sync.js"></script>
+<script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/gamify.js"></script>
+<script src="js/sync.js"></script>
 <script src="js/i18n.js"></script>
+<script src="data/i18n-content.js"></script>
+<script src="data/i18n-content-grammar.js"></script>
+<script src="data/i18n-vocab-a1.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1><nav class="top-nav" aria-label="منوی اصلی"><a class="navlink" href="index.html">خانه</a><a class="navlink" href="plan.html" aria-current="page">برنامه</a><a class="navlink" href="practice.html">تمرین</a><a class="navlink" href="notebook.html">دفترچه</a><a class="navlink" href="me.html">من</a></nav>
+<div class="plan">
+  <header class="top">
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <div class="top-tools">
+      <button class="ico-btn" id="soundBtn" type="button" aria-label="صدا">🔊</button>
+      <a class="ico-btn" href="me.html" aria-label="من">👤</a>
+    </div>
   </header>
 
-  <h2>برنامه‌ی امروز</h2>
-  <p class="muted">مدت وقتت را انتخاب کن تا مراحل امروز را ببینی.</p>
-  <ul class="segment" id="minutes" role="group" aria-label="مدت مطالعه"></ul>
-  <ul class="segment" id="levels" role="group" aria-label="سطح"></ul>
+  <h2 class="sum-title" id="sumTitle">امروز</h2>
+  <p class="sum-sub" id="sumSub"></p>
+  <div class="meter"><i id="meterBar" style="width:0%"></i></div>
 
-  <div class="total"><span>پیشرفت امروز</span><span id="count"></span></div>
-  <div class="bar"><i id="barFill" style="width:0"></i></div>
+  <section class="next" id="next">
+    <div class="next-head">
+      <div class="next-ico" aria-hidden="true">📘</div>
+      <div>
+        <div class="next-tag" id="nextTag">بعدی</div>
+        <div class="next-title" id="nextTitle"></div>
+      </div>
+    </div>
+    <a class="go" id="nextGo" href="index.html">شروع <span aria-hidden="true">←</span></a>
+    <button class="skip" id="skipBtn" type="button">امروز را رد کن</button>
+  </section>
 
-  <div id="steps"></div>
-  <p class="muted" id="note"></p>
+  <div class="sec-title">کارهای امروز</div>
+  <div class="tasks" id="tasks"></div>
+
+  <div class="pref">
+    <span id="prefText"></span>
+    <div class="seg" id="durSeg" role="group" aria-label="مدت">
+      <button type="button" data-min="15">۱۵</button>
+      <button type="button" data-min="30">۳۰</button>
+      <button type="button" data-min="45">۴۵</button>
+      <button type="button" data-min="60">۶۰</button>
+    </div>
+  </div>
+
+  <div class="sec-title">تمرین بیشتر</div>
+  <div class="more">
+    <a class="tile" href="memory.html"><span class="ti">🗂️</span><b>کارت‌های واژه</b><small>مرور واژه‌ها با کارت</small></a>
+    <a class="tile" href="practice.html"><span class="ti">🎯</span><b>نقاط ضعف</b><small>سؤال‌هایی که اشتباه زدی</small></a>
+    <a class="tile" href="listening.html"><span class="ti">🎧</span><b>درک شنیداری</b><small>گوش کن و جواب بده</small></a>
+    <a class="tile" href="test.html"><span class="ti">🏅</span><b>آزمون پایان سطح</b><small>قبولی باز می‌کند سطح بعدی را</small></a>
+  </div>
 </div>
 
-<nav class="tabbar" aria-label="منوی پایین"><a href="index.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a><a href="plan.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a><a href="practice.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a><a href="notebook.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a><a href="me.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a></nav>
+<nav class="tabbar" aria-label="منوی پایین">
+  <a href="index.html"><span>🏠</span><span>خانه</span></a>
+  <a href="plan.html" aria-current="page"><span>📅</span><span>برنامه</span></a>
+  <a href="practice.html"><span>🎯</span><span>تمرین</span></a>
+  <a href="notebook.html"><span>📓</span><span>دفترچه</span></a>
+  <a href="me.html"><span>👤</span><span>من</span></a>
+</nav>
 
 <script src="data/data.js"></script>
 <script src="data/explain.js"></script>
@@ -109,144 +167,120 @@
 <script src="data/vocab-c1.js"></script>
 <script src="data/vocab-c2.js"></script>
 <script>
-  const $ = (s) => document.querySelector(s);
-  const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
-  const MINUTES = [15, 30, 45, 60];
-  const TODAY_KEY = "seespanish:today:v1";
-  const PREF_KEY = "seespanish:plan:pref";
-  const SEE_GRAMMAR_LEVEL = () => window.SEE.grammar;
-
-  let pref = { level: "A1", minutes: 30 };
-  try { Object.assign(pref, JSON.parse(localStorage.getItem(PREF_KEY)) || {}); } catch (e) { /* ignore */ }
-
-  function savePref() {
-    try { localStorage.setItem(PREF_KEY, JSON.stringify(pref)); } catch (e) { /* ignore */ }
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var PK = "seespanish:progress:v2";
+  var TODAY_KEY = "seespanish:today:v1";
+  var PREF_KEY = "seespanish:plan:pref";
+  var level = "A1";
+  try { level = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
+  function tt(key, vars) { return window.SEE_I18N ? SEE_I18N.t(key, vars) : key; }
+  function tr(obj, f) { return window.SEE_I18N ? SEE_I18N.tx(obj, f) : obj[f]; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch (e) { return {}; } }
+  function todayStr() { return new Date().toISOString().slice(0, 10); }
+  function loadToday() {
+    var t = {}; try { t = JSON.parse(localStorage.getItem(TODAY_KEY)) || {}; } catch (e) {}
+    if (t.day !== todayStr()) t = { day: todayStr(), done: {}, skipped: false };
+    return t;
   }
+  function saveToday(t) { try { localStorage.setItem(TODAY_KEY, JSON.stringify(t)); } catch (e) {} }
+  function minutes() { try { return Number(localStorage.getItem(PREF_KEY)) || 30; } catch (e) { return 30; } }
 
-  // وضعیت تیک‌ها برای امروز؛ اگر روز عوض شود، از نو شروع می‌شود
-  function todayState() {
-    const day = new Date().toISOString().slice(0, 10);
-    let st = {};
-    try { st = JSON.parse(localStorage.getItem(TODAY_KEY)) || {}; } catch (e) { st = {}; }
-    if (st.day !== day) st = { day, done: {} };
-    return st;
-  }
-  function saveToday(st) {
-    try { localStorage.setItem(TODAY_KEY, JSON.stringify(st)); } catch (e) { /* ignore */ }
-  }
-
-  function buildSteps() {
-    const plan = window.SEE_PROGRESS.dailyPlan(pref.level);
-    const steps = [];
-    steps.push({
-      id: "cards", title: SEE_I18N.t("مرور واژگان"), min: 5,
-      text: plan.words.length ? `${plan.words.length} واژه برای مرور: ${plan.words.join("، ")}` : SEE_I18N.t("امروز کارتی برای مرور نداری."),
-      href: "memory.html"
-    });
-    if (plan.grammar) {
-      steps.push({
-        id: "grammar", title: SEE_I18N.t("یک گرامر تازه"), min: 5,
-        text: plan.grammar.title, href: "index.html"
-      });
-    }
-    if (plan.exercise) {
-      const weak = window.SEE_PROGRESS.weakIds().length > 0;
-      steps.push({
-        id: "exercise", title: weak ? SEE_I18N.t("تمرین نقاط ضعف") : SEE_I18N.t("یک تمرین"), min: 5,
-        text: SEE_I18N.t("یک سؤال را حل کن و توضیحش را بخوان."),
-        href: "practice.html" + (weak ? "?weak=1" : "")
-      });
-    }
-    if (pref.minutes >= 30) {
-      steps.push({
-        id: "listen", title: SEE_I18N.t("درک شنیداری"), min: 5,
-        text: SEE_I18N.t("یک متن را گوش کن و به سؤال‌هایش جواب بده."), href: "listening.html"
-      });
-    }
-    // بر اساس مدت انتخابی، مراحل زیاد را کنار می‌گذاریم
-    let total = 0;
-    return steps.filter((s) => {
-      if (total + s.min <= pref.minutes + 5) { total += s.min; return true; }
-      return false;
-    });
+  // ---------- درس بعدی ----------
+  function nextLesson() {
+    var p = loadP();
+    var items = (window.SEE && SEE.grammar && SEE.grammar[level]) || [];
+    return items.filter(function (it) { return !p[it.id + "|path"]; })[0] || null;
   }
 
-  function lvlOpen(l) {
-    if (!(window.SEE_PROGRESS && typeof window.SEE_PROGRESS.levelOpen === "function")) return true;
-    return window.SEE_PROGRESS.levelOpen(l);
-  }
-  function lvlLockMsg(l) {
-    if (window.SEE_PROGRESS && typeof window.SEE_PROGRESS.lockMessage === "function") return window.SEE_PROGRESS.lockMessage(l);
-    return "";
-  }
-  function renderSegments() {
-    const m = $("#minutes"); m.innerHTML = "";
-    MINUTES.forEach((v) => {
-      const li = document.createElement("li"); const b = document.createElement("button");
-      b.type = "button"; b.textContent = v + " دقیقه";
-      b.setAttribute("aria-pressed", String(v === pref.minutes));
-      b.addEventListener("click", () => { pref.minutes = v; savePref(); render(); });
-      li.appendChild(b); m.appendChild(li);
-    });
-    const l = $("#levels"); l.innerHTML = "";
-    LEVELS.forEach((v) => {
-      const li = document.createElement("li"); const b = document.createElement("button");
-      b.type = "button"; b.textContent = v;
-      b.setAttribute("aria-pressed", String(v === pref.level));
-      b.addEventListener("click", () => {
-        if (!lvlOpen(v)) { window.alert(lvlLockMsg(v)); return; }
-        pref.level = v; savePref(); render();
-      });
-      li.appendChild(b); l.appendChild(li);
-    });
+  // ---------- کارهای امروز ----------
+  function buildTasks() {
+    var nx = nextLesson();
+    var list = [];
+    list.push({ id: "lesson", ico: "📘", title: nx ? tt("درس") + ": " + tr(nx, "title") : tt("همه‌ی درس‌های این سطح تمام شد"), min: 17, href: "index.html", needs: !!nx });
+    list.push({ id: "flash", ico: "🗂️", title: tt("مرور واژگان"), min: 5, href: "memory.html" });
+    list.push({ id: "weak", ico: "🎯", title: tt("تمرین نقاط ضعف"), min: 5, href: "practice.html" });
+    list.push({ id: "listen", ico: "🎧", title: tt("درک شنیداری"), min: 8, href: "listening.html" });
+    return list;
   }
 
   function render() {
-    renderSegments();
-    const steps = buildSteps();
-    const st = todayState();
-    const box = $("#steps"); box.innerHTML = "";
-    let doneCount = 0;
+    var t = loadToday();
+    var tasks = buildTasks();
+    var doneCount = tasks.filter(function (x) { return t.done[x.id]; }).length;
+    var pending = tasks.filter(function (x) { return !t.done[x.id]; });
+    var left = pending.reduce(function (s, x) { return s + x.min; }, 0);
+    var pct = tasks.length ? Math.round(doneCount / tasks.length * 100) : 0;
 
-    steps.forEach((s, i) => {
-      const done = !!st.done[s.id];
-      if (done) doneCount++;
-      const card = document.createElement("div");
-      card.className = "card" + (done ? " done" : "");
+    $("sumSub").textContent = doneCount + " " + tt("از") + " " + tasks.length + " " + tt("انجام شد") + " · " + tt("حدود") + " " + left + " " + tt("دقیقه مانده");
+    $("meterBar").style.width = pct + "%";
 
-      const no = document.createElement("div");
-      no.className = "step-no"; no.textContent = String(i + 1);
+    // کارت بعدی
+    var first = pending[0];
+    if (t.skipped || !first) {
+      $("nextTag").textContent = t.skipped ? tt("امروز را رد کردی") : tt("امروز تمام شد");
+      $("nextTitle").textContent = t.skipped ? tt("فردا دوباره برنامه داری.") : tt("عالی! کارهای امروز کامل شد.");
+      $("nextGo").href = "index.html"; $("nextGo").innerHTML = tt("صفحه‌ی خانه") + ' <span aria-hidden="true">←</span>';
+      $("skipBtn").hidden = true;
+    } else {
+      $("nextTag").textContent = tt("بعدی") + " · " + first.min + " " + tt("دقیقه");
+      $("nextTitle").textContent = first.title;
+      $("nextGo").href = first.href;
+      $("nextGo").innerHTML = tt("شروع") + ' <span aria-hidden="true">←</span>';
+      $("skipBtn").hidden = false;
+    }
 
-      const body = document.createElement("div");
-      const h = document.createElement("h3"); h.textContent = `${s.title} · ${s.min} دقیقه`;
-      const p = document.createElement("p"); p.dir = "auto"; p.textContent = s.text;
-      const a = document.createElement("a"); a.className = "go"; a.href = s.href; a.textContent = SEE_I18N.t("شروع");
-      body.append(h, p, a);
+    // فهرست کارها
+    $("tasks").innerHTML = tasks.map(function (x) {
+      var d = !!t.done[x.id];
+      return '<button class="task ' + (d ? "done" : "") + '" type="button" data-task="' + x.id + '">' +
+        '<span class="task-ico" aria-hidden="true">' + x.ico + '</span>' +
+        '<span><b>' + esc(x.title) + '</b><small>' + x.min + ' ' + esc(tt("دقیقه")) + '</small></span>' +
+        '<span class="task-check" aria-hidden="true">✓</span></button>';
+    }).join("");
 
-      const tick = document.createElement("button");
-      tick.type = "button"; tick.className = "tick";
-      tick.setAttribute("aria-label", done ? SEE_I18N.t("برگرداندن") : SEE_I18N.t("انجام شد"));
-      tick.textContent = done ? "✓" : "";
-      tick.addEventListener("click", () => {
-        const cur = todayState();
-        cur.done[s.id] = !cur.done[s.id];
-        saveToday(cur);
-        render();
-      });
-
-      card.append(no, body, tick);
-      box.appendChild(card);
+    $("prefText").textContent = minutes() + " " + tt("دقیقه در روز") + " · " + level;
+    Array.prototype.forEach.call($("durSeg").children, function (b) {
+      b.setAttribute("aria-pressed", String(Number(b.dataset.min) === minutes()));
     });
-
-    const pct = steps.length ? Math.round((doneCount / steps.length) * 100) : 0;
-    $("#count").textContent = `${doneCount} از ${steps.length}`;
-    $("#barFill").style.width = pct + "%";
-    $("#note").textContent = pref.minutes >= 60
-      ? SEE_I18N.t("برای ۶۰ دقیقه، بعد از انجام مراحل بالا، تمرین بیشتری از همین سطح حل کن.")
-      : SEE_I18N.t("هر مرحله که انجام شد، تیک بزن. فردا برنامه‌ی تازه‌ای برات ساخته می‌شود.");
+    if (window.SEE_I18N) SEE_I18N.apply();
   }
 
+  $("tasks").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-task]");
+    if (!b) return;
+    var t = loadToday();
+    var id = b.getAttribute("data-task");
+    var wasDone = !!t.done[id];
+    t.done[id] = !wasDone;
+    saveToday(t);
+    if (!wasDone && window.SEE_FX) SEE_FX.result(true, b);
+    render();
+  });
+
+  $("skipBtn").addEventListener("click", function () {
+    var t = loadToday(); t.skipped = true; saveToday(t); render();
+  });
+
+  Array.prototype.forEach.call($("durSeg").children, function (b) {
+    b.addEventListener("click", function () {
+      try { localStorage.setItem(PREF_KEY, b.dataset.min); } catch (e) {}
+      render();
+    });
+  });
+
+  var sb = $("soundBtn");
+  function paintSound() { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; sb.classList.toggle("on", on); sb.textContent = on ? "🔊" : "🔇"; }
+  sb.addEventListener("click", function () { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; if (window.SEE_PREFS) SEE_PREFS.setSound(!on); paintSound(); });
+  paintSound();
+
+  $("sumTitle").textContent = tt("امروز");
   render();
+  document.addEventListener("see:answer", render);
+  document.addEventListener("DOMContentLoaded", render);
+  if (window.SEE_I18N) setTimeout(SEE_I18N.apply, 600);
+})();
 </script>
 <script>
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
