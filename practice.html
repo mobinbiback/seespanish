@@ -3,113 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#2E2E33">
+<meta name="theme-color" content="#1E1E26">
 <link rel="manifest" href="manifest.json">
-<title>seespanish · تمرین امتحان</title>
+<title>seespanish · تمرین</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root {
-    --paper: #F7F3E8; --paper-2: #EFE9D6; --graphite: #2E2E33; --graphite-soft: #6B6B73;
-    --pencil: #F2C230; --ok: #CDE8C4; --bad: #F4C7C7; --line: #D6CEB4; --shadow: rgba(46,46,51,.18);
-    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif; --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+    --head: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
+    --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; font-family: var(--body); color: var(--graphite); background: var(--paper);
-    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
-    background-size: 100% 32px; background-attachment: fixed; line-height: 1.9; min-height: 100vh;
+  [hidden] { display: none !important; }
+  body { margin: 0; font-family: var(--body); line-height: 1.8; }
+  .logo { font-family: "Caveat", cursive; font-size: 2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 1.8rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+
+  .pr { max-width: 720px; margin: 0 auto; padding: 0 18px 140px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0 6px; flex-wrap: wrap; }
+  .top-tools { display: flex; gap: 8px; align-items: center; }
+  .ico-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 18px; box-shadow: 0 4px 0 var(--edge, #CFC6AE); display: grid; place-items: center; text-decoration: none; }
+  .ico-btn.on { background: var(--pencil); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+
+  /* سطح‌ها و حالت */
+  .lvls { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px 10px; }
+  .lvl { min-width: 50px; height: 46px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE); white-space: nowrap; }
+  .lvl[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+  .lvl[aria-disabled="true"] { opacity: .5; }
+  .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 14px; }
+  .mode { min-height: 46px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE); }
+  .mode[aria-pressed="true"] { background: #6200BE; color: #FFFFFD; border-color: transparent; box-shadow: 0 4px 0 #4F00A0; }
+
+  /* کارت شروع دور */
+  .hero {
+    position: relative; overflow: hidden; border-radius: 24px; padding: 20px; color: #FFFFFD;
+    background: linear-gradient(135deg, #6200BE 0%, #4F00A0 60%, #2E0A66 100%);
+    box-shadow: 0 8px 0 #2E0A66, 0 16px 30px rgba(98,0,190,.25); margin-bottom: 16px;
   }
-  :focus-visible { outline: 3px dashed var(--pencil); outline-offset: 4px; }
-  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 80px; }
-  header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px;
-    border-bottom: 2px solid var(--graphite); padding-bottom: 12px; margin-bottom: 22px; }
-  .logo { font-family: "Caveat", cursive; font-size: 2.8rem; font-weight: 700; margin: 0; line-height: 1; }
-  .logo span { background: linear-gradient(transparent 62%, var(--pencil) 62%, var(--pencil) 92%, transparent 92%); padding: 0 4px; }
-  .nav a { font-family: var(--head); font-size: 1.4rem; color: var(--graphite); border-bottom: 2px dashed var(--graphite); text-decoration: none; margin-right: 14px; }
-  .levels { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 20px; }
-  .levels button {
-    font-family: var(--head); font-size: 1.5rem; font-weight: 700; color: var(--graphite);
-    background: #fff; border: 2px solid var(--graphite);
-    border-radius: 255px 18px 225px 15px / 15px 225px 15px 255px;
-    padding: 4px 18px 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite);
-  }
-  .levels button[aria-pressed="true"] { background: var(--pencil); }
-  .card { background: #fff; border: 2px solid var(--graphite); border-radius: 12px 5px 14px 7px;
-    padding: 20px 22px; box-shadow: 5px 6px 0 var(--shadow); margin-bottom: 22px; }
-  .badge { display: inline-block; font-family: var(--head); font-size: 1.15rem; background: var(--paper-2);
-    border: 1.5px solid var(--graphite); padding: 0 10px; border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; margin-bottom: 8px; }
-  .prompt { background: var(--paper-2); border-radius: 8px; padding: 10px 14px; margin: 8px 0 12px; }
-  .question { font-weight: 800; margin: 6px 0; }
-  .opts { list-style: none; padding: 0; margin: 8px 0; }
-  .opts li { margin: 6px 0; }
-  .opts label { cursor: pointer; }
-  input[type="text"] { font: inherit; padding: 6px 10px; border: 2px solid var(--graphite); border-radius: 6px; width: 260px; max-width: 100%; }
-  textarea { font: inherit; width: 100%; min-height: 140px; padding: 10px; border: 2px solid var(--graphite); border-radius: 8px; background: #fff; }
-  .count { font-size: .9rem; color: var(--graphite-soft); }
-  button.act {
-    font-family: var(--head); font-size: 1.35rem; color: var(--graphite); background: var(--pencil);
-    border: 2px solid var(--graphite); border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px;
-    padding: 2px 18px; cursor: pointer; box-shadow: 3px 3px 0 var(--graphite); margin-top: 8px;
-  }
-  .result { margin-top: 12px; padding: 12px 14px; border-radius: 10px; border: 2px dashed var(--graphite); }
-  .result.ok { background: var(--ok); }
-  .result.bad { background: var(--bad); }
-  .result h4 { font-family: var(--head); font-size: 1.5rem; margin: 0 0 4px; }
-  .study h5 { font-family: var(--head); font-size: 1.3rem; margin: 12px 0 4px; }
-  .gcard { border-bottom: 1px dashed var(--line); padding: 6px 0; }
-  .gcard:last-child { border-bottom: 0; }
-  .gcard b { font-weight: 800; }
-  .gcard small { color: var(--graphite-soft); display: block; }
-  .stars { font-family: var(--head); font-size: 1.1rem; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { font-size: .95rem; background: #fff; border: 1.5px solid var(--graphite); border-radius: 255px 12px 220px 10px / 10px 220px 12px 255px; padding: 0 10px; }
-  .checklist li { list-style: none; margin: 4px 0; }
+  .hero::after { content: ""; position: absolute; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,189,65,.2); left: -50px; bottom: -70px; }
+  .hero h2 { font-family: var(--head); font-size: 1.3rem; margin: 6px 0 4px; position: relative; z-index: 1; }
+  .hero p { margin: 0 0 14px; opacity: .92; font-size: 13px; position: relative; z-index: 1; }
+  .hero-row { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .ring { width: 74px; height: 74px; border-radius: 50%; background: conic-gradient(#FFBD41 var(--p, 0%), rgba(255,255,253,.18) 0); display: grid; place-items: center; flex: 0 0 auto; }
+  .ring span { width: 58px; height: 58px; border-radius: 50%; background: #3B0A80; display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  .go { position: relative; z-index: 1; min-height: 48px; padding: 0 22px; border: 0; border-radius: 999px; background: #FFBD41; color: #2E0A66; font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 #B98F12; }
+
+  /* کارت تمرین */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 18px; box-shadow: 0 7px 0 var(--edge, #CFC6AE), 0 14px 26px var(--shadow); margin-bottom: 14px; }
+  .meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .badge { font-size: 11.5px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: rgba(98,0,190,.14); color: #6200BE; }
+  .counter { font-size: 12px; color: var(--graphite-soft); font-variant-numeric: tabular-nums; }
+  .track { height: 9px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-bottom: 14px; }
+  .track i { display: block; height: 100%; background: linear-gradient(90deg, #6200BE, #FFBD41); border-radius: 999px; transition: width .4s; }
+  .prompt { font-family: "Nunito", system-ui, sans-serif; direction: ltr; text-align: left; font-size: 15px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; color: var(--graphite); line-height: 1.7; white-space: pre-wrap; }
+  .question { font-weight: 800; font-size: 17px; color: var(--graphite); margin: 14px 0 10px; line-height: 1.7; direction: ltr; text-align: left; font-family: "Nunito", system-ui, sans-serif; }
+
+  /* گزینه‌ها */
+  .opts { display: grid; gap: 10px; }
+  .opt { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: center; min-height: 56px; padding: 10px 12px; border-radius: 16px; border: 2px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; text-align: left; cursor: pointer; box-shadow: 0 4px 0 var(--edge, #CFC6AE); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; font-weight: 700; }
+  .opt .k { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); font-size: 13px; font-weight: 800; }
+  .opt[aria-pressed="true"] { border-color: #6200BE; background: rgba(98,0,190,.08); }
+  .opt[aria-pressed="true"] .k { background: #6200BE; color: #FFFFFD; border-color: transparent; }
+  .opt.right { border-color: #3F6B0A; background: rgba(179,217,59,.2); }
+  .opt.wrong { border-color: #B4431B; background: rgba(253,127,82,.16); }
+  .opt:disabled { cursor: default; }
+  .opt:active:not(:disabled) { transform: translateY(2px); }
+
+  /* پرکردن جای خالی */
+  .field { width: 100%; min-height: 60px; padding: 0 16px; border-radius: 18px; border: 2px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-size: 20px; font-family: "Nunito", system-ui, sans-serif; box-sizing: border-box; direction: ltr; text-align: left; }
+  .field:focus { outline: none; border-color: #6200BE; box-shadow: 0 0 0 4px rgba(98,0,190,.14); }
+  .field.right { border-color: #3F6B0A; }
+  .field.wrong { border-color: #B4431B; }
+
+  /* نوشتن */
+  .area { width: 100%; min-height: 150px; padding: 14px; border-radius: 18px; border: 2px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-size: 16px; font-family: "Nunito", system-ui, sans-serif; box-sizing: border-box; direction: ltr; text-align: left; resize: vertical; line-height: 1.8; }
+  .area:focus { outline: none; border-color: #6200BE; }
+  .wc { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--graphite-soft); margin: 8px 2px 12px; }
+  .wc b { color: var(--graphite); }
+  .wc .ok { color: #3F6B0A; font-weight: 800; }
+  .check { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 13.5px; padding: 8px 4px; color: var(--graphite); cursor: pointer; }
+  .check input { width: 22px; height: 22px; accent-color: #6200BE; margin-top: 2px; }
+
+  /* دکمه‌ها */
+  .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .btn { flex: 1; min-height: 52px; padding: 0 18px; border-radius: 18px; border: 0; background: #FD7F52; color: #FFFFFD; font: inherit; font-weight: 800; font-size: 16px; cursor: pointer; box-shadow: 0 5px 0 #B4431B; }
+  .btn.alt { background: var(--surface); color: var(--graphite); border: 1px solid var(--line); box-shadow: 0 5px 0 var(--edge, #CFC6AE); }
+  .btn.good { background: #B3D93B; color: #1B1530; box-shadow: 0 5px 0 #6F9A12; }
+  .btn:active { transform: translateY(3px); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn.small { flex: 0 0 auto; min-height: 42px; padding: 0 14px; font-size: 13px; }
+
+  /* بازخورد */
+  .fb { margin-top: 14px; border-radius: 20px; padding: 14px; border: 2px solid; }
+  .fb.ok { background: rgba(179,217,59,.16); border-color: #3F6B0A; }
+  .fb.bad { background: rgba(253,127,82,.12); border-color: #B4431B; }
+  .fb h3 { font-family: var(--head); font-size: 1.05rem; margin: 0 0 6px; color: var(--graphite); }
+  .fb p { margin: 4px 0; font-size: 13.5px; color: var(--graphite); line-height: 1.9; }
+  .fb .ans { font-family: "Nunito", system-ui, sans-serif; direction: ltr; text-align: left; font-weight: 800; }
+  .study { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .study h4 { font-size: 12.5px; color: var(--graphite-soft); margin: 10px 0 6px; font-weight: 800; }
+  .gcard { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 8px; }
+  .gcard b { font-size: 13.5px; color: var(--graphite); }
+  .gcard small { display: block; color: var(--graphite-soft); font-size: 12px; line-height: 1.8; margin-top: 2px; }
+  .gcard .stars { color: #B98F12; font-size: 11px; letter-spacing: 1px; }
   details.explain { margin-top: 6px; }
-  details.explain summary { cursor: pointer; font-family: var(--head); font-size: 1.15rem; border-bottom: 1.5px dashed var(--graphite); display: inline-block; }
-  .explain-body { white-space: pre-line; margin-top: 6px; padding: 8px 10px; background: var(--paper-2); border-radius: 8px; font-size: .92rem; }
-  .checklist { padding: 0; }
-  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
-  .vocab-grid div { background: #fff; border: 1.5px solid var(--graphite); border-radius: 8px; padding: 8px 10px; }
-  .vocab-grid b { display: block; }
-  .muted { color: var(--graphite-soft); font-size: .92rem; }
-  h2 { font-family: var(--head); font-size: 2rem; margin: 26px 0 8px; }
-  footer { margin-top: 30px; font-size: .9rem; color: var(--graphite-soft); text-align: center; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: none; justify-content: space-around; gap: 6px;
-    background: #fff; border-top: 2px solid var(--graphite); padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); z-index: 50; }
-  .tabbar a { font-family: var(--head); font-size: 1.25rem; color: var(--graphite); text-decoration: none; padding: 6px 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
-  .tabbar a[aria-current="page"] { background: var(--pencil); border: 2px solid var(--graphite); }
-  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 84px; } }
+  details.explain summary { cursor: pointer; font-size: 12px; font-weight: 800; color: #6200BE; }
+  .explain-body { white-space: pre-line; font-size: 12.5px; line-height: 1.9; background: var(--paper-2); border-radius: 12px; padding: 10px; margin-top: 6px; color: var(--graphite); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .vchip { font-size: 12px; padding: 5px 10px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); color: var(--graphite); }
+  .ask { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 700; font-size: 13px; text-decoration: none; box-shadow: 0 3px 0 var(--edge, #CFC6AE); }
+
+  /* پایان دور */
+  .done { text-align: center; padding: 18px 10px; }
+  .done .big { font-family: var(--head); font-size: 2.6rem; font-weight: 800; color: var(--graphite); margin: 6px 0; font-variant-numeric: tabular-nums; }
+  .done p { color: var(--graphite-soft); font-size: 14px; margin: 4px 0; }
+  .empty { text-align: center; color: var(--graphite-soft); padding: 26px 10px; font-size: 14px; border: 1px dashed var(--line); border-radius: 18px; }
+
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft); text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
+  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 60px; } header nav.top-nav { display: none !important; } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
-<script src="js/sync.js"></script>
+<script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/gamify.js"></script>
+<script src="js/sync.js"></script>
 <script src="js/i18n.js"></script>
+<script src="data/i18n-content.js"></script>
+<script src="data/i18n-content-grammar.js"></script>
+<script src="data/i18n-vocab-a1.js"></script>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1><nav class="top-nav" aria-label="منوی اصلی"><a class="navlink" href="index.html">خانه</a><a class="navlink" href="plan.html">برنامه</a><a class="navlink" href="practice.html" aria-current="page">تمرین</a><a class="navlink" href="notebook.html">دفترچه</a><a class="navlink" href="me.html">من</a></nav>
-    
+<div class="pr">
+  <header class="top">
+    <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
+    <div class="top-tools">
+      <button class="ico-btn" id="soundBtn" type="button" aria-label="صدا">🔊</button>
+      <a class="ico-btn" href="me.html" aria-label="من">👤</a>
+    </div>
   </header>
 
-  <p class="muted">سؤال‌ها به سبک DELE و SIELE نوشته شده‌اند ولی سؤال رسمی نیستند. بعد از هر جواب، تحلیل و گرامر و واژه‌های مرتبط را می‌بینی.</p>
+  <div id="gameBar" aria-label="پیشرفت امروز"></div>
 
-  <ul class="levels" id="levels" role="group" aria-label="انتخاب سطح"></ul>
+  <nav class="lvls" id="levels" role="group" aria-label="سطح"></nav>
+  <div class="modes" role="group" aria-label="حالت تمرین">
+    <button class="mode" type="button" data-mode="all" aria-pressed="true">همه‌ی تمرین‌ها</button>
+    <button class="mode" type="button" data-mode="weak" aria-pressed="false">نقاط ضعف</button>
+  </div>
 
-  <div id="items"></div>
+  <!-- صفحه‌ی شروع -->
+  <section id="startView">
+    <div class="hero">
+      <div class="hero-row">
+        <div class="ring" id="ring"><span id="ringTxt">۰٪</span></div>
+        <div>
+          <h2 id="heroTitle">آماده‌ای؟</h2>
+          <p id="heroText"></p>
+        </div>
+      </div>
+      <button class="go" id="startBtn" type="button">شروع دور ۱۰ تایی</button>
+    </div>
+    <div class="empty" id="emptyBox" hidden>در این حالت هنوز تمرینی نداری.</div>
+  </section>
 
-  <h2>واژگان این سطح</h2>
-  <div class="card"><div class="vocab-grid" id="vocab"></div></div>
+  <!-- صفحه‌ی تمرین -->
+  <section id="roundView" hidden>
+    <div class="track"><i id="trackBar" style="width:0%"></i></div>
+    <div class="card" id="qCard"></div>
+  </section>
 
-  <footer>پاسخ‌ها و پیشرفت فقط در همین صفحه بررسی می‌شوند و در جای دیگری ذخیره نمی‌شوند.</footer>
+  <!-- پایان دور -->
+  <section id="doneView" hidden>
+    <div class="card done">
+      <div class="big" id="doneScore">۰/۰</div>
+      <p id="doneMsg"></p>
+      <div class="actions">
+        <button class="btn good" id="againBtn" type="button">دور تازه</button>
+        <a class="btn alt" id="gramBtn" href="notebook.html">دفترچه</a>
+      </div>
+    </div>
+  </section>
 </div>
+
+<nav class="tabbar" aria-label="منوی پایین">
+  <a href="index.html"><span>🏠</span><span>خانه</span></a>
+  <a href="plan.html"><span>📅</span><span>برنامه</span></a>
+  <a href="practice.html" aria-current="page"><span>🎯</span><span>تمرین</span></a>
+  <a href="notebook.html"><span>📓</span><span>دفترچه</span></a>
+  <a href="me.html"><span>👤</span><span>من</span></a>
+</nav>
 
 <script src="data/data.js"></script>
 <script src="data/explain.js"></script>
@@ -117,6 +204,7 @@
 <script src="data/explain-b2.js"></script>
 <script src="data/explain-c1.js"></script>
 <script src="data/explain-c2.js"></script>
+<script src="data/progress.js"></script>
 <script src="data/practice.js"></script>
 <script src="data/practice-extra.js"></script>
 <script src="data/practice-b1.js"></script>
@@ -125,184 +213,250 @@
 <script src="data/practice-expand.js"></script>
 <script src="data/practice-expand2.js"></script>
 <script src="data/practice-expand3.js"></script>
-<script src="data/progress.js"></script>
 <script src="data/vocab-more.js"></script>
 <script src="data/vocab-b1.js"></script>
 <script src="data/vocab-b2.js"></script>
 <script src="data/vocab-c1.js"></script>
 <script src="data/vocab-c2.js"></script>
 <script>
-  const G = window.SEE;
-  const P = window.SEE_PRACTICE;
-  let current = "A1";
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var G = window.SEE, P = window.SEE_PRACTICE;
+  var LEVELS = G.levels || ["A1", "A2", "B1", "B2", "C1", "C2"];
+  var WEAK_KEY = "seespanish:practice:weak:v1";
+  var level = "A1", mode = "all", round = null, lastRound = null;
+  try { level = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
 
-  const $ = (s) => document.querySelector(s);
-  const norm = (t) => t.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  function tt(k, v) { return window.SEE_I18N ? SEE_I18N.t(k, v) : k; }
+  function tr(o, f) { return window.SEE_I18N ? SEE_I18N.tx(o, f) : o[f]; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function norm(t) { return String(t).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " "); }
+  function grammarById(id) { for (var i = 0; i < LEVELS.length; i++) { var a = G.grammar[LEVELS[i]] || []; for (var j = 0; j < a.length; j++) if (a[j].id === id) return a[j]; } return null; }
+  function weakSet() { try { return new Set(JSON.parse(localStorage.getItem(WEAK_KEY)) || []); } catch (e) { return new Set(); } }
+  function saveWeak(s) { try { localStorage.setItem(WEAK_KEY, JSON.stringify([...s])); } catch (e) {} }
+  function shuffle(a) { return a.slice().sort(function () { return Math.random() - 0.5; }); }
+  function lvlOpen(l) { return window.SEE_PROGRESS && SEE_PROGRESS.levelOpen ? SEE_PROGRESS.levelOpen(l) : true; }
+  function lvlMsg(l) { return window.SEE_PROGRESS && SEE_PROGRESS.lockMessage ? SEE_PROGRESS.lockMessage(l) : ""; }
+  function levelItems(l) { return (P.items || []).filter(function (it) { return it.level === l; }); }
 
-  function grammarById(id) {
-    for (const l of G.levels) for (const it of G.grammar[l]) if (it.id === id) return it;
-    return null;
-  }
-
-  function studyBlock(it) {
-    const gs = (it.grammar || []).map(grammarById).filter(Boolean).map((g) => `
-      <div class="gcard">
-        <b dir="auto">${g.title}</b>
-        <span class="stars">${"★".repeat(g.stars)}${"☆".repeat(3 - g.stars)}</span>
-        <small>${g.note}</small>
-        ${(window.SEE_EXPLAIN || {})[g.id] ? `<details class="explain"><summary>توضیح کامل</summary><div class="explain-body">${(window.SEE_EXPLAIN[g.id]).replace(/</g, "&lt;")}</div></details>` : ""}
-      </div>`).join("");
-    const vs = (it.vocab || []).map((v) => {
-      const hit = (P.vocab[it.level] || []).find((x) => x.es === v);
-      return `<span class="chip"><span dir="ltr">${v}</span>${hit ? " · " + hit.fa : ""}</span>`;
-    }).join("");
-    return `
-      <div class="study">
-        <h5>گرامری که باید بخوانی</h5>
-        ${gs || '<p class="muted">برای این سؤال گرامر جدا ثبت نشده است.</p>'}
-        <h5>کلمه‌هایی که باید بخوانی</h5>
-        <div class="chips">${vs}</div>
-      </div>`;
-  }
-
-  function lvlOpen(l) {
-    if (!(window.SEE_PROGRESS && typeof window.SEE_PROGRESS.levelOpen === "function")) return true;
-    return window.SEE_PROGRESS.levelOpen(l);
-  }
-  function lvlLockMsg(l) {
-    if (window.SEE_PROGRESS && typeof window.SEE_PROGRESS.lockMessage === "function") return window.SEE_PROGRESS.lockMessage(l);
-    return "";
-  }
+  // ---------- سطح و حالت ----------
   function renderLevels() {
-    const ul = $("#levels");
-    ul.innerHTML = "";
-    G.levels.forEach((lvl) => {
-      const li = document.createElement("li");
-      const b = document.createElement("button");
-      b.type = "button";
-      b.textContent = lvl;
-      b.setAttribute("aria-pressed", String(lvl === current));
-      b.addEventListener("click", () => {
-        if (!lvlOpen(lvl)) { window.alert(lvlLockMsg(lvl)); return; }
-        current = lvl; renderLevels(); renderItems(); renderVocab();
+    var box = $("levels"); box.innerHTML = "";
+    LEVELS.forEach(function (l) {
+      var open = lvlOpen(l);
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "lvl"; b.textContent = l;
+      b.setAttribute("aria-pressed", String(l === level));
+      b.setAttribute("aria-disabled", String(!open));
+      b.onclick = function () {
+        if (!open) { alert(lvlMsg(l)); return; }
+        level = l; round = null; try { localStorage.setItem("seespanish:level", l); } catch (e) {} renderAll();
+      };
+      box.appendChild(b);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".mode"), function (b) {
+    b.addEventListener("click", function () { mode = b.dataset.mode; round = null; renderAll(); });
+  });
+
+  // ---------- انتخاب سؤال‌های دور ----------
+  function pool() {
+    var all = levelItems(level);
+    if (mode === "weak") { var w = weakSet(); all = all.filter(function (it) { return w.has(it.id); }); }
+    return all;
+  }
+  function startRound() {
+    var items = shuffle(pool()).slice(0, 10);
+    if (!items.length) return;
+    round = { items: items, i: 0, right: 0, answered: false, results: [] };
+    lastRound = null;
+    show("round");
+    renderQuestion();
+  }
+
+  // ---------- نمایش‌ها ----------
+  function show(which) {
+    $("startView").hidden = which !== "start";
+    $("roundView").hidden = which !== "round";
+    $("doneView").hidden = which !== "done";
+  }
+
+  function renderStart() {
+    var all = levelItems(level), w = weakSet();
+    var doneIds = (window.SEE_PROGRESS && SEE_PROGRESS.levelProgress) ? SEE_PROGRESS.levelProgress(level).exercises : null;
+    var done = doneIds ? doneIds.done : 0, total = doneIds ? doneIds.total : all.length;
+    var pct = total ? Math.round(done / total * 100) : 0;
+    $("ring").style.setProperty("--p", pct + "%");
+    $("ringTxt").textContent = pct + "٪";
+    $("heroTitle").textContent = level + " · " + (mode === "weak" ? tt("نقاط ضعف") : tt("تمرین‌های سطح"));
+    $("heroText").textContent = mode === "weak"
+      ? (w.size ? tt("تمرین‌هایی که قبلاً اشتباه زدی.") + " (" + pool().length + ")" : tt("هنوز تمرین اشتباهی نداری!"))
+      : done + " " + tt("از") + " " + total + " " + tt("تمرین انجام شد");
+    $("startBtn").disabled = !pool().length;
+    $("emptyBox").hidden = !!pool().length;
+    show("start");
+  }
+
+  function renderQuestion() {
+    var r = round, it = r.items[r.i];
+    var n = r.items.length;
+    $("trackBar").style.width = Math.round(r.i / n * 100) + "%";
+    var g = (it.grammar || []).map(grammarById).filter(Boolean);
+    var answerHtml = "";
+    if (it.type === "mcq") {
+      answerHtml = '<div class="opts" id="opts">' + it.options.map(function (o, idx) {
+        return '<button class="opt" type="button" data-idx="' + idx + '" aria-pressed="false"><span class="k">' + String.fromCharCode(65 + idx) + '</span><span>' + esc(o) + '</span></button>';
+      }).join("") + '</div>';
+    } else if (it.type === "fill") {
+      answerHtml = '<input class="field" id="fillIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="جواب">';
+    } else {
+      answerHtml = '<textarea class="area" id="writeIn" placeholder="' + esc(tt("اینجا بنویس…")) + '"></textarea>' +
+        '<div class="wc"><span>' + esc(tt("کلمه‌ها")) + ': <b id="wcNow">0</b> / ' + it.minWords + '–' + it.maxWords + '</span><span id="wcState"></span></div>' +
+        '<div id="checks">' + (it.checklist || []).map(function (c, i) {
+          return '<label class="check"><input type="checkbox" data-c="' + i + '"><span>' + esc(c) + '</span></label>';
+        }).join("") + '</div>';
+    }
+    var kind = it.type === "mcq" ? tt("چندگزینه‌ای") : it.type === "fill" ? tt("جای خالی") : tt("نوشتن");
+    $("qCard").innerHTML =
+      '<div class="meta"><span class="badge">' + esc(it.level) + ' · ' + esc(it.skill || kind) + '</span><span class="counter">' + (r.i + 1) + ' / ' + n + '</span></div>' +
+      '<div class="prompt">' + esc(it.prompt) + '</div>' +
+      (it.question ? '<div class="question">' + esc(it.question) + '</div>' : '<div style="height:10px"></div>') +
+      answerHtml +
+      '<div id="fb"></div>' +
+      '<div class="actions" id="act"><button class="btn" id="checkBtn" type="button">' + esc(tt("بررسی جواب")) + '</button></div>';
+
+    if (it.type === "mcq") {
+      var picked = null;
+      document.querySelectorAll("#opts .opt").forEach(function (b) {
+        b.addEventListener("click", function () {
+          if (r.answered) return;
+          picked = Number(b.dataset.idx);
+          document.querySelectorAll("#opts .opt").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        });
       });
-      li.appendChild(b);
-      ul.appendChild(li);
-    });
+      $("checkBtn").onclick = function () { if (picked === null) return; grade(picked === it.answer, it, picked); };
+    } else if (it.type === "fill") {
+      var inp = $("fillIn"); inp.focus();
+      var go = function () { if (r.answered) return nextQ(); if (!inp.value.trim()) return; var ok = it.accept.map(norm).indexOf(norm(inp.value)) >= 0; grade(ok, it, inp.value); };
+      $("checkBtn").onclick = go;
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") go(); });
+    } else {
+      var ta = $("writeIn");
+      var checkAll = function () {
+        var words = (ta.value.trim().match(/\S+/g) || []).length;
+        $("wcNow").textContent = words;
+        var okW = words >= it.minWords && words <= it.maxWords;
+        $("wcState").innerHTML = okW ? '<span class="ok">✓ ' + esc(tt("طول مناسب است")) + '</span>' : esc(tt("هنوز کامل نیست"));
+        return okW;
+      };
+      ta.addEventListener("input", checkAll); checkAll();
+      $("checkBtn").onclick = function () {
+        if (r.answered) return nextQ();
+        var allChecked = Array.prototype.every.call(document.querySelectorAll("#checks input"), function (c) { return c.checked; });
+        var ok = checkAll() && allChecked && ta.value.trim().length > 0;
+        grade(ok, it, ta.value);
+      };
+    }
+    if (window.SEE_I18N) SEE_I18N.apply();
+    show("round");
   }
 
-  function renderItems() {
-    const box = $("#items");
-    box.innerHTML = "";
-    const weakOnly = new URLSearchParams(location.search).get("weak") === "1";
-    const weak = window.SEE_PROGRESS.weakIds();
-    const list = weakOnly
-      ? P.items.filter((i) => weak.includes(i.id))
-      : P.items.filter((i) => i.level === current);
-    if (weakOnly && !list.length) box.innerHTML = `<p class="muted">نقطه‌ضعفی ثبت نشده است. اول چند تمرین را حل کن.</p>`;
-    list.forEach((it) => {
-      const card = document.createElement("div");
-      card.className = "card";
-      const askText = SEE_I18N.t("یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: ") +
-        it.prompt + " " + (it.question || "");
-      card.innerHTML = `<span class="badge">${it.level} · ${it.skill}</span>
-        <div class="prompt" dir="ltr">${it.prompt}</div>
-        <div class="question" dir="ltr">${it.question || ""}</div>
-        <div class="body"></div>
-        <div class="feedback"></div>
-        <a class="ask-tutor" href="tutor.html?q=${encodeURIComponent(askText)}"
-           style="display:inline-block;margin-top:10px;min-height:40px;line-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--graphite);text-decoration:none;font-weight:700">از مربی بپرس</a>`;
-      box.appendChild(card);
-      const body = card.querySelector(".body");
-      const fb = card.querySelector(".feedback");
+  function grade(ok, it, given) {
+    var r = round;
+    if (r.answered) return;
+    r.answered = true;
+    if (ok) r.right++;
+    r.results.push(ok);
+    if (window.SEE_PROGRESS && SEE_PROGRESS.recordAnswer) SEE_PROGRESS.recordAnswer(it.id, ok);
+    var w = weakSet(); if (ok) w.delete(it.id); else w.add(it.id); saveWeak(w);
+    if (window.SEE_FX) SEE_FX.result(ok, $("qCard"));
 
-      if (it.type === "mcq") {
-        const ul = document.createElement("ul");
-        ul.className = "opts";
-        it.options.forEach((opt, idx) => {
-          const li = document.createElement("li");
-          li.innerHTML = `<label><input type="radio" name="${it.id}" value="${idx}"> <span dir="ltr">${opt}</span></label>`;
-          ul.appendChild(li);
-        });
-        body.appendChild(ul);
-        const btn = document.createElement("button");
-        btn.className = "act"; btn.type = "button"; btn.textContent = SEE_I18N.t("بررسی جواب");
-        btn.addEventListener("click", () => {
-          const sel = card.querySelector(`input[name="${it.id}"]:checked`);
-          if (!sel) { fb.innerHTML = `<p class="muted">اول یک گزینه را انتخاب کن.</p>`; return; }
-          const ok = Number(sel.value) === it.answer;
-          window.SEE_PROGRESS.recordAnswer(it.id, ok);
-          if (window.SEE_FX) SEE_FX.result(ok, card);
-          fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
-            <h4>${ok ? SEE_I18N.t("درست است") : SEE_I18N.t("پاسخ درست: ") + it.options[it.answer]}</h4>
-            <p>${it.analysis}</p>${studyBlock(it)}</div>`;
-        });
-        body.appendChild(btn);
-      } else if (it.type === "fill") {
-        const input = document.createElement("input");
-        input.type = "text"; input.placeholder = SEE_I18N.t("جواب را بنویس"); input.dir = "ltr";
-        body.appendChild(input);
-        const btn = document.createElement("button");
-        btn.className = "act"; btn.type = "button"; btn.textContent = SEE_I18N.t("بررسی جواب");
-        btn.addEventListener("click", () => {
-          const ok = it.accept.map(norm).includes(norm(input.value));
-          window.SEE_PROGRESS.recordAnswer(it.id, ok);
-          if (window.SEE_FX) SEE_FX.result(ok, card);
-          fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
-            <h4>${ok ? SEE_I18N.t("درست است") : SEE_I18N.t("پاسخ درست: ") + it.answer}</h4>
-            <p>${it.analysis}</p>${studyBlock(it)}</div>`;
-        });
-        body.appendChild(btn);
-      } else if (it.type === "writing") {
-        const ta = document.createElement("textarea");
-        ta.dir = "ltr";
-        const cnt = document.createElement("p");
-        cnt.className = "count";
-        const words = () => (ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0);
-        const update = () => { cnt.textContent = `${words()} کلمه (هدف: ${it.minWords} تا ${it.maxWords})`; };
-        ta.addEventListener("input", update); update();
-        body.append(ta, cnt);
-
-        const list = document.createElement("ul");
-        list.className = "checklist";
-        it.checklist.forEach((c, idx) => {
-          const li = document.createElement("li");
-          li.innerHTML = `<label><input type="checkbox" data-idx="${idx}"> ${c}</label>`;
-          list.appendChild(li);
-        });
-        body.appendChild(list);
-
-        const btn = document.createElement("button");
-        btn.className = "act"; btn.type = "button"; btn.textContent = SEE_I18N.t("ارزیابی متن");
-        btn.addEventListener("click", () => {
-          const n = words();
-          const checked = body.querySelectorAll("input[type=checkbox]:checked").length;
-          const inRange = n >= it.minWords && n <= it.maxWords;
-          const ok = inRange && checked === it.checklist.length;
-          window.SEE_PROGRESS.recordAnswer(it.id, ok);
-          if (window.SEE_FX) SEE_FX.result(ok, card);
-          fb.innerHTML = `<div class="result ${ok ? "ok" : "bad"}">
-            <h4>${ok ? SEE_I18N.t("متن کامل است") : SEE_I18N.t("هنوز کامل نیست")}</h4>
-            <p>${inRange ? SEE_I18N.t("طول متن مناسب است.") : "طول متن باید بین " + it.minWords + " و " + it.maxWords + " کلمه باشد. الان " + n + " کلمه داری."}
-            ${checked === it.checklist.length ? "" : SEE_I18N.t("همه‌ی موارد چک‌لیست را بررسی کن.")}</p>
-            <p>${it.analysis}</p>${studyBlock(it)}</div>`;
-        });
-        body.appendChild(btn);
-      }
-    });
+    // نمایش جواب درست و توضیح
+    if (it.type === "mcq") {
+      document.querySelectorAll("#opts .opt").forEach(function (b, idx) {
+        b.disabled = true;
+        if (idx === it.answer) b.classList.add("right");
+        else if (idx === Number(given) && !ok) b.classList.add("wrong");
+      });
+    } else if (it.type === "fill") {
+      $("fillIn").disabled = true; $("fillIn").classList.add(ok ? "right" : "wrong");
+    } else {
+      $("writeIn").disabled = true;
+      document.querySelectorAll("#checks input").forEach(function (c) { c.disabled = true; });
+    }
+    var correct = it.type === "mcq" ? it.options[it.answer] : it.type === "fill" ? it.answer : "";
+    var gramHtml = (it.grammar || []).map(grammarById).filter(Boolean).map(function (g) {
+      var ex = (window.SEE_EXPLAIN || {})[g.id];
+      return '<div class="gcard"><b>' + esc(tr(g, "title")) + '</b><span class="stars"> ' + "★".repeat(g.stars || 1) + "☆".repeat(3 - (g.stars || 1)) + '</span>' +
+        '<small>' + esc(tr(g, "note")) + '</small>' +
+        (ex ? '<details class="explain"><summary>' + esc(tt("توضیح کامل")) + '</summary><div class="explain-body" dir="auto">' + esc(ex) + '</div></details>' : '') + '</div>';
+    }).join("");
+    var vocabHtml = (it.vocab || []).map(function (v) {
+      var hit = (P.vocab[it.level] || []).filter(function (x) { return x.es === v; })[0];
+      return '<span class="vchip"><span dir="ltr">' + esc(v) + '</span>' + (hit ? ' · ' + esc(hit.fa) : '') + '</span>';
+    }).join("");
+    $("fb").innerHTML = '<div class="fb ' + (ok ? "ok" : "bad") + '"><h3>' + (ok ? "✓ " + esc(tt("درست بود")) : "✗ " + esc(tt("نه، دوباره یادت بیاد"))) + '</h3>' +
+      (correct ? '<p>' + esc(tt("جواب درست")) + ': <span class="ans" dir="ltr">' + esc(correct) + '</span></p>' : '') +
+      (it.analysis ? '<p>' + esc(it.analysis) + '</p>' : '') +
+      ((gramHtml || vocabHtml) ? '<div class="study">' + (gramHtml ? '<h4>' + esc(tt("گرامری که باید بخوانی")) + '</h4>' + gramHtml : '') +
+        (vocabHtml ? '<h4>' + esc(tt("کلمه‌هایی که باید بخوانی")) + '</h4><div class="chips">' + vocabHtml + '</div>' : '') + '</div>' : '') +
+      '<a class="ask" href="tutor.html?q=' + encodeURIComponent(tt("یه کمک بهم بده با این تمرین، ولی جوابش رو مستقیم نگو، فقط راهنمایی کن: ") + it.prompt) + '">✨ ' + esc(tt("از مربی بپرس")) + '</a></div>';
+    $("checkBtn").textContent = r.i + 1 >= r.items.length ? tt("پایان دور") : tt("ادامه");
+    $("checkBtn").disabled = false;
+    $("checkBtn").onclick = nextQ;
+    if (window.SEE_I18N) SEE_I18N.apply();
   }
 
-  function renderVocab() {
-    const box = $("#vocab");
-    box.innerHTML = (P.vocab[current] || []).map((v) =>
-      `<div><b>${v.es}</b>${v.fa}<br><span class="muted">${v.topic}</span></div>`).join("");
+  function nextQ() {
+    var r = round;
+    r.i++; r.answered = false;
+    if (r.i >= r.items.length) return finish();
+    renderQuestion();
   }
 
-  renderLevels();
-  renderItems();
-  renderVocab();
+  function finish() {
+    var total = round.items.length, right = round.right;
+    var pct = Math.round(right / total * 100);
+    $("doneScore").textContent = right + " / " + total;
+    $("doneMsg").textContent = pct >= 80 ? tt("عالی بود! ادامه بده.") : pct >= 50 ? tt("خوب پیش میری. نقاط ضعف رو دوباره تمرین کن.") : tt("اشکالی نداره؛ دور بعدی بهتر میشه.");
+    if (pct >= 80 && window.SEE_FX) SEE_FX.celebrate();
+    show("done");
+    lastRound = { right: right, total: total };
+    round = null;
+    renderAll(false);
+  }
+
+  $("startBtn").addEventListener("click", startRound);
+  $("againBtn").addEventListener("click", startRound);
+
+  var sb = $("soundBtn");
+  function paintSound() { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; sb.classList.toggle("on", on); sb.textContent = on ? "🔊" : "🔇"; }
+  sb.addEventListener("click", function () { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; if (window.SEE_PREFS) SEE_PREFS.setSound(!on); paintSound(); });
+  paintSound();
+
+  function renderAll(showStart) {
+    renderLevels();
+    Array.prototype.forEach.call(document.querySelectorAll(".mode"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === mode)); });
+    if (showStart === false) return;
+    if (!round) renderStart();
+    if (window.SEE_I18N) SEE_I18N.apply();
+  }
+
+  // کلیدهای میانبر: ۱ تا ۴ برای گزینه‌ها
+  document.addEventListener("keydown", function (e) {
+    if (!round || round.answered || !round.items[round.i] || round.items[round.i].type !== "mcq") return;
+    var n = Number(e.key);
+    if (n >= 1 && n <= 4) { var b = document.querySelector('#opts .opt[data-idx="' + (n - 1) + '"]'); if (b) b.click(); }
+  });
+
+  renderAll();
+  if (window.SEE_I18N) setTimeout(SEE_I18N.apply, 600);
+  document.addEventListener("DOMContentLoaded", function () { renderAll(); });
+  document.addEventListener("see:answer", function () { if (!round) renderStart(); });
+})();
 </script>
-<nav class="tabbar" aria-label="منوی پایین"><a href="index.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a><a href="plan.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a><a href="practice.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a><a href="notebook.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a><a href="me.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a></nav>
-<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
 </body>
 </html>
