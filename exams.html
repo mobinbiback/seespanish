@@ -195,6 +195,7 @@
 <script src="data/practice-expand.js"></script>
 <script src="data/practice-expand2.js"></script>
 <script src="data/practice-expand3.js"></script>
+<script src="data/exam-bank.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -230,9 +231,14 @@
       seg.appendChild(b);
     });
   }
+  function examPool() {
+    var bank = (window.SEE_EXAM_BANK || []).filter(function (it) { return it.level === level; });
+    var prac = (P.items || []).filter(function (it) { return it.level === level; });
+    return bank.concat(prac);
+  }
   function renderStart() {
     renderLevels();
-    var pool = (P.items || []).filter(function (it) { return it.level === level; });
+    var pool = examPool();
     $("heroTitle").textContent = tt("آزمون سطح") + " " + level;
     $("heroText").textContent = pool.length < COUNT ? tt("برای این سطح سؤال کافی نیست.") : tt("سؤال‌ها به‌صورت تصادفی انتخاب می‌شوند.");
     $("stQ").textContent = Math.min(COUNT, pool.length);
@@ -258,7 +264,7 @@
   // ---------- شروع آزمون ----------
   function startExam() {
     var pool = (P.items || []).filter(function (it) { return it.level === level; });
-    var items = shuffle(pool).slice(0, COUNT);
+    var items = shuffle(examPool()).slice(0, COUNT);
     attempt = { items: items, answers: items.map(function () { return null; }), i: 0, left: MINUTES * 60, startedAt: Date.now() };
     show("take");
     renderQuestion();
