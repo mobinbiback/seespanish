@@ -101,6 +101,19 @@
     background: var(--r18-surface); color: var(--r18-text); font: inherit; font-weight: 700; cursor: pointer; text-decoration: none;
     display: inline-flex; align-items: center; justify-content: center;
   }
+  .r18-field { display: grid; gap: 6px; margin: 12px 0; }
+  .r18-field label { font-size: 12.5px; color: var(--r18-muted); font-weight: 700; }
+  .r18-field input {
+    width: 100%; min-height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--r18-line);
+    background: var(--r18-surface-2); color: var(--r18-text); font: inherit; font-size: 14px; box-sizing: border-box;
+  }
+  .r18-field input:focus { outline: none; border-color: var(--r18-accent-text); }
+  .r18-tabs { display: flex; gap: 8px; }
+  .r18-tabs button { flex: 1; }
+  #setView .r18-panel { padding: 16px; }
+  #setView .r18-chips { margin-top: 12px; }
+  #setView .r18-chips button { flex: 1; }
+  .r18-composer { z-index: 60; }
   .r18-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--r18-accent-text); color: var(--r18-accent-text); font-size: 11px; font-weight: 700; }
   .r18-login { display: flex; flex-direction: column; gap: 10px; }
   .r18-login a.r18-btn-primary { text-align: center; line-height: 44px; text-decoration: none; display: block; }
@@ -219,7 +232,7 @@
     }
 
     function showHub() {
-      toolView.hidden = true; hubView.hidden = false; composer.hidden = true;
+      toolView.hidden = true; $("setView").hidden = true; hubView.hidden = false; composer.hidden = true;
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -261,7 +274,7 @@
 
     function showUsage(used, limit) {
       if (!limit) { meterText.textContent = "حساب مدیر: بدون محدودیت"; meterBar.style.width = "0%"; return; }
-      meterText.textContent = (mode === "tutor" ? "پرسش‌های امروز: " : "واژه‌های امروز: ") + used + " از " + limit;
+      meterText.textContent = SEE_I18N.t(mode === "tutor" ? "پرسش‌های امروز: " : "واژه‌های امروز: ") + used + " از " + limit;
       meterBar.style.width = Math.min(100, Math.round((used / limit) * 100)) + "%";
     }
 
@@ -277,15 +290,15 @@
 
     function openTool(m) {
       mode = m;
-      hubView.hidden = true; toolView.hidden = false; composer.hidden = false;
+      hubView.hidden = true; $("setView").hidden = true; toolView.hidden = false; composer.hidden = false;
       chat.innerHTML = "";
       $("toolBadge").textContent = m === "tutor" ? "مربی" : "واژه‌یاب";
       if (m === "tutor") {
-        setMascot("lola", "normal", "سؤالت رو درباره‌ی اسپانیایی بپرس.");
-        input.placeholder = "سؤالت رو بنویس…";
+        setMascot("lola", "normal", SEE_I18N.t("سؤالت رو درباره‌ی اسپانیایی بپرس."));
+        input.placeholder = SEE_I18N.t("سؤالت رو بنویس…");
       } else {
-        setMascot("tomas", "normal", "یک کلمه‌ی اسپانیایی یا فارسی بنویس تا معنیش رو بگم.");
-        input.placeholder = "مثلاً: madrugada یا صبح زود";
+        setMascot("tomas", "normal", SEE_I18N.t("یک کلمه‌ی اسپانیایی یا فارسی بنویس تا معنیش رو بگم."));
+        input.placeholder = SEE_I18N.t("مثلاً: madrugada یا صبح زود");
       }
       renderChips();
       refreshUsage();
@@ -374,18 +387,18 @@
           var who = isTutor ? "lola" : "tomas";
           if (j.ok) {
             addMsg(j.answer, "bot", who);
-            if (j.own_key) meterText.textContent = "با کلید شخصی خودت (بدون محدودیت سایت)";
+            if (j.own_key) meterText.textContent = SEE_I18N.t("با کلید شخصی خودت (بدون محدودیت سایت)");
             else showUsage(j.used, j.limit);
-            setMascot(who, "happy", isTutor ? "آفرین! ادامه بده." : "این هم معنیش.");
+            setMascot(who, "happy", SEE_I18N.t(isTutor ? "آفرین! ادامه بده." : "این هم معنیش."));
           } else if (res.status === 429) {
-            addMsg("سهمیه‌ی امروزت تموم شد (" + j.limit + "). فردا دوباره می‌تونی.", "err");
+            addMsg(SEE_I18N.t("سهمیه‌ی امروزت تموم شد ({n}). فردا دوباره می‌تونی.", { n: j.limit }), "err");
             showUsage(j.limit, j.limit);
-            setMascot(who, "sad", "امروز دیگه نمی‌تونیم ادامه بدیم.");
+            setMascot(who, "sad", SEE_I18N.t("امروز دیگه نمی‌تونیم ادامه بدیم."));
           } else if (res.status === 401) {
-            addMsg("ورودت منقضی شده. دوباره با Google وارد شو.", "err");
+            addMsg(SEE_I18N.t("ورودت منقضی شده. دوباره با Google وارد شو."), "err");
             setMascot(who, "sad", "");
           } else {
-            addMsg("الان جواب نداد. کمی بعد دوباره امتحان کن.", "err");
+            addMsg(SEE_I18N.t("الان جواب نداد. کمی بعد دوباره امتحان کن."), "err");
             setMascot(who, "sad", "");
           }
         })
