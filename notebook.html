@@ -16,115 +16,109 @@
     --body: "IRANYekanX", "Vazirmatn", "Nunito", system-ui, sans-serif;
   }
   body { margin: 0; font-family: var(--body); line-height: 1.8; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 110px; }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 16px; flex-wrap: wrap; }
-  .logo { font-family: "Caveat", cursive; font-size: 2.2rem; margin: 0; }
-  .logo span.fx-spotlight { font: 800 2rem/1.2 "JetBrains Mono", "Nunito", monospace; }
-  h2 { font-family: var(--head); font-size: 1.5rem; margin: 18px 0 6px; }
-  .muted { color: var(--graphite-soft); font-size: .95rem; }
-  .segment {
-    display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface);
-    border: 1px solid var(--line); box-shadow: 0 6px 18px var(--shadow); list-style: none; margin: 0 0 12px;
-  }
-  .segment li { flex: 1 1 0; min-width: 0; }
-  .segment button {
-    width: 100%; min-height: 40px; border: 0; border-radius: 999px; background: transparent;
-    color: var(--graphite-soft); font: inherit; font-size: 1rem; cursor: pointer; padding: 0 6px;
-  }
-  .segment button[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; }
-  .search {
-    width: 100%; min-height: 44px; padding: 10px 14px; font: inherit; border-radius: 14px;
-    background: var(--surface); color: var(--graphite); border: 1px solid var(--line); margin-bottom: 10px;
-  }
-  .item {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
-    box-shadow: 0 6px 18px var(--shadow); padding: 12px 16px; margin-bottom: 10px;
-  }
-  .item summary { cursor: pointer; font-weight: 800; list-style: none; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
-  .item summary::-webkit-details-marker { display: none; }
-  .stars { font-family: var(--head); letter-spacing: 1px; color: var(--graphite-soft); font-size: .95rem; }
-  .item .note { margin: 8px 0 4px; color: var(--graphite-soft); font-size: .95rem; }
-  .explain { white-space: pre-line; background: var(--paper-2); border-radius: 10px; padding: 10px 12px; font-size: .95rem; margin-top: 8px; }
-  .verb-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 14px 0 6px; }
-  .verb-head b { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-size: 1.25rem; }
-  .verb-head span.m { color: var(--graphite-soft); font-size: .92rem; }
-  .speak {
-    min-width: 40px; min-height: 40px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 1rem;
-    box-shadow: 0 4px 0 #CFC6AE;
-  }
-  .verb-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 16px; overflow: hidden; box-shadow: 0 6px 18px var(--shadow); }
-  .verb-table th, .verb-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--line); }
-  .verb-table td.pn { color: var(--graphite-soft); font-size: .9rem; }
-  .verb-table td.form { direction: ltr; font-family: "Nunito", system-ui, sans-serif; font-weight: 700; }
-  .verb-table td.act { width: 56px; }
-  .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
-    box-shadow: 0 8px 24px var(--shadow); padding: 16px 18px; margin-bottom: 12px;
-  }
-  .btn {
-    display: inline-block; min-height: 44px; padding: 8px 22px; border: 0; border-radius: 999px; cursor: pointer;
-    background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; font-size: 1.02rem; margin: 8px 6px 0 0;
-    box-shadow: 0 4px 0 #B98F12;
-  }
-  .btn.ghost { background: var(--surface); color: var(--graphite); border: 1px solid var(--line); box-shadow: 0 4px 0 #CFC6AE; }
-  .drill-q { font-family: "Nunito", system-ui, sans-serif; font-size: 1.25rem; direction: ltr; text-align: left; margin: 8px 0; }
-  .drill-q small { display: block; color: var(--graphite-soft); font-family: var(--body); direction: rtl; text-align: right; font-size: .92rem; }
-  .drill-input {
-    width: 100%; min-height: 46px; padding: 8px 12px; font: inherit; direction: ltr; text-align: left;
-    background: var(--surface); color: var(--graphite); border: 1px solid var(--line); border-radius: 14px;
-  }
-  .feedback { margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px dashed var(--line); }
-  .feedback.ok { background: var(--ok); }
-  .feedback.bad { background: var(--bad); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; list-style: none; padding: 0; }
-  .chip {
-    min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--surface); color: var(--graphite); font: inherit; cursor: pointer;
-  }
-  .chip[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); font-weight: 800; border-color: transparent; }
-  .empty { text-align: center; color: var(--graphite-soft); padding: 18px 0; }
-  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px;
-    box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
-  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft);
-    text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
+  .logo { font-family: "Caveat", cursive; font-size: 2rem; margin: 0; }
+  .logo span.fx-spotlight { font: 800 1.8rem/1.2 "JetBrains Mono", "Nunito", monospace; }
+
+  .nb { max-width: 720px; margin: 0 auto; padding: 0 18px 130px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0 6px; flex-wrap: wrap; }
+  .top-tools { display: flex; gap: 8px; align-items: center; }
+  .ico-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); cursor: pointer; font-size: 18px; box-shadow: 0 4px 0 var(--edge, #CFC6AE); display: grid; place-items: center; text-decoration: none; }
+  .ico-btn.on { background: var(--pencil); border-color: transparent; box-shadow: 0 4px 0 #B98F12; }
+
+  .title { font-family: var(--head); font-size: 1.45rem; margin: 10px 0 2px; color: var(--graphite); }
+  .sub { color: var(--graphite-soft); font-size: 13px; margin: 0 0 12px; }
+
+  /* تب‌ها */
+  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .tab { min-height: 48px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 var(--edge, #CFC6AE); }
+  .tab[aria-selected="true"] { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 5px 0 #B98F12; }
+
+  /* چیپ‌ها */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 12px; }
+  .chip { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 3px 0 var(--edge, #CFC6AE); }
+  .chip[aria-pressed="true"] { background: var(--pencil); color: var(--accent-ink); border-color: transparent; box-shadow: 0 3px 0 #B98F12; }
+  .chip[disabled] { opacity: .45; cursor: not-allowed; box-shadow: none; }
+  .chip-label { font-size: 11px; font-weight: 800; letter-spacing: .8px; color: var(--graphite-soft); margin: 10px 0 4px; display: block; }
+
+  .search { width: 100%; min-height: 46px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; box-sizing: border-box; }
+
+  /* کارت‌ها */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px; box-shadow: 0 6px 0 var(--edge, #CFC6AE), 0 10px 22px var(--shadow); margin-bottom: 12px; }
+  .card-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; background: none; border: 0; font: inherit; color: var(--graphite); width: 100%; text-align: right; padding: 0; }
+  .card-h b { font-family: var(--head); font-size: 1.02rem; }
+  .card-h small { display: block; color: var(--graphite-soft); font-size: 12px; font-weight: 400; }
+  .pill { font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--pencil); color: var(--accent-ink); white-space: nowrap; }
+  .body { margin-top: 12px; }
+  .note { color: var(--graphite); font-size: 13px; line-height: 2; white-space: pre-line; background: var(--paper-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-top: 10px; }
+  .ask { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--graphite); font: inherit; font-weight: 700; font-size: 13px; text-decoration: none; box-shadow: 0 3px 0 var(--edge, #CFC6AE); }
+
+  /* جدول صرف */
+  .vt { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .vt th { background: var(--pencil); color: var(--accent-ink); font-size: 12.5px; font-weight: 800; padding: 8px; text-align: right; }
+  .vt td { padding: 9px 10px; border-top: 1px solid var(--line); font-size: 14px; direction: ltr; text-align: left; }
+  .vt td.pn { direction: rtl; text-align: right; color: var(--graphite-soft); font-size: 12.5px; }
+  .vt td.sp { width: 44px; text-align: center; }
+  .spk { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper-2); cursor: pointer; font-size: 13px; }
+  .verb-meta { color: var(--graphite-soft); font-size: 12px; margin: 4px 0 8px; }
+  .tense-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+
+  /* تمرین */
+  .drill-q { font-family: "Nunito", system-ui, sans-serif; font-size: 22px; direction: ltr; text-align: left; margin: 12px 0 4px; }
+  .drill-q small { display: block; color: var(--graphite-soft); font-family: var(--body); direction: rtl; text-align: right; font-size: 13px; }
+  .field { width: 100%; min-height: 52px; padding: 0 14px; border-radius: 16px; border: 1px solid var(--line); background: var(--paper-2); color: var(--graphite); font: inherit; font-size: 18px; box-sizing: border-box; direction: ltr; text-align: left; }
+  .btn { min-height: 48px; padding: 0 20px; border-radius: 16px; border: 0; background: var(--pencil); color: var(--accent-ink); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 #B98F12; margin-top: 10px; }
+  .btn.ghost { background: var(--surface); color: var(--graphite); border: 1px solid var(--line); box-shadow: 0 5px 0 var(--edge, #CFC6AE); }
+  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #B98F12; }
+  .fb { margin-top: 10px; padding: 10px 12px; border-radius: 14px; border: 1px dashed var(--line); font-size: 14px; }
+  .fb.ok { background: rgba(179,217,59,.18); border-color: #3F6B0A; color: var(--graphite); }
+  .fb.bad { background: rgba(253,127,82,.14); border-color: #B4431B; color: var(--graphite); }
+  .bar { height: 10px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin: 10px 0; }
+  .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--pencil), #B98F12); border-radius: 999px; transition: width .3s; }
+  .score { font-family: var(--head); font-size: 1.6rem; text-align: center; margin: 14px 0 4px; color: var(--graphite); }
+  .weak { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .weak span { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid #B4431B; color: #B4431B; }
+  .empty { text-align: center; color: var(--graphite-soft); padding: 22px 0; font-size: 14px; }
+
+  .tabbar { position: fixed; bottom: 0; left: 12px; right: 12px; display: none; justify-content: space-around; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 10px 30px var(--shadow); z-index: 50; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .78rem; color: var(--graphite-soft); text-decoration: none; padding: 6px 2px; min-height: 52px; border-radius: 16px; }
   .tabbar a[aria-current="page"] { color: var(--graphite); font-weight: 800; }
-  @media (max-width: 640px) { .tabbar { display: flex; } }
+  .tabbar a[aria-current="page"]::before { content: ""; width: 26px; height: 4px; border-radius: 999px; background: var(--pencil); margin-bottom: 4px; }
+  @media (max-width: 640px) { .tabbar { display: flex; } body { padding-bottom: 60px; } header nav.top-nav { display: none !important; } }
 </style>
 <link rel="stylesheet" href="css/theme.css">
 <script src="js/theme.js"></script>
 <script src="js/prefs.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/gamify.js"></script>
+<script src="js/sync.js"></script>
 <script src="js/i18n.js"></script>
 <script src="data/i18n-content.js"></script>
 <script src="data/i18n-content-grammar.js"></script>
+<script src="data/i18n-vocab-a1.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <header>
+<div class="nb">
+  <header class="top">
     <h1 class="logo"><span class="fx-spotlight">See Spanish</span></h1>
-    <nav class="top-nav" aria-label="منوی اصلی">
-      <a class="navlink" href="index.html">خانه</a>
-      <a class="navlink" href="plan.html">برنامه</a>
-      <a class="navlink" href="practice.html">تمرین</a>
-      <a class="navlink" href="notebook.html" aria-current="page">دفترچه</a>
-      <a class="navlink" href="me.html">من</a>
-    </nav>
+    <div class="top-tools">
+      <button class="ico-btn" id="soundBtn" type="button" aria-label="صدا">🔊</button>
+      <a class="ico-btn" href="me.html" aria-label="من">👤</a>
+    </div>
   </header>
 
-  <h2>دفترچه</h2>
-  <p class="muted">قوانین هر سطح، جدول صرف افعال و تمرین صرف.</p>
+  <h2 class="title" id="title">دفترچه</h2>
+  <p class="sub" id="sub">قوانین، افعال و تمرین صرف، همه‌ی سطح‌ها در یک جا.</p>
 
-  <ul class="segment" id="tabs" role="tablist" aria-label="بخش دفترچه">
-    <li><button type="button" data-tab="rules" aria-pressed="true">قوانین</button></li>
-    <li><button type="button" data-tab="verbs" aria-pressed="false">افعال</button></li>
-    <li><button type="button" data-tab="drill" aria-pressed="false">تمرین صرف</button></li>
-  </ul>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="rules" aria-selected="true">قوانین</button>
+    <button class="tab" role="tab" data-tab="verbs" aria-selected="false">افعال</button>
+    <button class="tab" role="tab" data-tab="drill" aria-selected="false">تمرین صرف</button>
+  </div>
 
-  <ul class="segment" id="levels" role="group" aria-label="سطح"></ul>
-  <input class="search" id="q" type="search" placeholder="جستجو: ser، subjuntivo، por…" aria-label="جستجو در دفترچه">
+  <input class="search" id="q" type="search" placeholder="جستجو: ser، subjuntivo، por…" aria-label="جستجو">
+  <span class="chip-label">سطح</span>
+  <div class="chips" id="levelChips" role="group" aria-label="سطح"></div>
 
   <section id="rules"></section>
   <section id="verbs" hidden></section>
@@ -132,11 +126,11 @@
 </div>
 
 <nav class="tabbar" aria-label="منوی پایین">
-  <a href="index.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>خانه</span></a>
-  <a href="plan.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg><span>برنامه</span></a>
-  <a href="practice.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>تمرین</span></a>
-  <a href="notebook.html" aria-current="page"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 4v16"/></svg><span>دفترچه</span></a>
-  <a href="me.html"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>من</span></a>
+  <a href="index.html"><span>🏠</span><span>خانه</span></a>
+  <a href="plan.html"><span>📅</span><span>برنامه</span></a>
+  <a href="practice.html"><span>🎯</span><span>تمرین</span></a>
+  <a href="notebook.html" aria-current="page"><span>📓</span><span>دفترچه</span></a>
+  <a href="me.html"><span>👤</span><span>من</span></a>
 </nav>
 
 <script src="data/data.js"></script>
@@ -147,241 +141,206 @@
 <script src="data/explain-c2.js"></script>
 <script src="data/verbs.js"></script>
 <script>
-  const $ = (s) => document.querySelector(s);
-  const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
-  const TENSES = [["presente", SEE_I18N.t("حال ساده")], ["indefinido", SEE_I18N.t("گذشته‌ی کامل")], ["imperfecto", SEE_I18N.t("گذشته‌ی استمراری")], ["futuro", SEE_I18N.t("آینده")]];
-  const PRONOUNS = ["yo", "tú", "él / ella", "nosotros", "vosotros", "ellos / ellas"];
-  const WEAK_KEY = "seespanish:verbs:weak:v1";
-  let tab = "rules";
-  let level = "A1";
-  let tense = "presente";
-  let drill = null;
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  var TENSES = [["presente", "حال ساده"], ["indefinido", "گذشته‌ی کامل"], ["imperfecto", "گذشته‌ی استمراری"], ["futuro", "آینده"]];
+  var PRONS = ["yo", "tú", "él / ella", "nosotros", "vosotros", "ellos / ellas"];
+  var IRREG = { ser: 1, estar: 1, tener: 1, ir: 1, hacer: 1, poder: 1, querer: 1, saber: 1, decir: 1, venir: 1, dar: 1, oír: 1 };
+  var WEAK_KEY = "seespanish:verbs:weak:v1";
+  var tab = "rules", level = "A1", tense = "presente", q = "", drill = null, groups = { ar: 1, er: 1, ir: 1, irreg: 1 };
+  try { level = localStorage.getItem("seespanish:level") || "A1"; } catch (e) {}
+  function tt(k, v) { return window.SEE_I18N ? SEE_I18N.t(k, v) : k; }
+  function tr(o, f) { return window.SEE_I18N ? SEE_I18N.tx(o, f) : o[f]; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function norm(t) { return String(t).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " "); }
+  function speak(t) { if (window.SEE_PREFS) SEE_PREFS.speak ? SEE_PREFS.speak(t, 0.85) : null; }
+  function groupOf(v) { if (IRREG[v.verb]) return "irreg"; var e = v.verb.slice(-2); return e === "ar" ? "ar" : e === "er" ? "er" : "ir"; }
+  function weakSet() { try { return new Set(JSON.parse(localStorage.getItem(WEAK_KEY)) || []); } catch (e) { return new Set(); } }
+  function saveWeak(s) { try { localStorage.setItem(WEAK_KEY, JSON.stringify([...s])); } catch (e) {} }
 
-  function segment(ul, items, selected, onPick) {
-    ul.innerHTML = "";
-    items.forEach(([val, label]) => {
-      const li = document.createElement("li"); const b = document.createElement("button");
-      b.type = "button"; b.textContent = label;
-      b.setAttribute("aria-pressed", String(val === selected));
-      b.addEventListener("click", () => onPick(val));
-      li.appendChild(b); ul.appendChild(li);
+  // ---------- سطح‌ها ----------
+  function renderLevels() {
+    var box = $("levelChips"); box.innerHTML = "";
+    LEVELS.forEach(function (l) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = l;
+      b.setAttribute("aria-pressed", String(l === level));
+      b.onclick = function () { level = l; drill = null; try { localStorage.setItem("seespanish:level", l); } catch (e) {} render(); };
+      box.appendChild(b);
     });
   }
 
-  function speakText(t) { if (window.SEE_PREFS) SEE_PREFS.speak(t, 0.85); }
-
-  function normalize(t) {
-    return String(t).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ");
+  // ---------- قوانین ----------
+  function rulesView() {
+    var items = (SEE.grammar[level] || []).filter(function (it) {
+      if (!q) return true;
+      var hay = (tr(it, "title") + " " + tr(it, "note") + " " + ((window.SEE_EXPLAIN && SEE_EXPLAIN[it.id]) || "")).toLowerCase();
+      return hay.indexOf(q.toLowerCase()) >= 0;
+    });
+    if (!items.length) return '<div class="empty">' + esc(tt("موردی پیدا نشد.")) + '</div>';
+    return items.map(function (it) {
+      var explain = (window.SEE_EXPLAIN && SEE_EXPLAIN[it.id]) || "";
+      var stars = "★".repeat(it.stars || 1) + "☆".repeat(3 - (it.stars || 1));
+      return '<div class="card"><button class="card-h" type="button" data-rule="' + esc(it.id) + '">' +
+        '<span><b>' + esc(tr(it, "title")) + '</b><small>' + esc(tr(it, "note")) + '</small></span>' +
+        '<span class="pill">' + stars + '</span></button>' +
+        '<div class="body" id="r-' + esc(it.id) + '" hidden>' +
+          (explain ? '<div class="note" dir="auto">' + esc(explain) + '</div>' : '') +
+          '<a class="ask" href="tutor.html?q=' + encodeURIComponent("این قانون رو با یک مثال ساده برام توضیح بده: " + it.title) + '">✨ ' + esc(tt("از مربی بپرس")) + '</a>' +
+        '</div></div>';
+    }).join("");
   }
 
-  function rulesList(q) {
-    const box = $("#rules");
-    box.innerHTML = "";
-    const needle = q.trim().toLowerCase();
-    const items = (window.SEE.grammar[level] || []).filter((it) =>
-      !needle || (SEE_I18N.tx(it, "title") + " " + SEE_I18N.tx(it, "note") + " " + (window.SEE_EXPLAIN[it.id] || "")).toLowerCase().includes(needle));
-    if (!items.length) { box.innerHTML = `<p class="empty">موردی پیدا نشد.</p>`; return; }
-    items.forEach((it) => {
-      const d = document.createElement("details");
-      d.className = "item";
-      const s = document.createElement("summary");
-      const t = document.createElement("span"); t.dir = "auto"; t.textContent = SEE_I18N.tx(it, "title");
-      const st = document.createElement("span"); st.className = "stars";
-      st.textContent = "★".repeat(it.stars) + "☆".repeat(3 - it.stars);
-      s.append(t, st);
-      d.appendChild(s);
-      const n = document.createElement("p"); n.className = "note"; n.dir = "auto"; n.textContent = SEE_I18N.tx(it, "note");
-      d.appendChild(n);
-      const ex = (window.SEE_EXPLAIN || {})[it.id];
-      if (ex) {
-        const e = document.createElement("div"); e.className = "explain"; e.dir = "auto"; e.textContent = ex;
-        d.appendChild(e);
-      }
-      box.appendChild(d);
+  // ---------- افعال ----------
+  function verbsView() {
+    var list = (window.SEE_VERBS || []).filter(function (v) {
+      if (v.level !== level && level !== "ALL") return false;
+      if (q && v.verb.indexOf(q.toLowerCase()) < 0 && v.meaning.indexOf(q) < 0) return false;
+      return true;
     });
-  }
-
-  function verbsList(q) {
-    const box = $("#verbs");
-    box.innerHTML = "";
-    const needle = q.trim().toLowerCase();
-    const list = window.SEE_VERBS.filter((v) => v.level === level &&
-      (!needle || v.verb.includes(needle) || v.meaning.includes(needle)));
-    if (!list.length) { box.innerHTML = `<p class="empty">فعلی در این سطح پیدا نشد. سطح دیگری را امتحان کن.</p>`; return; }
-    list.forEach((v) => {
-      const head = document.createElement("div"); head.className = "verb-head";
-      const left = document.createElement("span");
-      left.innerHTML = `<b></b> <span class="m"></span>`;
-      left.querySelector("b").textContent = v.verb;
-      left.querySelector(".m").textContent = v.meaning;
-      const all = document.createElement("button");
-      all.type = "button"; all.className = "speak"; all.textContent = "🔊";
-      all.setAttribute("aria-label", SEE_I18N.t("پخش کل جدول"));
-      all.addEventListener("click", () => speakText(v.tenses[tense].join(", ")));
-      head.append(left, all);
-      box.appendChild(head);
-
-      const forms = v.tenses[tense];
-      const table = document.createElement("table"); table.className = "verb-table";
-      const tbody = document.createElement("tbody");
-      PRONOUNS.forEach((p, i) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td class="pn"></td><td class="form"></td><td class="act"></td>`;
-        tr.children[0].textContent = p;
-        tr.children[1].textContent = forms[i];
-        const b = document.createElement("button");
-        b.type = "button"; b.className = "speak"; b.textContent = "🔊";
-        b.setAttribute("aria-label", "پخش " + forms[i]);
-        b.addEventListener("click", () => speakText(forms[i]));
-        tr.children[2].appendChild(b);
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-      box.appendChild(table);
-    });
+    var tabs = '<div class="tense-row">' + TENSES.map(function (t) {
+      return '<button class="chip" type="button" data-tense="' + t[0] + '" aria-pressed="' + (tense === t[0]) + '">' + esc(tt(t[1])) + '</button>';
+    }).join("") + '</div>';
+    if (!list.length) return tabs + '<div class="empty">' + esc(tt("فعلی در این سطح پیدا نشد. سطح دیگری را امتحان کن.")) + '</div>';
+    return tabs + list.map(function (v) {
+      var forms = v.tenses[tense] || [];
+      var rows = PRONS.map(function (p, i) {
+        return '<tr><td class="pn">' + esc(p) + '</td><td>' + esc(forms[i] || "—") + '</td><td class="sp"><button class="spk" type="button" data-say="' + esc(forms[i] || "") + '" aria-label="پخش">🔊</button></td></tr>';
+      }).join("");
+      return '<div class="card"><div class="card-h" style="cursor:default"><span><b>' + esc(v.verb) + '</b><small>' + esc(v.meaning) + '</small></span>' +
+        '<span class="pill">' + esc(groupOf(v) === "irreg" ? tt("نامنظم") : "-" + groupOf(v)) + '</span></div>' +
+        '<div class="body"><table class="vt"><thead><tr><th colspan="3">' + esc(tt(TENSES.find(function (t) { return t[0] === tense; })[1])) + '</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<button class="ask" type="button" data-say="' + esc(forms.join(", ")) + '">🔊 ' + esc(tt("پخش کل جدول")) + '</button></div></div>';
+    }).join("");
   }
 
   // ---------- تمرین صرف ----------
-  function loadWeak() {
-    try { return JSON.parse(localStorage.getItem(WEAK_KEY)) || []; } catch (e) { return []; }
-  }
-  function saveWeak(list) {
-    try { localStorage.setItem(WEAK_KEY, JSON.stringify(list)); } catch (e) { /* ignore */ }
-  }
-
   function buildPool() {
-    const pool = [];
-    window.SEE_VERBS.filter((v) => v.level === level).forEach((v) => {
-      PRONOUNS.forEach((p, i) => {
-        pool.push({ key: v.verb + "|" + tense + "|" + i, verb: v.verb, meaning: v.meaning, pron: p, ans: v.tenses[tense][i] });
+    var pool = [];
+    (window.SEE_VERBS || []).forEach(function (v) {
+      if (!groups[groupOf(v)]) return;
+      if (drill && drill.level && v.level !== drill.level) return;
+      PRONS.forEach(function (p, i) {
+        pool.push({ key: v.verb + "|" + drill.tense + "|" + i, verb: v.verb, meaning: v.meaning, pron: p, ans: (v.tenses[drill.tense] || [])[i] || "" });
       });
     });
-    return pool;
+    return pool.filter(function (x) { return x.ans; });
   }
-
-  function startDrill() {
-    const pool = buildPool();
-    const weak = new Set(loadWeak());
-    const weakItems = pool.filter((x) => weak.has(x.key));
-    const rest = pool.filter((x) => !weak.has(x.key));
-    const shuffle = (a) => a.sort(() => Math.random() - 0.5);
-    const picked = shuffle(weakItems).slice(0, 5).concat(shuffle(rest)).slice(0, 10);
-    drill = { items: picked, i: 0, right: 0 };
-    renderDrill();
-  }
-
-  function renderDrill() {
-    const box = $("#drill");
-    box.innerHTML = "";
-    const pool = buildPool();
-    const weakSet = new Set(loadWeak());
-    const weakCount = pool.filter((x) => weakSet.has(x.key)).length;
-
+  function drillView() {
     if (!drill) {
-      const card = document.createElement("div"); card.className = "card";
-      card.innerHTML = `
-        <div><b>تمرین صرف</b></div>
-        <p class="muted">فرم درست فعل را برای هر ضمیر بنویس. ۱۰ سؤال در هر دور؛ فرم‌هایی که اشتباه زدی، دفعه‌ی بعد زودتر میان.</p>
-        <div class="muted">زمان:</div>
-        <ul class="chips" id="dTense"></ul>
-        <p class="muted">فرم‌های ضعیف ذخیره‌شده: ${weakCount}</p>
-        <button class="btn" type="button" id="dStart">شروع ۱۰ سؤال</button>`;
-      box.appendChild(card);
-      const tl = card.querySelector("#dTense");
-      TENSES.forEach(([val, label]) => {
-        const li = document.createElement("li");
-        const b = document.createElement("button");
-        b.type = "button"; b.className = "chip"; b.textContent = label;
-        b.setAttribute("aria-pressed", String(val === tense));
-        b.addEventListener("click", () => { tense = val; renderDrill(); });
-        li.appendChild(b); tl.appendChild(li);
-      });
-      card.querySelector("#dStart").addEventListener("click", () => {
-        if (pool.length) startDrill();
-      });
-      return;
+      var sets = ["ar", "er", "ir", "irreg"].map(function (g) {
+        return '<button class="chip" type="button" data-group="' + g + '" aria-pressed="' + !!groups[g] + '">' + (g === "irreg" ? tt("نامنظم") : "-" + g) + '</button>';
+      }).join("");
+      var tenses = TENSES.map(function (t) {
+        return '<button class="chip" type="button" data-dtense="' + t[0] + '" aria-pressed="' + (tense === t[0]) + '">' + esc(tt(t[1])) + '</button>';
+      }).join("");
+      var lvls = '<button class="chip" type="button" data-dlevel="" aria-pressed="' + (!window.drillLevel) + '">' + esc(tt("همه")) + '</button>' +
+        LEVELS.map(function (l) { return '<button class="chip" type="button" data-dlevel="' + l + '" aria-pressed="' + (window.drillLevel === l) + '">' + l + '</button>'; }).join("");
+      var weakN = weakSet().size;
+      return '<div class="card"><b>' + esc(tt("تمرین صرف")) + '</b><p class="sub" style="margin:4px 0 0">' + esc(tt("فرم درست فعل را برای هر ضمیر بنویس؛ ۱۰ سؤال در هر دور.")) + '</p>' +
+        '<span class="chip-label">' + esc(tt("گروه فعل")) + '</span><div class="chips">' + sets + '</div>' +
+        '<span class="chip-label">' + esc(tt("زمان")) + '</span><div class="chips">' + tenses + '</div>' +
+        '<span class="chip-label">' + esc(tt("سطح فعل")) + '</span><div class="chips">' + lvls + '</div>' +
+        '<p class="sub">' + esc(tt("فعل‌های ضعیف ذخیره‌شده")) + ': ' + weakN + '</p>' +
+        '<button class="btn" type="button" id="dStart">' + esc(tt("شروع ۱۰ سؤال")) + '</button></div>';
     }
-
     if (drill.i >= drill.items.length) {
-      const card = document.createElement("div"); card.className = "card";
-      card.innerHTML = `
-        <div><b>پایان دور</b></div>
-        <p>${drill.right} از ${drill.items.length} درست</p>
-        <button class="btn" type="button" id="dAgain">دور تازه</button>
-        <button class="btn ghost" type="button" id="dBack">برگشت</button>`;
-      box.appendChild(card);
-      card.querySelector("#dAgain").addEventListener("click", startDrill);
-      card.querySelector("#dBack").addEventListener("click", () => { drill = null; renderDrill(); });
-      if (window.SEE_SFX) SEE_SFX.play(drill.right >= 7 ? "done" : "ok");
-      return;
+      var weak = [...weakSet()].slice(-12);
+      return '<div class="card"><div class="score">' + drill.right + ' / ' + drill.items.length + '</div>' +
+        '<p class="sub" style="text-align:center">' + esc(tt("پایان دور")) + '</p>' +
+        (drill.missed.length ? '<div class="weak">' + drill.missed.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join("") + '</div>' : '') +
+        '<button class="btn" type="button" id="dAgain">' + esc(tt("دور تازه")) + '</button> ' +
+        '<button class="btn ghost" type="button" id="dBack">' + esc(tt("برگشت")) + '</button></div>';
     }
-
-    const cur = drill.items[drill.i];
-    const tenseLabel = TENSES.find((t) => t[0] === tense)[1];
-    const card = document.createElement("div"); card.className = "card";
-    card.innerHTML = `
-      <div class="muted">سؤال ${drill.i + 1} از ${drill.items.length} · ${cur.verb} (${cur.meaning}) · ${tenseLabel}</div>
-      <div class="drill-q">${cur.pron}<small>${cur.meaning}</small></div>
-      <input class="drill-input" id="dIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label=SEE_I18N.t("فرم درست")>
-      <div>
-        <button class="btn" type="button" id="dCheck">بررسی</button>
-        <button class="btn ghost" type="button" id="dListen">🔊 گوش بده</button>
-      </div>
-      <div id="dFb"></div>`;
-    box.appendChild(card);
-
-    const input = card.querySelector("#dIn");
-    input.focus();
-    const check = () => {
-      if (!input.value.trim()) return;
-      const ok = normalize(input.value) === normalize(cur.ans);
-      if (ok) drill.right += 1;
-      const weak = new Set(loadWeak());
-      if (ok) weak.delete(cur.key); else weak.add(cur.key);
-      saveWeak([...weak]);
-      if (window.SEE_SFX) SEE_SFX.play(ok ? "ok" : "bad");
-      const fb = card.querySelector("#dFb");
-      fb.className = "feedback " + (ok ? "ok" : "bad");
-      fb.innerHTML = ok ? SEE_I18N.t("درست بود ✓") : `جواب درست: <b dir="ltr"></b>`;
-      if (!ok) fb.querySelector("b").textContent = cur.ans;
-      const btn = card.querySelector("#dCheck");
-      btn.textContent = SEE_I18N.t("ادامه");
-      btn.onclick = () => { drill.i += 1; renderDrill(); };
-    };
-    card.querySelector("#dCheck").addEventListener("click", check);
-    input.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
-    card.querySelector("#dListen").addEventListener("click", () => speakText(cur.ans));
+    var cur = drill.items[drill.i];
+    return '<div class="card"><div class="bar"><i style="width:' + Math.round(drill.i / drill.items.length * 100) + '%"></i></div>' +
+      '<span class="sub">' + (drill.i + 1) + ' / ' + drill.items.length + ' · ' + esc(cur.verb) + ' (' + esc(cur.meaning) + ')</span>' +
+      '<div class="drill-q">' + esc(cur.pron) + '<small>' + esc(tt(TENSES.find(function (t) { return t[0] === drill.tense; })[1])) + '</small></div>' +
+      '<input class="field" id="dIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="فرم درست">' +
+      '<div><button class="btn" type="button" id="dCheck">' + esc(tt("بررسی جواب")) + '</button> ' +
+      '<button class="btn ghost" type="button" id="dListen">🔊 ' + esc(tt("گوش بده")) + '</button></div>' +
+      '<div id="dFb"></div></div>';
   }
 
   function render() {
-    segment($("#levels"), LEVELS.map((l) => [l, l]), level, (v) => { level = v; drill = null; render(); });
-    const q = $("#q").value;
-    $("#rules").hidden = tab !== "rules";
-    $("#verbs").hidden = tab !== "verbs";
-    $("#drill").hidden = tab !== "drill";
-    if (tab === "rules") rulesList(q);
-    if (tab === "verbs") {
-      let tl = document.getElementById("tenseTabs");
-      if (!tl) {
-        tl = document.createElement("ul"); tl.className = "segment"; tl.id = "tenseTabs";
-        $("#verbs").before(tl);
-      }
-      segment(tl, TENSES, tense, (v) => { tense = v; render(); });
-      verbsList(q);
-    }
-    if (tab === "drill") renderDrill();
+    $("title").textContent = tt("دفترچه");
+    var chipsEl = $("levelChips");
+    chipsEl.style.display = tab === "drill" ? "none" : "flex";
+    document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.tab === tab)); });
+    $("rules").hidden = tab !== "rules"; $("verbs").hidden = tab !== "verbs"; $("drill").hidden = tab !== "drill";
+    if (tab === "rules") $("rules").innerHTML = rulesView();
+    if (tab === "verbs") $("verbs").innerHTML = verbsView();
+    if (tab === "drill") $("drill").innerHTML = drillView();
+    renderLevels();
+    if (window.SEE_I18N) SEE_I18N.apply();
   }
 
-  document.querySelectorAll("#tabs button").forEach((b) => {
-    b.addEventListener("click", () => {
-      tab = b.dataset.tab;
-      drill = null;
-      document.querySelectorAll("#tabs button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      render();
-    });
+  // ---------- رویدادها ----------
+  document.querySelectorAll(".tab").forEach(function (b) {
+    b.addEventListener("click", function () { tab = b.dataset.tab; drill = null; render(); });
   });
-  $("#q").addEventListener("input", render);
+  $("q").addEventListener("input", function () { q = this.value.trim(); render(); });
+
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    var rule = t.closest("[data-rule]");
+    if (rule) { var body = $("r-" + rule.getAttribute("data-rule")); if (body) body.hidden = !body.hidden; return; }
+    var say = t.closest("[data-say]");
+    if (say) { speak(say.getAttribute("data-say")); return; }
+    var tense_ = t.closest("[data-tense]");
+    if (tense_) { tense = tense_.getAttribute("data-tense"); render(); return; }
+    var g = t.closest("[data-group]");
+    if (g) { var k = g.getAttribute("data-group"); groups[k] = groups[k] ? 0 : 1; render(); return; }
+    var dt = t.closest("[data-dtense]");
+    if (dt) { tense = dt.getAttribute("data-dtense"); render(); return; }
+    var dl = t.closest("[data-dlevel]");
+    if (dl) { window.drillLevel = dl.getAttribute("data-dlevel") || null; render(); return; }
+    if (t.id === "dStart") {
+      drill = { tense: tense, level: window.drillLevel || null, items: [], i: 0, right: 0, missed: [] };
+      var pool = buildPool(); var weak = weakSet();
+      var sh = function (a) { return a.sort(function () { return Math.random() - 0.5; }); };
+      var wk = sh(pool.filter(function (x) { return weak.has(x.key); })).slice(0, 4);
+      drill.items = wk.concat(sh(pool.filter(function (x) { return !weak.has(x.key); }))).slice(0, 10);
+      if (!drill.items.length) { drill = null; return; }
+      render(); $("dIn") && $("dIn").focus(); return;
+    }
+    if (t.id === "dAgain") { drill.items = []; drill = Object.assign({}, drill, { i: 0, right: 0, missed: [] }); var p2 = buildPool(); var w2 = weakSet(); var sh2 = function (a) { return a.sort(function () { return Math.random() - 0.5; }); }; drill.items = sh2(p2.filter(function (x) { return w2.has(x.key); })).slice(0, 4).concat(sh2(p2.filter(function (x) { return !w2.has(x.key); }))).slice(0, 10); render(); return; }
+    if (t.id === "dBack") { drill = null; render(); return; }
+    if (t.id === "dListen") { if (drill) speak(drill.items[drill.i].ans); return; }
+    if (t.id === "dCheck") { checkAnswer(); return; }
+  });
+
+  function checkAnswer() {
+    var inp = $("dIn"); if (!inp || !drill) return;
+    var cur = drill.items[drill.i];
+    if (!inp.value.trim()) return;
+    var ok = norm(inp.value) === norm(cur.ans);
+    var weak = weakSet();
+    if (ok) { drill.right++; weak.delete(cur.key); } else { weak.add(cur.key); drill.missed.push(cur.verb + ": " + cur.ans); }
+    saveWeak(weak);
+    if (window.SEE_FX) SEE_FX.result(ok, $("drill"));
+    $("dFb").className = "fb " + (ok ? "ok" : "bad");
+    $("dFb").innerHTML = ok ? "✓ " + esc(tt("درست بود")) : esc(tt("جواب درست")) + ": <b dir='ltr'>" + esc(cur.ans) + "</b>";
+    $("dCheck").textContent = tt("ادامه");
+    $("dCheck").id = "dNext";
+    $("dNext").onclick = function () { drill.i++; render(); };
+    inp.disabled = true;
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && drill && document.activeElement && document.activeElement.id === "dIn") {
+      if ($("dNext")) { $("dNext").click(); } else { checkAnswer(); }
+    }
+  });
+
+  var sb = $("soundBtn");
+  function paintSound() { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; sb.classList.toggle("on", on); sb.textContent = on ? "🔊" : "🔇"; }
+  sb.addEventListener("click", function () { var on = window.SEE_PREFS ? SEE_PREFS.soundOn() : true; if (window.SEE_PREFS) SEE_PREFS.setSound(!on); paintSound(); });
+  paintSound();
+
   render();
+  document.addEventListener("DOMContentLoaded", render);
+  if (window.SEE_I18N) setTimeout(SEE_I18N.apply, 600);
+})();
 </script>
 <script>
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
